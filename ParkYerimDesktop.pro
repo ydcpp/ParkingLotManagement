@@ -15,18 +15,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-SOURCES += \
-    applicationwindow.cpp \
-    databasemanager.cpp \
-    logger.cpp \
-    main.cpp \
-    parkyerim.cpp
+INCLUDEPATH += ./include
 
-HEADERS += \
-    applicationwindow.hpp \
-    databasemanager.hpp \
-    logger.hpp \
-    parkyerim.hpp
+VPATH += ./src
+
+include(include/include.pri)
+
+include(src/src.pri)
+
 
 FORMS += \
     applicationwindow.ui \
