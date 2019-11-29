@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -17,11 +17,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     applicationwindow.cpp \
+    databasemanager.cpp \
+    logger.cpp \
     main.cpp \
     parkyerim.cpp
 
 HEADERS += \
     applicationwindow.hpp \
+    databasemanager.hpp \
+    logger.hpp \
     parkyerim.hpp
 
 FORMS += \
