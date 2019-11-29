@@ -2,6 +2,8 @@
 #define PARKYERIM_HPP
 
 #include <QMainWindow>
+#include "applicationwindow.hpp"
+#include <string>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ParkYerim; }
@@ -15,7 +17,14 @@ public:
     ParkYerim(QWidget *parent = nullptr);
     ~ParkYerim();
 
+private slots:
+    void on_pushButton_clicked();
+
 private:
     Ui::ParkYerim *ui;
+    ApplicationWindow* appwindow = nullptr;
+
+    bool validateLoginInfo();
+    void launchProgram();
 };
 #endif // PARKYERIM_HPP

@@ -16,13 +16,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    applicationwindow.cpp \
     main.cpp \
     parkyerim.cpp
 
 HEADERS += \
+    applicationwindow.hpp \
     parkyerim.hpp
 
 FORMS += \
+    applicationwindow.ui \
     parkyerim.ui
 
 # Default rules for deployment.
