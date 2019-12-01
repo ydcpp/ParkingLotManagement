@@ -2,11 +2,14 @@
 <ui version="4.0">
  <class>ApplicationWindow</class>
  <widget class="QWidget" name="ApplicationWindow">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1024</width>
+    <width>1200</width>
     <height>720</height>
    </rect>
   </property>
@@ -25,103 +28,1288 @@
   <property name="windowTitle">
    <string>ParkYerim Otopark - v0.01 Desktop</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
-   <item>
-    <widget class="QFrame" name="frame_mainFrame">
+  <widget class="QFrame" name="frame_mainFrame">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>1181</width>
+     <height>701</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>66</y>
+      <width>1161</width>
+      <height>611</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QFrame" name="frame_controls">
+     <property name="geometry">
+      <rect>
+       <x>840</x>
+       <y>10</y>
+       <width>311</width>
+       <height>591</height>
+      </rect>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QGridLayout" name="gridLayout">
-      <property name="sizeConstraint">
-       <enum>QLayout::SetDefaultConstraint</enum>
+     <widget class="QCalendarWidget" name="calendarWidget">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>311</width>
+        <height>191</height>
+       </rect>
       </property>
-      <item row="1" column="0" colspan="3">
-       <widget class="QFrame" name="frame">
-        <property name="frameShape">
-         <enum>QFrame::Box</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <widget class="QToolButton" name="toolButton_quit">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>31</width>
-          <height>31</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>31</width>
-          <height>31</height>
-         </size>
-        </property>
-        <property name="toolTip">
-         <string>Güvenli Çıkış</string>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>img/close.png</normaloff>img/close.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>128</width>
-          <height>128</height>
-         </size>
-        </property>
-        <property name="popupMode">
-         <enum>QToolButton::DelayedPopup</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="label">
-        <property name="maximumSize">
-         <size>
-          <width>50</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="text">
-         <string> DURUM:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1" colspan="2">
-       <widget class="QLabel" name="label_2">
-        <property name="minimumSize">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>status</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+      <property name="minimumDate">
+       <date>
+        <year>2000</year>
+        <month>9</month>
+        <day>14</day>
+       </date>
+      </property>
+      <property name="gridVisible">
+       <bool>false</bool>
+      </property>
+      <property name="verticalHeaderFormat">
+       <enum>QCalendarWidget::NoVerticalHeader</enum>
+      </property>
+      <property name="dateEditEnabled">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="toolButton_vehicle_in">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>200</y>
+        <width>151</width>
+        <height>161</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>ARAÇ GİRİŞİ</string>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>256</width>
+        <height>256</height>
+       </size>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextUnderIcon</enum>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="toolButton_vehicle_out">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>200</y>
+        <width>151</width>
+        <height>161</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>ARAÇ ÇIKIŞI</string>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>256</width>
+        <height>256</height>
+       </size>
+      </property>
+      <property name="toolButtonStyle">
+       <enum>Qt::ToolButtonTextUnderIcon</enum>
+      </property>
+     </widget>
     </widget>
-   </item>
-  </layout>
+    <widget class="QFrame" name="frame_entry">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>411</width>
+       <height>611</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Box</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QGraphicsView" name="graphicsView_vehicle_in">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>411</width>
+        <height>231</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_6">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>250</y>
+        <width>71</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>PLAKA :</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_7">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>290</y>
+        <width>71</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>RENK :</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_8">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>330</y>
+        <width>71</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>MARKA :</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_in_plate">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>250</y>
+        <width>281</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>00 FFF 000</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_in_color">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>290</y>
+        <width>281</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>BEYAZ</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_in_model">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>330</y>
+        <width>281</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>FORD</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="Line" name="line">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>270</y>
+        <width>381</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="Line" name="line_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>310</y>
+        <width>381</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="Line" name="line_3">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>350</y>
+        <width>381</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_in_type">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>110</x>
+        <y>370</y>
+        <width>281</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>SEDAN</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="Line" name="line_4">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>390</y>
+        <width>381</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_9">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>370</y>
+        <width>71</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>TÜR :</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QFrame" name="frame_exit">
+     <property name="geometry">
+      <rect>
+       <x>420</x>
+       <y>0</y>
+       <width>411</width>
+       <height>611</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Box</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QGraphicsView" name="graphicsView_vehicle_out">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>411</width>
+        <height>231</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="Line" name="line_5">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>310</y>
+        <width>381</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_10">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>290</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>RENK :</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_out_plate">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>250</y>
+        <width>261</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>00 FFF 000</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_out_model">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>330</y>
+        <width>261</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>FORD</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="Line" name="line_6">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>270</y>
+        <width>381</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_11">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>250</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>PLAKA :</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_out_color">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>290</y>
+        <width>261</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>BEYAZ</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="Line" name="line_7">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>350</y>
+        <width>381</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_out_type">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>370</y>
+        <width>261</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>SEDAN</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="Line" name="line_8">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>390</y>
+        <width>381</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_12">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>330</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>MARKA :</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_13">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>370</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>TÜR :</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_14">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>450</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>GİRİŞ SAATİ :</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="Line" name="line_9">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>470</y>
+        <width>381</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_15">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>490</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>ÇIKIŞ SAATİ :</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="Line" name="line_10">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>510</y>
+        <width>381</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QDateTimeEdit" name="dateTimeEdit_in">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>450</y>
+        <width>261</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="wrapping">
+       <bool>false</bool>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+      <property name="keyboardTracking">
+       <bool>false</bool>
+      </property>
+      <property name="showGroupSeparator" stdset="0">
+       <bool>false</bool>
+      </property>
+      <property name="dateTime">
+       <datetime>
+        <hour>12</hour>
+        <minute>0</minute>
+        <second>0</second>
+        <year>2000</year>
+        <month>9</month>
+        <day>14</day>
+       </datetime>
+      </property>
+      <property name="minimumDateTime">
+       <datetime>
+        <hour>0</hour>
+        <minute>0</minute>
+        <second>0</second>
+        <year>1999</year>
+        <month>9</month>
+        <day>14</day>
+       </datetime>
+      </property>
+      <property name="currentSection">
+       <enum>QDateTimeEdit::DaySection</enum>
+      </property>
+      <property name="displayFormat">
+       <string>dd.MM.yyyy - HH:mm</string>
+      </property>
+     </widget>
+     <widget class="QDateTimeEdit" name="dateTimeEdit_out">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>490</y>
+        <width>261</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="wrapping">
+       <bool>false</bool>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+      <property name="keyboardTracking">
+       <bool>false</bool>
+      </property>
+      <property name="showGroupSeparator" stdset="0">
+       <bool>false</bool>
+      </property>
+      <property name="dateTime">
+       <datetime>
+        <hour>12</hour>
+        <minute>0</minute>
+        <second>0</second>
+        <year>2000</year>
+        <month>9</month>
+        <day>14</day>
+       </datetime>
+      </property>
+      <property name="minimumDateTime">
+       <datetime>
+        <hour>0</hour>
+        <minute>0</minute>
+        <second>0</second>
+        <year>1999</year>
+        <month>9</month>
+        <day>14</day>
+       </datetime>
+      </property>
+      <property name="currentSection">
+       <enum>QDateTimeEdit::DaySection</enum>
+      </property>
+      <property name="displayFormat">
+       <string>dd.MM.yyyy - HH:mm</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_out_parkLocation">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>410</y>
+        <width>261</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>C - 14</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_16">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>410</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>PARK YERİ :</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="Line" name="line_11">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>430</y>
+        <width>381</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="Line" name="line_12">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>550</y>
+        <width>381</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_17">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>530</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color : red;</string>
+      </property>
+      <property name="text">
+       <string>ÜCRET :</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_out_price">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>530</y>
+        <width>261</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>12 TL</string>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>681</y>
+      <width>43</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>50</width>
+      <height>20</height>
+     </size>
+    </property>
+    <property name="text">
+     <string> DURUM:</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_status">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>680</y>
+      <width>941</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>40</width>
+      <height>20</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>100009</width>
+      <height>20</height>
+     </size>
+    </property>
+    <property name="text">
+     <string>status</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton_settings">
+    <property name="geometry">
+     <rect>
+      <x>1080</x>
+      <y>20</y>
+      <width>41</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>9999</width>
+      <height>9999</height>
+     </size>
+    </property>
+    <property name="text">
+     <string>Ayarlar</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>assets/images/settings.png</normaloff>assets/images/settings.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>64</width>
+      <height>64</height>
+     </size>
+    </property>
+    <property name="toolButtonStyle">
+     <enum>Qt::ToolButtonIconOnly</enum>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton_quit">
+    <property name="geometry">
+     <rect>
+      <x>1130</x>
+      <y>20</y>
+      <width>41</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>31</width>
+      <height>31</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>9999</width>
+      <height>9999</height>
+     </size>
+    </property>
+    <property name="toolTip">
+     <string>Güvenli Çıkış</string>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>Çıkış</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>assets/images/close.png</normaloff>assets/images/close.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>64</width>
+      <height>64</height>
+     </size>
+    </property>
+    <property name="popupMode">
+     <enum>QToolButton::DelayedPopup</enum>
+    </property>
+    <property name="toolButtonStyle">
+     <enum>Qt::ToolButtonIconOnly</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>1130</x>
+      <y>0</y>
+      <width>41</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Çıkış</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>1080</x>
+      <y>0</y>
+      <width>41</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Ayarlar</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="lcdNumber">
+    <property name="geometry">
+     <rect>
+      <x>850</x>
+      <y>10</y>
+      <width>151</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="smallDecimalPoint">
+     <bool>false</bool>
+    </property>
+    <property name="digitCount">
+     <number>5</number>
+    </property>
+    <property name="segmentStyle">
+     <enum>QLCDNumber::Filled</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>30</y>
+      <width>231</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>ARAÇ GİRİŞ</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>520</x>
+      <y>30</y>
+      <width>231</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>ARAÇ ÇIKIŞ</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_18">
+    <property name="geometry">
+     <rect>
+      <x>1030</x>
+      <y>0</y>
+      <width>41</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Yönetici</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton_adminpanel">
+    <property name="geometry">
+     <rect>
+      <x>1030</x>
+      <y>20</y>
+      <width>41</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>9999</width>
+      <height>9999</height>
+     </size>
+    </property>
+    <property name="text">
+     <string>Ayarlar</string>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>assets/images/adminpanel.png</normaloff>assets/images/adminpanel.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>64</width>
+      <height>64</height>
+     </size>
+    </property>
+    <property name="toolButtonStyle">
+     <enum>Qt::ToolButtonIconOnly</enum>
+    </property>
+   </widget>
+  </widget>
  </widget>
  <resources/>
  <connections/>

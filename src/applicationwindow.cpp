@@ -2,22 +2,29 @@
 #include "ui_applicationwindow.h"
 
 #include <QMessageBox>
+#include <QTimer>
+#include "parkyerim.hpp"
 
-ApplicationWindow::ApplicationWindow(QWidget *parent) :
+ApplicationWindow::ApplicationWindow(DatabaseManager* dbmanager, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ApplicationWindow)
 {
     ui->setupUi(this);
     this->setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint | Qt::WindowMaximizeButtonHint | Qt::CustomizeWindowHint);
     this->setAttribute( Qt::WA_DeleteOnClose, true );
-    for(QString s : m_params)
-    {
-        QList<QString> param = s.split(',' , QString::SkipEmptyParts);
-        QString pName = param[0].trimmed();
-        QString pValue = param[1].trimmed();
-        m_assetPaths[pName] = pValue;
-    }
-    ui->toolButton_quit->setIcon(QIcon(m_assetPaths["icon_close"]));
+    m_parent = static_cast<ParkYerim*>(parent);
+    m_dbmanager = dbmanager;
+
+    // setting up icons
+    ui->toolButton_quit->setIcon(QIcon(m_parent->getAssetPaths()["icon_close"]));
+    ui->toolButton_settings->setIcon(QIcon(m_parent->getAssetPaths()["icon_settings"]));
+    ui->toolButton_adminpanel->setIcon(QIcon(m_parent->getAssetPaths()["icon_adminpanel"]));
+
+    // setting up digital clock
+    QTimer *timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &ApplicationWindow::showTime);
+    timer->start(1000);
+    showTime();
 }
 
 ApplicationWindow::~ApplicationWindow()
@@ -25,9 +32,24 @@ ApplicationWindow::~ApplicationWindow()
     delete ui;
 }
 
-QMap<QString, QString> ApplicationWindow::getAssetPaths() const
+void ApplicationWindow::clearVehicleInStats()
 {
-    return m_assetPaths;
+    ui->lineEdit_in_plate->setText("");
+    ui->lineEdit_in_color->setText("");
+    ui->lineEdit_in_model->setText("");
+    ui->lineEdit_in_type->setText("");
+}
+
+void ApplicationWindow::clearVehicleOutStats()
+{
+    ui->lineEdit_out_plate->setText("");
+    ui->lineEdit_out_color->setText("");
+    ui->lineEdit_out_model->setText("");
+    ui->lineEdit_out_type->setText("");
+    ui->lineEdit_out_parkLocation->setText("");
+    ui->lineEdit_out_price->setText("");
+    ui->dateTimeEdit_in->setDateTime(QDateTime(QDate(2000,1,1),QTime(0,0)));
+    ui->dateTimeEdit_out->setDateTime(QDateTime(QDate(2000,1,1),QTime(0,0)));
 }
 
 void ApplicationWindow::on_toolButton_quit_clicked()
@@ -37,4 +59,23 @@ void ApplicationWindow::on_toolButton_quit_clicked()
     if(reply == QMessageBox::Yes){
         QApplication::quit();
     }
+}
+
+void ApplicationWindow::showTime()
+{
+    QTime time = QTime::currentTime();
+        QString text = time.toString("hh:mm");
+        if ((time.second() % 2) == 0)
+            text[2] = ' ';
+        ui->lcdNumber->display(text);
+}
+
+void ApplicationWindow::on_toolButton_vehicle_in_clicked()
+{
+    clearVehicleInStats();
+}
+
+void ApplicationWindow::on_toolButton_vehicle_out_clicked()
+{
+    clearVehicleOutStats();
 }

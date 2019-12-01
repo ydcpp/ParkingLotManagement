@@ -1,5 +1,6 @@
 HEADERS += \
-    include/applicationwindow.hpp \
-    include/databasemanager.hpp \
-    include/logger.hpp \
-    include/parkyerim.hpp
+    $$PWD/User.hpp \
+    $$PWD/applicationwindow.hpp \
+    $$PWD/logger.hpp \
+    $$PWD/parkyerim.hpp \
+    $$PWD/databasemanager.hpp
