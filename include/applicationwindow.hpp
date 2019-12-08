@@ -1,6 +1,10 @@
 #ifndef APPLICATIONWINDOW_HPP
 #define APPLICATIONWINDOW_HPP
 
+#include "adminpanel.hpp"
+#include "manuelaraccikis.hpp"
+#include "manuelaracgiris.hpp"
+
 #include <QWidget>
 #include <QMap>
 
@@ -33,11 +37,18 @@ private slots:
 
     void on_toolButton_vehicle_out_clicked();
 
+    void on_toolButton_adminpanel_clicked();
+
+    void on_toolButton_settings_clicked();
+
 private:
     Ui::ApplicationWindow *ui;
     ParkYerim* m_parent = nullptr;
     DatabaseManager* m_dbmanager = nullptr;
     User* m_user = nullptr;
+    AdminPanel* m_window_admin = nullptr;
+    ManuelAracGiris* m_window_vehicle_in = nullptr;
+    ManuelAracCikis* m_window_vehicle_out = nullptr;
 
     void initializeAssetPaths();
     void setupIcons();

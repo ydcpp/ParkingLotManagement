@@ -178,7 +178,7 @@ border-color : red;
         <x>0</x>
         <y>0</y>
         <width>321</width>
-        <height>231</height>
+        <height>191</height>
        </rect>
       </property>
       <property name="font">
@@ -216,6 +216,48 @@ border-color : red;
       </property>
       <property name="text">
        <string>PushButton</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_20">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>200</y>
+        <width>141</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>KALAN BOŞ YER : </string>
+      </property>
+     </widget>
+     <widget class="QLCDNumber" name="lcdNumber_freespacecount">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>200</y>
+        <width>71</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="smallDecimalPoint">
+       <bool>false</bool>
+      </property>
+      <property name="digitCount">
+       <number>4</number>
+      </property>
+      <property name="segmentStyle">
+       <enum>QLCDNumber::Flat</enum>
       </property>
      </widget>
     </widget>
@@ -315,7 +357,7 @@ border-color : red;
      </widget>
      <widget class="QLineEdit" name="lineEdit_in_plate">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="geometry">
        <rect>
@@ -344,7 +386,7 @@ border-color : red;
      </widget>
      <widget class="QLineEdit" name="lineEdit_in_color">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="geometry">
        <rect>
@@ -371,7 +413,7 @@ border-color : red;
      </widget>
      <widget class="QLineEdit" name="lineEdit_in_model">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="geometry">
        <rect>
@@ -437,7 +479,7 @@ border-color : red;
      </widget>
      <widget class="QLineEdit" name="lineEdit_in_type">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="geometry">
        <rect>
@@ -562,7 +604,7 @@ border-color : red;
      </widget>
      <widget class="QLineEdit" name="lineEdit_out_plate">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="geometry">
        <rect>
@@ -591,7 +633,7 @@ border-color : red;
      </widget>
      <widget class="QLineEdit" name="lineEdit_out_model">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="geometry">
        <rect>
@@ -654,7 +696,7 @@ border-color : red;
      </widget>
      <widget class="QLineEdit" name="lineEdit_out_color">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="geometry">
        <rect>
@@ -694,7 +736,7 @@ border-color : red;
      </widget>
      <widget class="QLineEdit" name="lineEdit_out_type">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="geometry">
        <rect>
@@ -852,7 +894,7 @@ border-color : red;
      </widget>
      <widget class="QDateTimeEdit" name="dateTimeEdit_in">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="geometry">
        <rect>
@@ -911,7 +953,7 @@ border-color : red;
      </widget>
      <widget class="QDateTimeEdit" name="dateTimeEdit_out">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="geometry">
        <rect>
@@ -970,7 +1012,7 @@ border-color : red;
      </widget>
      <widget class="QLineEdit" name="lineEdit_out_parkLocation">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="geometry">
        <rect>
@@ -1072,7 +1114,7 @@ border-color : red;
      </widget>
      <widget class="QLineEdit" name="lineEdit_out_price">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="geometry">
        <rect>

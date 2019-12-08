@@ -6,6 +6,9 @@ ManuelAracGiris::ManuelAracGiris(QWidget *parent) :
     ui(new Ui::ManuelAracGiris)
 {
     ui->setupUi(this);
+
+    this->setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint);
+    this->setAttribute( Qt::WA_DeleteOnClose, true );
 }
 
 ManuelAracGiris::~ManuelAracGiris()

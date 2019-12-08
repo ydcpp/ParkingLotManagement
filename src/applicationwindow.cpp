@@ -114,3 +114,14 @@ void ApplicationWindow::setupCustomComponents()
     ui->label_user->setText(m_user->getFirstName() + " " + m_user->getLastName());
     if(m_user->getUserType() < 2) ui->toolButton_adminpanel->setEnabled(false);
 }
+
+void ApplicationWindow::on_toolButton_adminpanel_clicked()
+{
+    m_window_admin = new AdminPanel(this);
+    m_window_admin->show();
+}
+
+void ApplicationWindow::on_toolButton_settings_clicked()
+{
+
+}

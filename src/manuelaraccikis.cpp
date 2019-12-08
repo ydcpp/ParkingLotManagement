@@ -6,6 +6,9 @@ ManuelAracCikis::ManuelAracCikis(QWidget *parent) :
     ui(new Ui::ManuelAracCikis)
 {
     ui->setupUi(this);
+
+    this->setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint);
+    this->setAttribute( Qt::WA_DeleteOnClose, true );
 }
 
 ManuelAracCikis::~ManuelAracCikis()

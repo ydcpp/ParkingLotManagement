@@ -15,6 +15,14 @@ public:
     explicit AdminPanel(QWidget *parent = nullptr);
     ~AdminPanel();
 
+private slots:
+
+    void on_pushButton_close_clicked();
+
+    void on_pushButton_employees_clicked();
+
+    void on_pushButton_managers_clicked();
+
 private:
     Ui::AdminPanel *ui;
 };
