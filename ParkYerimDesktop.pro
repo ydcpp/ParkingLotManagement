@@ -42,5 +42,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     assets/database/parkyerimdb.sqlite \
-    assets/images/*
+    assets/images/* \
+    assets/config/* \
+    assets/other/*
 
