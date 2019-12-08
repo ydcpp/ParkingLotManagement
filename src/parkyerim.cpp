@@ -7,15 +7,8 @@ ParkYerim::ParkYerim(QWidget *parent)
 {
     ui->setupUi(this);
 
-    // setting up asset paths
-    for(QString s : m_params)
-    {
-        QList<QString> param = s.split(',' , QString::SkipEmptyParts);
-        QString pName = param[0].trimmed();
-        QString pValue = param[1].trimmed();
-        m_assetPaths[pName] = pValue;
-    }
-    m_database = new DatabaseManager(m_assetPaths["database_path"]);
+    // initialize database instance
+    m_database = new DatabaseManager(m_databasepath);
     if(!m_database->isConnected()){
         ui->label_status->setStyleSheet("color:red;");
         ui->label_status->setText("Veritabanına bağlanılamadı.");
@@ -30,12 +23,6 @@ ParkYerim::~ParkYerim()
     if(m_user) delete m_user;
 }
 
-QMap<QString, QString> ParkYerim::getAssetPaths()
-{
-    return m_assetPaths;
-}
-
-
 void ParkYerim::on_pushButton_clicked()
 {
     if(validateLoginInfo()) launchProgram();
@@ -43,12 +30,18 @@ void ParkYerim::on_pushButton_clicked()
 
 bool ParkYerim::validateLoginInfo()
 {
-    return true;
+    QString username = ui->lineEdit_user->text();
+    QString password = ui->lineEdit_password->text();
+    QString errormessage;
+    if(!m_database->validateUserLogin(username,password,errormessage, &m_user)){
+        ui->label_status->setText(errormessage);
+        return false;
+    }else return true;
 }
 
 void ParkYerim::launchProgram()
 {
-    ApplicationWindow* appwindow = new ApplicationWindow(m_database,this);
+    ApplicationWindow* appwindow = new ApplicationWindow(m_database,m_user);
     this->hide();
     appwindow->show();
 }

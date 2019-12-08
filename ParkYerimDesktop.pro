@@ -19,13 +19,21 @@ INCLUDEPATH += ./include
 
 VPATH += ./src
 
-include(include/include.pri)
 
-include(src/src.pri)
+HEADERS += \
+    $$PWD/include/*.hpp
+
+
+SOURCES += \
+    $$PWD/src/*.cpp
+
 
 FORMS += \
-    applicationwindow.ui \
-    parkyerim.ui
+    $$PWD/forms/*.ui
+
+
+
+RC_ICONS = ParkYerimDesktop.ico
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
