@@ -172,39 +172,6 @@ border-color : red;
        <string>PushButton</string>
       </property>
      </widget>
-     <widget class="QCalendarWidget" name="calendarWidget">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>321</width>
-        <height>191</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-        <weight>50</weight>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="minimumDate">
-       <date>
-        <year>2000</year>
-        <month>9</month>
-        <day>14</day>
-       </date>
-      </property>
-      <property name="gridVisible">
-       <bool>false</bool>
-      </property>
-      <property name="verticalHeaderFormat">
-       <enum>QCalendarWidget::NoVerticalHeader</enum>
-      </property>
-      <property name="dateEditEnabled">
-       <bool>false</bool>
-      </property>
-     </widget>
      <widget class="QPushButton" name="pushButton_4">
       <property name="geometry">
        <rect>
@@ -224,7 +191,7 @@ border-color : red;
         <x>0</x>
         <y>200</y>
         <width>141</width>
-        <height>31</height>
+        <height>21</height>
        </rect>
       </property>
       <property name="font">
@@ -240,9 +207,9 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>140</x>
-        <y>200</y>
+        <y>195</y>
         <width>71</width>
-        <height>31</height>
+        <height>35</height>
        </rect>
       </property>
       <property name="font">
@@ -259,6 +226,55 @@ border-color : red;
       <property name="segmentStyle">
        <enum>QLCDNumber::Flat</enum>
       </property>
+     </widget>
+     <widget class="QFrame" name="frame">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>321</width>
+        <height>191</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Box</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QCalendarWidget" name="calendarWidget">
+       <property name="geometry">
+        <rect>
+         <x>2</x>
+         <y>2</y>
+         <width>317</width>
+         <height>187</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="minimumDate">
+        <date>
+         <year>2000</year>
+         <month>9</month>
+         <day>14</day>
+        </date>
+       </property>
+       <property name="gridVisible">
+        <bool>false</bool>
+       </property>
+       <property name="verticalHeaderFormat">
+        <enum>QCalendarWidget::NoVerticalHeader</enum>
+       </property>
+       <property name="dateEditEnabled">
+        <bool>false</bool>
+       </property>
+      </widget>
      </widget>
     </widget>
     <widget class="QFrame" name="frame_entry">

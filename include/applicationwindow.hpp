@@ -2,8 +2,8 @@
 #define APPLICATIONWINDOW_HPP
 
 #include "adminpanel.hpp"
-#include "manuelaraccikis.hpp"
-#include "manuelaracgiris.hpp"
+#include "manualvehicleentry.hpp"
+#include "manualvehicleexit.hpp"
 
 #include <QWidget>
 #include <QMap>
@@ -28,6 +28,7 @@ public:
     void clearVehicleInStats();
     void clearVehicleOutStats();
     QMap<QString, QString> getAssetPaths();
+    DatabaseManager* getDBManager();
 
 private slots:
     void on_toolButton_quit_clicked();
@@ -47,8 +48,8 @@ private:
     DatabaseManager* m_dbmanager = nullptr;
     User* m_user = nullptr;
     AdminPanel* m_window_admin = nullptr;
-    ManuelAracGiris* m_window_vehicle_in = nullptr;
-    ManuelAracCikis* m_window_vehicle_out = nullptr;
+    ManualVehicleEntry* m_window_vehicle_in = nullptr;
+    ManualVehicleExit* m_window_vehicle_out = nullptr;
 
     void initializeAssetPaths();
     void setupIcons();

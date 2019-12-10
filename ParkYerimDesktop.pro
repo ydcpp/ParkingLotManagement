@@ -17,19 +17,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 INCLUDEPATH += ./include
 
-VPATH += ./src
-
 
 HEADERS += \
-    $$PWD/include/*.hpp \
+    $$PWD/include/*.hpp
 
 
 SOURCES += \
-    $$PWD/src/*.cpp \
+    $$PWD/src/*.cpp
 
 
 FORMS += \
-    $$PWD/forms/*.ui \
+    $$PWD/forms/*.ui
 
 
 

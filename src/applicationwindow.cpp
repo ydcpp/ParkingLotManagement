@@ -52,6 +52,11 @@ QMap<QString, QString> ApplicationWindow::getAssetPaths()
     return m_assetPaths;
 }
 
+DatabaseManager *ApplicationWindow::getDBManager()
+{
+    return m_dbmanager;
+}
+
 void ApplicationWindow::on_toolButton_quit_clicked()
 {
     QMessageBox::StandardButton reply;
@@ -117,7 +122,7 @@ void ApplicationWindow::setupCustomComponents()
 
 void ApplicationWindow::on_toolButton_adminpanel_clicked()
 {
-    m_window_admin = new AdminPanel(this);
+    m_window_admin = new AdminPanel(m_dbmanager,this);
     m_window_admin->show();
 }
 

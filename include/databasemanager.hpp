@@ -22,6 +22,8 @@ public:
     ~DatabaseManager();
 
     bool validateUserLogin(QString username, QString password, QString& errormsg, User** currentUser);
+    bool deleteUser(QString username, QString& errmsg);
+    bool createUser(QString firstname, QString lastname, QString phone, QString username, QString password, qint32 usertype, QString& errmsg);
 
     bool isConnected();
 

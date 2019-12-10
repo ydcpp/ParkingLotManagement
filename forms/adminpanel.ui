@@ -153,7 +153,7 @@
         <string>Kayıtlı Yöneticileri Listele</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_monthlyincome">
+      <widget class="QPushButton" name="pushButton_deleteUser">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -179,7 +179,7 @@
       <property name="title">
        <string>Muhasebe İşlemleri</string>
       </property>
-      <widget class="QPushButton" name="pushButton_weeklyincome">
+      <widget class="QPushButton" name="pushButton_payments">
        <property name="geometry">
         <rect>
          <x>10</x>

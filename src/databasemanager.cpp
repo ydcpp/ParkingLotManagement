@@ -69,7 +69,77 @@ bool DatabaseManager::validateUserLogin(QString username, QString password, QStr
     }
 }
 
+bool DatabaseManager::deleteUser(QString username, QString& errmsg)
+{
+    if(!database.open()) return false;
+    QSqlQuery query;
+    query.prepare("select * from Accounts where Username = :usr");
+    query.bindValue(":usr",username);
+    if(!query.exec()){
+        errmsg = query.lastError().text();
+        return false;
+    }
+    if(!query.next()){
+        errmsg = "Böyle bir kullanıcı adı bulunmamaktadır.";
+        return false;
+    }else{
+        query.clear();
+        query.prepare("delete from Accounts where Username = :usr");
+        query.bindValue(":usr",username);
+        if(!query.exec()){
+            errmsg = query.lastError().text();
+            return false;
+        }
+        return true;
+    }
+}
+
+bool DatabaseManager::createUser(QString firstname, QString lastname, QString phone, QString username, QString password, qint32 usertype, QString &errmsg)
+{
+    QSqlQuery query;
+    query.prepare("insert into Person (FirstName,LastName) values(:fn,:ln)");
+    query.bindValue(":fn",firstname);
+    query.bindValue(":ln",lastname);
+    if(!query.exec()){
+        errmsg = query.lastError().text();
+        return false;
+    }
+    query.clear();
+    query.exec("SELECT last_insert_rowid()");
+    query.next();
+    qint32 userID = query.value(0).toInt();
+    query.clear();
+    query.prepare("insert into Phones (PhoneNumber,fk_PersonID) values (:phone,:userID)");
+    query.bindValue(":phone",phone);
+    query.bindValue(":userID",userID);
+    if(!query.exec()){
+        errmsg = query.lastError().text();
+        query.prepare("delete from Person where ID = :id");
+        query.bindValue(":id",userID);
+        query.exec();
+        return false;
+    }
+    query.clear();
+    query.prepare("insert into Accounts (Username,Password,AccountType,fk_PersonID) values (:usr,:pw,:type,:pid)");
+    query.bindValue(":usr",username);
+    query.bindValue(":pw",password);
+    query.bindValue(":type",usertype);
+    query.bindValue(":pid",userID);
+    if(!query.exec()){
+        query.prepare("delete from Person where ID = :id");
+        query.bindValue(":id",userID);
+        query.exec();
+        return false;
+    }
+    return true;
+}
+
 bool DatabaseManager::isConnected()
 {
     return database.isOpen();
 }
+
+
+
+
+
