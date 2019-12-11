@@ -1,11 +1,12 @@
 #include "databasemanager.hpp"
 
-
 DatabaseManager::DatabaseManager(QString dbpath)
 {
     database = QSqlDatabase::addDatabase("QSQLITE");
     database.setDatabaseName(dbpath);
     database.open();
+    getColorsFromDB();
+    getVehicleTypesFromDB();
 }
 
 
@@ -134,9 +135,155 @@ bool DatabaseManager::createUser(QString firstname, QString lastname, QString ph
     return true;
 }
 
+bool DatabaseManager::newVehicleEntry(QString plate, QString model, QString type, QString color, QString &errmsg, qint32 &vehicleID)
+{
+    QSqlQuery query;
+    // check if vehicle already exists
+    query.prepare("select ID from Vehicles where Plate = :plate");
+    query.bindValue(":plate",plate);
+    if(!query.exec()){
+        errmsg = query.lastError().text();
+        return false;
+    }
+    if(query.next()){
+        vehicleID = query.value(0).toInt();
+        return true;
+    }else{
+        // create new vehicle entry
+        query.clear();
+        query.prepare("insert into Vehicles(Plate,Model,fk_colorID,fk_vehicleTypeID) values(:pl,:model,:colorid,:typeid)");
+        query.bindValue(":pl",plate);
+        query.bindValue(":model",model);
+        query.bindValue(":colorid",m_colors[color]);
+        query.bindValue(":typeid",m_vehicleTypes[type]);
+        if(!query.exec()){
+            errmsg = query.lastError().text();
+            return false;
+        }
+        query.clear();
+        query.exec("SELECT last_insert_rowid()");
+        query.next();
+        vehicleID = query.value(0).toInt();
+        return true;
+    }
+}
+
+bool DatabaseManager::newPaymentEntry(qint32 vehicleID, bool isNightPlan, QString& errmsg)
+{
+    QSqlQuery query;
+    query.prepare("insert into Payments(fk_VehicleID,isNightPlan) values(:vid,:night)");
+    query.bindValue(":vid",vehicleID);
+    query.bindValue(":night",isNightPlan);
+    if(!query.exec()){
+        errmsg = query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
+bool DatabaseManager::getBillingResult(QString plate, QString &errmsg, QList<qint64>& minutes)
+{
+    QSqlQuery query;
+    qint32 vehicleID;
+    // veritabanından aracın girdiği saati sorgula, şimdiki saatten farkını al
+    query.prepare("select ID from Vehicles where Plate = :plate");
+    query.bindValue(":plate",plate);
+    if(!query.exec()){
+        errmsg = query.lastError().text();
+        return false;
+    }
+    if(!query.next()){
+        errmsg = "Bu plakalı araç sistemde bulunmamaktadır.";
+        return false;
+    }
+    vehicleID = query.value(0).toInt();
+    QDateTime entryDate;
+    query.clear();
+    query.prepare("select VehicleEntryDate from Payments where fk_VehicleID = :vid and isPaymentComplete = false");
+    query.bindValue(":vid",vehicleID);
+    if(!query.exec()){
+        errmsg = query.lastError().text();
+        return false;
+    }
+    if(!query.next()){
+        errmsg = "Bu plakalı aracın ödenmemiş kaydı bulunmamaktadır.";
+        return false;
+    }else{
+        entryDate = query.value(0).toDateTime();
+        minutes.append(entryDate.secsTo(QDateTime::currentDateTime())/60);
+        while(query.next()){
+            // birden fazla kaydı olup olmadığına bakılıyor.
+            entryDate = query.value(0).toDateTime();
+            minutes.append(entryDate.secsTo(QDateTime::currentDateTime())/60);
+        }
+    }
+    return true;
+}
+
+bool DatabaseManager::completePayment(qint32 vehicleID, QDateTime exitDate, float price, QString &errmsg, QString payerName)
+{
+    qint32 paymentID;
+    QSqlQuery query;
+    query.prepare("select Payments.ID from Payments left join Vehicles on Payments.fk_VehicleID = Vehicles.ID where Vehicles.ID = :vid and Payments.isPaymentComplete = false");
+    query.bindValue(":vid",vehicleID);
+    if(!query.exec()){
+        errmsg = query.lastError().text();
+        return false;
+    }
+    if(!query.next()){
+        errmsg = "Bu araca ait ödenmemiş bir ücret bulunamadı.";
+        return false;
+    }
+    paymentID = query.value(0).toInt();
+    query.clear();
+    query.prepare("update Payments set PayerName = :payer, Price = :price, PaymentDate = :date, isPaymentComplete = true where ID = :pid");
+    query.bindValue(":pid",paymentID);
+    query.bindValue(":payer",payerName);
+    query.bindValue(":price",price);
+    query.bindValue(":date",exitDate.toString("yyyy-MM-dd HH:mm:ss"));
+    if(!query.exec()){
+        errmsg = query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
+
 bool DatabaseManager::isConnected()
 {
     return database.isOpen();
+}
+
+QMap<QString,qint32> DatabaseManager::getColors()
+{
+    return m_colors;
+}
+
+QMap<QString,qint32> DatabaseManager::getVehicleTypes()
+{
+    return m_vehicleTypes;
+}
+
+void DatabaseManager::getColorsFromDB()
+{
+    QSqlQuery query;
+    query.exec("select * from Colors where id != 0");
+    while(query.next()){
+        qint32 colorID = query.value(0).toInt();
+        QString color = query.value(1).toString();
+        m_colors[color] = colorID;
+    }
+}
+
+void DatabaseManager::getVehicleTypesFromDB()
+{
+    QSqlQuery query;
+    query.exec("select * from VehicleTypes where id != 0");
+    while(query.next()){
+        qint32 typeID = query.value(0).toInt();
+        QString type = query.value(1).toString();
+        m_vehicleTypes[type] = typeID;
+    }
 }
 
 

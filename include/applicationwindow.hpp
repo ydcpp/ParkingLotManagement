@@ -50,6 +50,7 @@ private:
     AdminPanel* m_window_admin = nullptr;
     ManualVehicleEntry* m_window_vehicle_in = nullptr;
     ManualVehicleExit* m_window_vehicle_out = nullptr;
+    bool m_isNight = true;
 
     void initializeAssetPaths();
     void setupIcons();

@@ -69,15 +69,17 @@ void ApplicationWindow::on_toolButton_quit_clicked()
 void ApplicationWindow::showTime()
 {
     QTime time = QTime::currentTime();
-        QString text = time.toString("hh:mm");
-        if ((time.second() % 2) == 0)
-            text[2] = ' ';
-        ui->lcdNumber->display(text);
+    QString text = time.toString("hh:mm");
+    if ((time.second() % 2) == 0) text[2] = ' ';
+    ui->lcdNumber->display(text);
+    // is day or night
+
 }
 
 void ApplicationWindow::on_toolButton_vehicle_in_clicked()
 {
-    clearVehicleInStats();
+    m_window_vehicle_in = new ManualVehicleEntry(m_dbmanager,m_isNight,this);
+    m_window_vehicle_in->exec();
 }
 
 void ApplicationWindow::on_toolButton_vehicle_out_clicked()
