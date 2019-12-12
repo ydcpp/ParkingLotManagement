@@ -15,14 +15,14 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>200</width>
-    <height>110</height>
+    <width>1200</width>
+    <height>720</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>9999</width>
-    <height>9999</height>
+    <width>1200</width>
+    <height>720</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -189,7 +189,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>200</y>
+        <y>202</y>
         <width>141</width>
         <height>21</height>
        </rect>
@@ -275,6 +275,44 @@ border-color : red;
         <bool>false</bool>
        </property>
       </widget>
+     </widget>
+     <widget class="QLabel" name="label_21">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>192</y>
+        <width>81</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Geçerli Tarife</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_currentPlan">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>212</y>
+        <width>81</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>GÜNDÜZ</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
      </widget>
     </widget>
     <widget class="QFrame" name="frame_entry">
@@ -1165,7 +1203,7 @@ border-color : red;
       <x>10</x>
       <y>681</y>
       <width>43</width>
-      <height>20</height>
+      <height>16</height>
      </rect>
     </property>
     <property name="maximumSize">
@@ -1185,25 +1223,25 @@ border-color : red;
     <property name="geometry">
      <rect>
       <x>60</x>
-      <y>680</y>
-      <width>941</width>
-      <height>20</height>
+      <y>681</y>
+      <width>1111</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="minimumSize">
      <size>
-      <width>40</width>
-      <height>20</height>
+      <width>200</width>
+      <height>16</height>
      </size>
     </property>
     <property name="maximumSize">
      <size>
       <width>100009</width>
-      <height>20</height>
+      <height>16</height>
      </size>
     </property>
     <property name="text">
-     <string>status</string>
+     <string/>
     </property>
     <property name="alignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>

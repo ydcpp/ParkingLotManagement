@@ -57,6 +57,40 @@ DatabaseManager *ApplicationWindow::getDBManager()
     return m_dbmanager;
 }
 
+float ApplicationWindow::calculatePrice(qint64 minutes, QString& currentPlan)
+{
+    float hour = float(minutes)/60.0f;
+    if(m_isNight){
+        // calculate price in night plan
+        currentPlan = "GECE";
+        return (m_pricePerHour*hour*m_nightPlanMultiplier);
+    }else{
+        // calculate price in day plan
+        currentPlan = "GÜNDÜZ";
+        return (m_pricePerHour*hour);
+    }
+}
+
+float ApplicationWindow::getPricePerHour() const
+{
+    return m_pricePerHour;
+}
+
+float ApplicationWindow::getNightPlanMultiplier() const
+{
+    return m_nightPlanMultiplier;
+}
+
+void ApplicationWindow::setPricePerHour(float value)
+{
+    m_pricePerHour = value;
+}
+
+void ApplicationWindow::setNightPlanMultiplier(float value)
+{
+    m_nightPlanMultiplier = value;
+}
+
 void ApplicationWindow::on_toolButton_quit_clicked()
 {
     QMessageBox::StandardButton reply;
@@ -69,11 +103,10 @@ void ApplicationWindow::on_toolButton_quit_clicked()
 void ApplicationWindow::showTime()
 {
     QTime time = QTime::currentTime();
-    QString text = time.toString("hh:mm");
+    QString text = time.toString("HH:mm");
     if ((time.second() % 2) == 0) text[2] = ' ';
     ui->lcdNumber->display(text);
-    // is day or night
-
+    // calculate if its day or night, then update m_isNight
 }
 
 void ApplicationWindow::on_toolButton_vehicle_in_clicked()
@@ -84,7 +117,8 @@ void ApplicationWindow::on_toolButton_vehicle_in_clicked()
 
 void ApplicationWindow::on_toolButton_vehicle_out_clicked()
 {
-    clearVehicleOutStats();
+    m_window_vehicle_out = new ManualVehicleExit(m_dbmanager,this);
+    m_window_vehicle_out->exec();
 }
 
 void ApplicationWindow::initializeAssetPaths()

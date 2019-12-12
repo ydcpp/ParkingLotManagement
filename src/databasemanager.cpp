@@ -181,11 +181,10 @@ bool DatabaseManager::newPaymentEntry(qint32 vehicleID, bool isNightPlan, QStrin
     return true;
 }
 
-bool DatabaseManager::getBillingResult(QString plate, QString &errmsg, QList<qint64>& minutes)
+bool DatabaseManager::getBillingResult(QString plate, QString& errmsg, qint32& out_paymentID, qint64& out_minutes, qint32& out_vehicleID, QDateTime& out_entryDate)
 {
     QSqlQuery query;
     qint32 vehicleID;
-    // veritabanından aracın girdiği saati sorgula, şimdiki saatten farkını al
     query.prepare("select ID from Vehicles where Plate = :plate");
     query.bindValue(":plate",plate);
     if(!query.exec()){
@@ -197,9 +196,10 @@ bool DatabaseManager::getBillingResult(QString plate, QString &errmsg, QList<qin
         return false;
     }
     vehicleID = query.value(0).toInt();
+    out_vehicleID = vehicleID;
     QDateTime entryDate;
     query.clear();
-    query.prepare("select VehicleEntryDate from Payments where fk_VehicleID = :vid and isPaymentComplete = false");
+    query.prepare("select ID, VehicleEntryDate from Payments where fk_VehicleID = :vid and isPaymentComplete = false");
     query.bindValue(":vid",vehicleID);
     if(!query.exec()){
         errmsg = query.lastError().text();
@@ -209,15 +209,12 @@ bool DatabaseManager::getBillingResult(QString plate, QString &errmsg, QList<qin
         errmsg = "Bu plakalı aracın ödenmemiş kaydı bulunmamaktadır.";
         return false;
     }else{
-        entryDate = query.value(0).toDateTime();
-        minutes.append(entryDate.secsTo(QDateTime::currentDateTime())/60);
-        while(query.next()){
-            // birden fazla kaydı olup olmadığına bakılıyor.
-            entryDate = query.value(0).toDateTime();
-            minutes.append(entryDate.secsTo(QDateTime::currentDateTime())/60);
-        }
+        out_paymentID = query.value(0).toInt();
+        entryDate = query.value(1).toDateTime();
+        out_entryDate = entryDate;
+        out_minutes = entryDate.secsTo(QDateTime::currentDateTime())/60;
+        return true;
     }
-    return true;
 }
 
 bool DatabaseManager::completePayment(qint32 vehicleID, QDateTime exitDate, float price, QString &errmsg, QString payerName)
@@ -231,7 +228,7 @@ bool DatabaseManager::completePayment(qint32 vehicleID, QDateTime exitDate, floa
         return false;
     }
     if(!query.next()){
-        errmsg = "Bu araca ait ödenmemiş bir ücret bulunamadı.";
+        errmsg = "Bu araca ait bir ücret kaydı bilgisi bulunamadı.";
         return false;
     }
     paymentID = query.value(0).toInt();
@@ -245,6 +242,46 @@ bool DatabaseManager::completePayment(qint32 vehicleID, QDateTime exitDate, floa
         errmsg = query.lastError().text();
         return false;
     }
+    return true;
+}
+
+bool DatabaseManager::getVehicleInformation(qint32 vehicleID, QString& errmsg, QString& out_plate, QString& out_color, QString& out_type, QString& out_model)
+{
+    QSqlQuery query;
+    query.prepare("select Plate, fk_colorID, fk_vehicleTypeID, Model from Vehicles where ID = :id");
+    query.bindValue(":id",vehicleID);
+    if(!query.exec()){
+        errmsg = query.lastError().text();
+        return false;
+    }
+    if(!query.next()){
+        errmsg = "Invalid vehicle ID";
+        return false;
+    }
+    qint32 colorID;
+    qint32 typeID;
+    out_plate = query.value(0).toString();
+    colorID = query.value(1).toInt();
+    typeID = query.value(2).toInt();
+    out_model = query.value(3).toString();
+    query.clear();
+    query.prepare("select Color from Colors where ID = :id");
+    query.bindValue(":id",colorID);
+    if(!query.exec()){
+        errmsg = query.lastError().text();
+        return false;
+    }
+    query.next();
+    out_color = query.value(0).toString();
+    query.clear();
+    query.prepare("select TypeName from VehicleTypes where ID = :id");
+    query.bindValue(":id",typeID);
+    if(!query.exec()){
+        errmsg = query.lastError().text();
+        return false;
+    }
+    query.next();
+    out_type = query.value(0).toString();
     return true;
 }
 

@@ -30,6 +30,14 @@ public:
     QMap<QString, QString> getAssetPaths();
     DatabaseManager* getDBManager();
 
+    float getPricePerHour() const;
+    float getNightPlanMultiplier() const;
+    void setPricePerHour(float value);
+    void setNightPlanMultiplier(float value);
+
+public slots:
+    float calculatePrice(qint64 minutes, QString& currentPlan);
+
 private slots:
     void on_toolButton_quit_clicked();
     void showTime();
@@ -51,6 +59,8 @@ private:
     ManualVehicleEntry* m_window_vehicle_in = nullptr;
     ManualVehicleExit* m_window_vehicle_out = nullptr;
     bool m_isNight = true;
+    float m_pricePerHour = 10.0f;
+    float m_nightPlanMultiplier = 1.5f;
 
     void initializeAssetPaths();
     void setupIcons();
