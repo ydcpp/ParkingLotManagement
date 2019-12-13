@@ -133,58 +133,6 @@ border-color : red;
        <enum>Qt::ToolButtonTextUnderIcon</enum>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>420</y>
-        <width>321</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Geçerli Fiyat Tarifesi Detaylarını Göster</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton_2">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>470</y>
-        <width>321</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Park Alanlarını Göster</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton_3">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>520</y>
-        <width>321</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Tüm Güvenlik Kameralarını Görüntüle</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton_4">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>570</y>
-        <width>321</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>İletişim / Yardım</string>
-      </property>
-     </widget>
      <widget class="QLabel" name="label_20">
       <property name="geometry">
        <rect>
@@ -279,9 +227,9 @@ border-color : red;
      <widget class="QLabel" name="label_21">
       <property name="geometry">
        <rect>
-        <x>230</x>
+        <x>220</x>
         <y>192</y>
-        <width>81</width>
+        <width>101</width>
         <height>16</height>
        </rect>
       </property>
@@ -301,17 +249,72 @@ border-color : red;
      <widget class="QLabel" name="label_currentPlan">
       <property name="geometry">
        <rect>
-        <x>230</x>
+        <x>220</x>
         <y>212</y>
-        <width>81</width>
-        <height>16</height>
+        <width>101</width>
+        <height>22</height>
        </rect>
       </property>
       <property name="text">
        <string>NULL</string>
       </property>
       <property name="alignment">
-       <set>Qt::AlignCenter</set>
+       <set>Qt::AlignHCenter|Qt::AlignTop</set>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="toolButton_currentPlanDetails">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>420</y>
+        <width>321</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Geçerli Fiyat Tarifesi Detaylarını Göster</string>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="toolButton_parkingSpots">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>470</y>
+        <width>321</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Park Alanlarını Göster</string>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="toolButton_securityCams">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>520</y>
+        <width>321</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Tüm Güvenlik Kameralarını Görüntüle</string>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="toolButton_help">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>570</y>
+        <width>321</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>İletişim / Yardım</string>
       </property>
      </widget>
     </widget>

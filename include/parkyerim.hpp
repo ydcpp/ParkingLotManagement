@@ -7,6 +7,9 @@
 #include "applicationwindow.hpp"
 #include "databasemanager.hpp"
 #include "User.hpp"
+#include "logger.hpp"
+
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ParkYerim; }
@@ -29,11 +32,13 @@ private:
     Ui::ParkYerim *ui;
     DatabaseManager* m_database = nullptr;
     User* m_user = nullptr;
+    Logger* m_logger = nullptr;
 
     bool validateLoginInfo();
     void launchProgram();
 
     const QString m_databasepath = "./assets/database/parkyerimdb.sqlite";
+    const QString m_logfilepath = "./assets/other/applicationlog.txt";
 
 };
 #endif // PARKYERIM_HPP

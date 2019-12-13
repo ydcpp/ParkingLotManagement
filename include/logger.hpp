@@ -7,11 +7,14 @@ class Logger : public QObject
 {
     Q_OBJECT
 public:
-    explicit Logger(QObject *parent = nullptr);
+    explicit Logger(QString filepath, QObject *parent = nullptr);
 
 signals:
 
 public slots:
+
+private:
+    QString m_filepath;
 };
 
 #endif // LOGGER_HPP

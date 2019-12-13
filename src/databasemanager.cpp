@@ -218,7 +218,7 @@ bool DatabaseManager::GetBillingResult(QString plate, QString& errmsg, qint32& o
     }
 }
 
-bool DatabaseManager::CompletePayment(qint32 vehicleID, QDateTime exitDate, float hours, float price, QString &errmsg, QString payerName)
+bool DatabaseManager::CompletePayment(qint32 vehicleID, QDateTime exitDate, qint64 minutes, float price, QString &errmsg, QString payerName)
 {
     qint32 paymentID;
     QSqlQuery query;
@@ -232,12 +232,13 @@ bool DatabaseManager::CompletePayment(qint32 vehicleID, QDateTime exitDate, floa
         errmsg = "Bu araca ait bir ücret kaydı bilgisi bulunamadı.";
         return false;
     }
+    QTime parkingTime = QTime(0,0).addSecs(60*int(minutes));
     paymentID = query.value(0).toInt();
     query.clear();
     query.prepare("update Payments set PayerName = :payer, HoursParked = :hrs, Price = :price, PaymentDate = :date, isPaymentComplete = true where ID = :pid");
     query.bindValue(":pid",paymentID);
     query.bindValue(":payer",payerName);
-    query.bindValue(":hrs",QString().setNum(hours,'f',2));
+    query.bindValue(":hrs",parkingTime.toString("HH:mm"));
     query.bindValue(":price",price);
     query.bindValue(":date",exitDate.toString("yyyy-MM-dd HH:mm:ss"));
     if(!query.exec()){
@@ -385,6 +386,63 @@ bool DatabaseManager::SetQUeryModel_Payments(QSqlQueryModel *out_model, QString 
     return true;
 }
 
+bool DatabaseManager::QueryMonthlyIncome(float &out_income, QString &errmsg)
+{
+    QSqlQuery query;
+    if(!query.exec("select PaymentDate, Price from Payments where isPaymentComplete = true")){
+        errmsg = query.lastError().text();
+        return false;
+    }
+    QList<PaymentInfo> payments;
+    float totalPrice = 0.0f;
+    while(query.next()){
+        payments.append(PaymentInfo(query.value(0).toDateTime(),query.value(1).toFloat()));
+    }
+    for(PaymentInfo p : payments){
+        if(p.date.daysTo(QDateTime::currentDateTime()) < 30) totalPrice += p.price;
+    }
+    out_income = totalPrice;
+    return true;
+}
+
+bool DatabaseManager::QueryWeeklyIncome(float &out_income, QString &errmsg)
+{
+    QSqlQuery query;
+    if(!query.exec("select PaymentDate, Price from Payments where isPaymentComplete = true")){
+        errmsg = query.lastError().text();
+        return false;
+    }
+    QList<PaymentInfo> payments;
+    float totalPrice = 0.0f;
+    while(query.next()){
+        payments.append(PaymentInfo(query.value(0).toDateTime(),query.value(1).toFloat()));
+    }
+    for(PaymentInfo p : payments){
+        if(p.date.daysTo(QDateTime::currentDateTime()) < 7) totalPrice += p.price;
+    }
+    out_income = totalPrice;
+    return true;
+}
+
+bool DatabaseManager::QueryDailyIncome(float &out_income, QString &errmsg)
+{
+    QSqlQuery query;
+    if(!query.exec("select PaymentDate, Price from Payments where isPaymentComplete = true")){
+        errmsg = query.lastError().text();
+        return false;
+    }
+    QList<PaymentInfo> payments;
+    float totalPrice = 0.0f;
+    while(query.next()){
+        payments.append(PaymentInfo(query.value(0).toDateTime(),query.value(1).toFloat()));
+    }
+    for(PaymentInfo p : payments){
+        if(p.date.daysTo(QDateTime::currentDateTime()) < 1) totalPrice += p.price;
+    }
+    out_income = totalPrice;
+    return true;
+}
+
 
 bool DatabaseManager::isConnected()
 {
@@ -422,37 +480,4 @@ void DatabaseManager::getVehicleTypesFromDB()
         m_vehicleTypes[type] = typeID;
     }
 }
-
-
-
-/*
-bool DatabaseManager::SetQueryModel_DevamEdenHizmetler(QSqlQueryModel* out_model)
-{
-    if(!out_model) return false;
-    if(!database.isOpen()) return false;
-    QSqlQuery query(database);
-    query.prepare("SELECT"
-                 " Siparisler.ID AS 'ID',"
-                 " GondereninAdiSoyadi AS 'GÖNDERİCİ',"
-                 " GondereninTelefonu AS 'GÖNDERİCİ TEL',"
-                 " AlicininAdiSoyadi AS 'ALICI',"
-                 " Adres AS 'TESLİMAT ADRESİ',"
-                 " Sehirler.SehirAdi AS 'ŞEHİR',"
-                 " SiparisTarihi AS 'SİPARİŞ TARİHİ',"
-                 " TeslimTarihi AS 'TESLİM TARİHİ',"
-                 " (Accounts.Adi || ' ' || Accounts.Soyadi) AS 'TESLİMAT ELEMANI',"
-                 " Accounts.ID AS 'ELEMAN ID'"
-                 " FROM Siparisler "
-                 " INNER JOIN Accounts ON Siparisler.TeslimatElemanID = Accounts.ID"
-                 " INNER JOIN Sehirler ON Siparisler.SehirID = Sehirler.PlakaNo"
-                 " WHERE Siparisler.Tamamlandi = 0");
-    if(!query.exec()) return false;
-    else{
-        out_model->setQuery(query);
-        return true;
-    }
-}
-*/
-
-
 

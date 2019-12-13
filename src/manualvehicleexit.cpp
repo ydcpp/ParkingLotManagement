@@ -27,7 +27,7 @@ void ManualVehicleExit::on_pushButton_query_clicked()
         QString errormsg;
         // query plate number,get vehicle id to m_vehicleID, get the info and calculate price
         bool isNight;
-        if(!m_dbmanager->GetBillingResult(ui->lineEdit_plateQuery->text(),errormsg,m_paymentID,m_minute,m_vehicleID,m_entryDate,isNight)){
+        if(!m_dbmanager->GetBillingResult(ui->lineEdit_plateQuery->text(),errormsg,m_paymentID,m_minutes,m_vehicleID,m_entryDate,isNight)){
             ui->label_result->setStyleSheet("color:red;");
             ui->label_result->setText(errormsg);
             return;
@@ -37,8 +37,7 @@ void ManualVehicleExit::on_pushButton_query_clicked()
             ui->label_result->setText(errormsg);
             return;
         }
-        m_hours = m_minute/60.f;
-        m_price = getCalculatedPrice(m_minute,isNight,m_currentPlan);
+        m_price = getCalculatedPrice(m_minutes,isNight,m_currentPlan);
         // displaying the bill
         ui->lineEdit_plate->setText(m_plate);
         ui->lineEdit_color->setText(m_color);
@@ -46,7 +45,7 @@ void ManualVehicleExit::on_pushButton_query_clicked()
         ui->lineEdit_model->setText(m_model);
         ui->dateTimeEdit_entryDate->setDateTime(m_entryDate);
         ui->dateTimeEdit_exitDate->setDateTime(QDateTime::currentDateTime());
-        ui->lineEdit_totalminutes->setText(QString::number(m_minute) + "  dk.");
+        ui->lineEdit_totalminutes->setText(QString::number(m_minutes) + "  dk.");
         ui->lineEdit_plan->setText(m_currentPlan);
         ui->lineEdit_price->setText(QString().setNum(m_price,'g',2));
         ui->pushButton_completePayment->setEnabled(true);
@@ -57,7 +56,7 @@ void ManualVehicleExit::on_pushButton_completePayment_clicked()
 {
     ui->pushButton_completePayment->setEnabled(false);
     QString errormsg;
-    if(!m_dbmanager->CompletePayment(m_vehicleID,QDateTime::currentDateTime(),m_hours,m_price,errormsg)){
+    if(!m_dbmanager->CompletePayment(m_vehicleID,QDateTime::currentDateTime(),m_minutes,m_price,errormsg)){
         ui->label_result->setStyleSheet("color:red;");
         ui->label_result->setText(errormsg);
         ui->pushButton_completePayment->setEnabled(true);

@@ -7,7 +7,7 @@
 #include "parkyerim.hpp"
 
 
-ApplicationWindow::ApplicationWindow(DatabaseManager* dbmanager, User* user, QWidget *parent) :
+ApplicationWindow::ApplicationWindow(DatabaseManager* dbmanager, User* user, Logger* logger, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ApplicationWindow)
 {
@@ -17,6 +17,7 @@ ApplicationWindow::ApplicationWindow(DatabaseManager* dbmanager, User* user, QWi
     m_parent = static_cast<ParkYerim*>(parent);
     m_dbmanager = dbmanager;
     m_user = user;
+    m_logger = logger;
     initializeAssetPaths();
     setupIcons();
     setupCustomComponents();
@@ -143,6 +144,7 @@ void ApplicationWindow::setupCustomComponents()
         for(PricingPlan* plan : m_pricingPlans){
             if(m_currentPlanID == plan->GetPlanID()){
                 currentPricingPlan = plan;
+                ui->label_currentPlan->setText(currentPricingPlan->GetPlanName());
                 break;
             }
         }
@@ -163,4 +165,24 @@ void ApplicationWindow::on_toolButton_settings_clicked()
 {
     m_window_settings = new SettingsPanel(m_dbmanager,m_pricingPlans,this);
     m_window_settings->exec();
+}
+
+void ApplicationWindow::on_toolButton_currentPlanDetails_clicked()
+{
+
+}
+
+void ApplicationWindow::on_toolButton_parkingSpots_clicked()
+{
+
+}
+
+void ApplicationWindow::on_toolButton_securityCams_clicked()
+{
+
+}
+
+void ApplicationWindow::on_toolButton_help_clicked()
+{
+
 }

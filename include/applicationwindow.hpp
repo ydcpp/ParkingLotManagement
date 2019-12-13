@@ -13,6 +13,7 @@ class ParkYerim;
 class DatabaseManager;
 class User;
 class PricingPlan;
+class Logger;
 
 namespace Ui {
 class ApplicationWindow;
@@ -23,7 +24,7 @@ class ApplicationWindow : public QWidget
     Q_OBJECT
 
 public:
-    explicit ApplicationWindow(DatabaseManager* dbmanager, User* user, QWidget *parent = nullptr);
+    explicit ApplicationWindow(DatabaseManager* dbmanager, User* user, Logger* logger, QWidget *parent = nullptr);
     ~ApplicationWindow();
 
     void ClearVehicleInStats();
@@ -48,6 +49,14 @@ private slots:
 
     void on_toolButton_settings_clicked();
 
+    void on_toolButton_currentPlanDetails_clicked();
+
+    void on_toolButton_parkingSpots_clicked();
+
+    void on_toolButton_securityCams_clicked();
+
+    void on_toolButton_help_clicked();
+
 signals:
     float getPricePlanCalculation(qint64 minutes, bool isNight);
 
@@ -56,6 +65,7 @@ private:
     ParkYerim* m_parent = nullptr;
     DatabaseManager* m_dbmanager = nullptr;
     User* m_user = nullptr;
+    Logger* m_logger = nullptr;
     AdminPanel* m_window_admin = nullptr;
     ManualVehicleEntry* m_window_vehicle_in = nullptr;
     ManualVehicleExit* m_window_vehicle_out = nullptr;

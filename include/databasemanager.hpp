@@ -31,12 +31,15 @@ public:
     bool NewVehicleEntry(QString plate, QString model, QString type, QString color, QString& errmsg, qint32& vehicleID);
     bool NewPaymentEntry(qint32 vehicleID, bool isNight, QString& errmsg);
     bool GetBillingResult(QString plate, QString& errmsg, qint32& out_paymentID, qint64& out_minutes, qint32& out_vehicleID, QDateTime& out_entryDate, bool& isNight);
-    bool CompletePayment(qint32 vehicleID, QDateTime exitDate,float hours, float price, QString& errmsg, QString payerName = "");
+    bool CompletePayment(qint32 vehicleID, QDateTime exitDate, qint64 minutes, float price, QString& errmsg, QString payerName = "");
     bool GetVehicleInformation(qint32 vehicleID, QString& errmsg, QString& out_plate, QString& out_color, QString& out_type, QString& out_model);
     bool GetPricingPlans(QList<PricingPlan*>& out_plans, QString& errmsg);
     bool SetQueryModel_Employees(QSqlQueryModel* out_model, QString& errmsg);
     bool SetQueryModel_Managers(QSqlQueryModel* out_model, QString& errmsg);
     bool SetQUeryModel_Payments(QSqlQueryModel* out_model, QString& errmsg);
+    bool QueryMonthlyIncome(float& out_income, QString& errmsg);
+    bool QueryWeeklyIncome(float& out_income, QString& errmsg);
+    bool QueryDailyIncome(float& out_income, QString& errmsg);
 
     bool isConnected();
 
@@ -50,6 +53,15 @@ private:
 
     void getColorsFromDB();
     void getVehicleTypesFromDB();
+
+    struct PaymentInfo{
+        QDateTime date;
+        float price;
+        PaymentInfo(QDateTime d, float p){
+            date = d;
+            price = p;
+        }
+    };
 };
 
 #endif // DATABASEMANAGER_HPP

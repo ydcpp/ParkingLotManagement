@@ -1,6 +1,6 @@
 #include "logger.hpp"
 
-Logger::Logger(QObject *parent) : QObject(parent)
+Logger::Logger(QString filepath, QObject *parent) : QObject(parent)
 {
-
+    m_filepath = filepath;
 }

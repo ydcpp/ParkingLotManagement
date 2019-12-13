@@ -1,6 +1,10 @@
 #include "parkyerim.hpp"
 #include "ui_parkyerim.h"
 
+#include <QTime>
+#include <QDebug>
+
+
 ParkYerim::ParkYerim(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::ParkYerim)
@@ -9,6 +13,7 @@ ParkYerim::ParkYerim(QWidget *parent)
 
     // initialize database instance
     m_database = new DatabaseManager(m_databasepath);
+    m_logger = new Logger(m_logfilepath);
     if(!m_database->isConnected()){
         ui->label_status->setStyleSheet("color:red;");
         ui->label_status->setText("Veritabanına bağlanılamadı.");
@@ -19,7 +24,8 @@ ParkYerim::ParkYerim(QWidget *parent)
 ParkYerim::~ParkYerim()
 {
     delete ui;
-    if(m_database) delete m_database;
+    delete m_database;
+    delete m_logger;
     if(m_user) delete m_user;
 }
 
@@ -41,7 +47,7 @@ bool ParkYerim::validateLoginInfo()
 
 void ParkYerim::launchProgram()
 {
-    ApplicationWindow* appwindow = new ApplicationWindow(m_database,m_user);
+    ApplicationWindow* appwindow = new ApplicationWindow(m_database,m_user,m_logger);
     this->hide();
     appwindow->show();
 }
