@@ -26,16 +26,17 @@ void ManualVehicleExit::on_pushButton_query_clicked()
     if(validateForm()){
         QString errormsg;
         // query plate number,get vehicle id to m_vehicleID, get the info and calculate price
-        if(!m_dbmanager->getBillingResult(ui->lineEdit_plateQuery->text(),errormsg,m_paymentID,m_minute,m_vehicleID,m_entryDate)){
+        if(!m_dbmanager->GetBillingResult(ui->lineEdit_plateQuery->text(),errormsg,m_paymentID,m_minute,m_vehicleID,m_entryDate)){
             ui->label_result->setStyleSheet("color:red;");
             ui->label_result->setText(errormsg);
             return;
         }
-        if(!m_dbmanager->getVehicleInformation(m_vehicleID,errormsg,m_plate,m_color,m_type,m_model)){
+        if(!m_dbmanager->GetVehicleInformation(m_vehicleID,errormsg,m_plate,m_color,m_type,m_model)){
             ui->label_result->setStyleSheet("color:red;");
             ui->label_result->setText(errormsg);
             return;
         }
+        m_hours = m_minute/60.f;
         m_price = getCalculatedPrice(m_minute,m_currentPlan);
         // displaying the bill
         ui->lineEdit_plate->setText(m_plate);
@@ -55,7 +56,7 @@ void ManualVehicleExit::on_pushButton_completePayment_clicked()
 {
     ui->pushButton_completePayment->setEnabled(false);
     QString errormsg;
-    if(!m_dbmanager->completePayment(m_vehicleID,QDateTime::currentDateTime(),m_price,errormsg)){
+    if(!m_dbmanager->CompletePayment(m_vehicleID,QDateTime::currentDateTime(),m_hours,m_price,errormsg)){
         ui->label_result->setStyleSheet("color:red;");
         ui->label_result->setText(errormsg);
         ui->pushButton_completePayment->setEnabled(true);

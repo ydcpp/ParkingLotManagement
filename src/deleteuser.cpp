@@ -22,12 +22,12 @@ void DeleteUser::on_pushButton_delete_clicked()
 {
     QString errormsg;
     if(validateForm()){
-        if(!m_dbmanager->deleteUser(ui->lineEdit_deleteUsername->text(),errormsg)) ui->label_error->setText(errormsg);
+        if(!m_dbmanager->DeleteUser(ui->lineEdit_deleteUsername->text(),errormsg)) ui->label_error->setText(errormsg);
         else{
             this->setEnabled(false);
             ui->label_error->setStyleSheet("color:green;");
             ui->label_error->setText("Kullanıcı kaydı silindi.");
-            QTimer::singleShot(3000,this,&QDialog::close);
+            QTimer::singleShot(2000,this,&QDialog::close);
         }
     }
 }

@@ -15,7 +15,7 @@ DatabaseManager::~DatabaseManager()
     if(database.isOpen()) database.close();
 }
 
-bool DatabaseManager::validateUserLogin(QString username, QString password, QString& errormsg, User** currentUser)
+bool DatabaseManager::ValidateUserLogin(QString username, QString password, QString& errormsg, User** currentUser)
 {
     if(!isConnected()) return false;
     else{
@@ -70,7 +70,7 @@ bool DatabaseManager::validateUserLogin(QString username, QString password, QStr
     }
 }
 
-bool DatabaseManager::deleteUser(QString username, QString& errmsg)
+bool DatabaseManager::DeleteUser(QString username, QString& errmsg)
 {
     if(!database.open()) return false;
     QSqlQuery query;
@@ -95,7 +95,7 @@ bool DatabaseManager::deleteUser(QString username, QString& errmsg)
     }
 }
 
-bool DatabaseManager::createUser(QString firstname, QString lastname, QString phone, QString username, QString password, qint32 usertype, QString &errmsg)
+bool DatabaseManager::CreateUser(QString firstname, QString lastname, QString phone, QString username, QString password, qint32 usertype, QString &errmsg)
 {
     QSqlQuery query;
     query.prepare("insert into Person (FirstName,LastName) values(:fn,:ln)");
@@ -135,7 +135,7 @@ bool DatabaseManager::createUser(QString firstname, QString lastname, QString ph
     return true;
 }
 
-bool DatabaseManager::newVehicleEntry(QString plate, QString model, QString type, QString color, QString &errmsg, qint32 &vehicleID)
+bool DatabaseManager::NewVehicleEntry(QString plate, QString model, QString type, QString color, QString &errmsg, qint32 &vehicleID)
 {
     QSqlQuery query;
     // check if vehicle already exists
@@ -168,12 +168,11 @@ bool DatabaseManager::newVehicleEntry(QString plate, QString model, QString type
     }
 }
 
-bool DatabaseManager::newPaymentEntry(qint32 vehicleID, bool isNightPlan, QString& errmsg)
+bool DatabaseManager::NewPaymentEntry(qint32 vehicleID, QString& errmsg)
 {
     QSqlQuery query;
-    query.prepare("insert into Payments(fk_VehicleID,isNightPlan) values(:vid,:night)");
-    query.bindValue(":vid",vehicleID);
-    query.bindValue(":night",isNightPlan);
+    query.prepare("insert into Payments(fk_VehicleID) values(:id)");
+    query.bindValue(":id",vehicleID);
     if(!query.exec()){
         errmsg = query.lastError().text();
         return false;
@@ -181,7 +180,7 @@ bool DatabaseManager::newPaymentEntry(qint32 vehicleID, bool isNightPlan, QStrin
     return true;
 }
 
-bool DatabaseManager::getBillingResult(QString plate, QString& errmsg, qint32& out_paymentID, qint64& out_minutes, qint32& out_vehicleID, QDateTime& out_entryDate)
+bool DatabaseManager::GetBillingResult(QString plate, QString& errmsg, qint32& out_paymentID, qint64& out_minutes, qint32& out_vehicleID, QDateTime& out_entryDate)
 {
     QSqlQuery query;
     qint32 vehicleID;
@@ -217,7 +216,7 @@ bool DatabaseManager::getBillingResult(QString plate, QString& errmsg, qint32& o
     }
 }
 
-bool DatabaseManager::completePayment(qint32 vehicleID, QDateTime exitDate, float price, QString &errmsg, QString payerName)
+bool DatabaseManager::CompletePayment(qint32 vehicleID, QDateTime exitDate, float hours, float price, QString &errmsg, QString payerName)
 {
     qint32 paymentID;
     QSqlQuery query;
@@ -233,9 +232,10 @@ bool DatabaseManager::completePayment(qint32 vehicleID, QDateTime exitDate, floa
     }
     paymentID = query.value(0).toInt();
     query.clear();
-    query.prepare("update Payments set PayerName = :payer, Price = :price, PaymentDate = :date, isPaymentComplete = true where ID = :pid");
+    query.prepare("update Payments set PayerName = :payer, HoursParked = :hrs, Price = :price, PaymentDate = :date, isPaymentComplete = true where ID = :pid");
     query.bindValue(":pid",paymentID);
     query.bindValue(":payer",payerName);
+    query.bindValue(":hrs",QString().setNum(hours,'f',2));
     query.bindValue(":price",price);
     query.bindValue(":date",exitDate.toString("yyyy-MM-dd HH:mm:ss"));
     if(!query.exec()){
@@ -245,7 +245,7 @@ bool DatabaseManager::completePayment(qint32 vehicleID, QDateTime exitDate, floa
     return true;
 }
 
-bool DatabaseManager::getVehicleInformation(qint32 vehicleID, QString& errmsg, QString& out_plate, QString& out_color, QString& out_type, QString& out_model)
+bool DatabaseManager::GetVehicleInformation(qint32 vehicleID, QString& errmsg, QString& out_plate, QString& out_color, QString& out_type, QString& out_model)
 {
     QSqlQuery query;
     query.prepare("select Plate, fk_colorID, fk_vehicleTypeID, Model from Vehicles where ID = :id");
@@ -282,6 +282,82 @@ bool DatabaseManager::getVehicleInformation(qint32 vehicleID, QString& errmsg, Q
     }
     query.next();
     out_type = query.value(0).toString();
+    return true;
+}
+
+bool DatabaseManager::GetPricingPlans(QList<PricingPlan *> &out_plans, QString &errmsg)
+{
+    QSqlQuery query;
+    return true;
+}
+
+
+bool DatabaseManager::SetQueryModel_Employees(QSqlQueryModel* out_model, QString &errmsg)
+{
+    if(!out_model){
+        errmsg = "QueryModel is not initialized.";
+        return false;
+    }
+    if(!database.isOpen()){
+        errmsg = "Database is not connected.";
+        return false;
+    }
+    QSqlQuery query;
+    query.prepare("select Person.FirstName, Person.LastName, Phones.PhoneNumber, Accounts.Username, Accounts.DateCreated from Accounts"
+                  " left join Person on Person.ID = Accounts.fk_personID"
+                  " left join Phones on Person.ID = Phones.fk_PersonID"
+                  " where Accounts.AccountType = 1");
+    if(!query.exec()){
+        errmsg = query.lastError().text();
+        return false;
+    }
+    out_model->setQuery(query);
+    return true;
+}
+
+bool DatabaseManager::SetQueryModel_Managers(QSqlQueryModel *out_model, QString &errmsg)
+{
+    if(!out_model){
+        errmsg = "QueryModel is not initialized.";
+        return false;
+    }
+    if(!database.isOpen()){
+        errmsg = "Database is not connected.";
+        return false;
+    }
+    QSqlQuery query;
+    query.prepare("select Person.FirstName, Person.LastName, Phones.PhoneNumber, Accounts.Username, Accounts.DateCreated from Accounts"
+                  " left join Person on Person.ID = Accounts.fk_personID"
+                  " left join Phones on Person.ID = Phones.fk_PersonID"
+                  " where Accounts.AccountType = 2 or Accounts.AccountType = 3");
+    if(!query.exec()){
+        errmsg = query.lastError().text();
+        return false;
+    }
+    out_model->setQuery(query);
+    return true;
+}
+
+bool DatabaseManager::SetQUeryModel_Payments(QSqlQueryModel *out_model, QString &errmsg)
+{
+    if(!out_model){
+        errmsg = "QueryModel is not initialized.";
+        return false;
+    }
+    if(!database.isOpen()){
+        errmsg = "Database is not connected.";
+        return false;
+    }
+    QSqlQuery query;
+    query.prepare("select Payments.ID, PricingPlans.PlanName, Vehicles.Plate, Payments.VehicleEntryDate, Payments.PaymentDate, Payments.HoursParked, Payments.Price"
+                  " from Payments left join Vehicles on Vehicles.ID = Payments.fk_VehicleID"
+                  " left join PricingPlans on PricingPlans.ID = Payments.fk_PricingPlanID"
+                  " where Payments.isPaymentComplete = true");
+    if(!query.exec()){
+        errmsg = query.lastError().text();
+        return false;
+    }
+    out_model->setQuery(query);
     return true;
 }
 
@@ -324,6 +400,35 @@ void DatabaseManager::getVehicleTypesFromDB()
 }
 
 
+
+/*
+bool DatabaseManager::SetQueryModel_DevamEdenHizmetler(QSqlQueryModel* out_model)
+{
+    if(!out_model) return false;
+    if(!database.isOpen()) return false;
+    QSqlQuery query(database);
+    query.prepare("SELECT"
+                 " Siparisler.ID AS 'ID',"
+                 " GondereninAdiSoyadi AS 'GÖNDERİCİ',"
+                 " GondereninTelefonu AS 'GÖNDERİCİ TEL',"
+                 " AlicininAdiSoyadi AS 'ALICI',"
+                 " Adres AS 'TESLİMAT ADRESİ',"
+                 " Sehirler.SehirAdi AS 'ŞEHİR',"
+                 " SiparisTarihi AS 'SİPARİŞ TARİHİ',"
+                 " TeslimTarihi AS 'TESLİM TARİHİ',"
+                 " (Accounts.Adi || ' ' || Accounts.Soyadi) AS 'TESLİMAT ELEMANI',"
+                 " Accounts.ID AS 'ELEMAN ID'"
+                 " FROM Siparisler "
+                 " INNER JOIN Accounts ON Siparisler.TeslimatElemanID = Accounts.ID"
+                 " INNER JOIN Sehirler ON Siparisler.SehirID = Sehirler.PlakaNo"
+                 " WHERE Siparisler.Tamamlandi = 0");
+    if(!query.exec()) return false;
+    else{
+        out_model->setQuery(query);
+        return true;
+    }
+}
+*/
 
 
 

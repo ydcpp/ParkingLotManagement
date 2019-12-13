@@ -4,14 +4,15 @@
 #include "adminpanel.hpp"
 #include "manualvehicleentry.hpp"
 #include "manualvehicleexit.hpp"
+#include "settingspanel.hpp"
 
 #include <QWidget>
 #include <QMap>
 
+class ParkYerim;
 class DatabaseManager;
 class User;
-class ParkYerim;
-
+class PricingPlan;
 
 namespace Ui {
 class ApplicationWindow;
@@ -58,6 +59,8 @@ private:
     AdminPanel* m_window_admin = nullptr;
     ManualVehicleEntry* m_window_vehicle_in = nullptr;
     ManualVehicleExit* m_window_vehicle_out = nullptr;
+    SettingsPanel* m_window_settings = nullptr;
+    QList<PricingPlan*> m_pricingPlans;
     bool m_isNight = true;
     float m_pricePerHour = 10.0f;
     float m_nightPlanMultiplier = 1.5f;

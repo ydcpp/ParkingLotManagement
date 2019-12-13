@@ -47,9 +47,9 @@
       <property name="geometry">
        <rect>
         <x>220</x>
-        <y>10</y>
+        <y>20</y>
         <width>641</width>
-        <height>391</height>
+        <height>381</height>
        </rect>
       </property>
      </widget>
@@ -205,6 +205,28 @@
         <string>Toplam Gelirleri Listele</string>
        </property>
       </widget>
+     </widget>
+     <widget class="QLabel" name="label_tableheader">
+      <property name="geometry">
+       <rect>
+        <x>380</x>
+        <y>-4</y>
+        <width>331</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
      </widget>
     </widget>
    </item>

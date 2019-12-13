@@ -30,11 +30,11 @@ void ManualVehicleEntry::on_pushButton_clicked()
     if(validateForm()){
         QString errormsg;
         qint32 vehicleid;
-        if(!m_dbmanager->newVehicleEntry(ui->lineEdit_plate->text(),ui->lineEdit_model->text(),ui->comboBox_types->currentText(),ui->comboBox_colors->currentText(),errormsg,vehicleid)){
+        if(!m_dbmanager->NewVehicleEntry(ui->lineEdit_plate->text(),ui->lineEdit_model->text(),ui->comboBox_types->currentText(),ui->comboBox_colors->currentText(),errormsg,vehicleid)){
             ui->label_error->setText(errormsg);
             return;
         }
-        if(!m_dbmanager->newPaymentEntry(vehicleid,m_nightplan,errormsg)){
+        if(!m_dbmanager->NewPaymentEntry(vehicleid,errormsg)){
             ui->label_error->setText(errormsg);
             return;
         }

@@ -1,6 +1,8 @@
 #include "adminpanel.hpp"
 #include "ui_adminpanel.h"
 
+#include "databasemanager.hpp"
+
 #include <QMessageBox>
 #include <QKeyEvent>
 #include <QTimer>
@@ -14,11 +16,15 @@ AdminPanel::AdminPanel(DatabaseManager* dbmanager, QWidget *parent) :
     this->setAttribute( Qt::WA_DeleteOnClose, true );
     ui->label_status->setText("");
     m_dbmanager = dbmanager;
+    m_model = new QSqlQueryModel();
+    m_proxymodel = new QSortFilterProxyModel();
 }
 
 AdminPanel::~AdminPanel()
 {
     delete ui;
+    delete m_model;
+    delete m_proxymodel;
 }
 
 void AdminPanel::keyPressEvent(QKeyEvent* e)
@@ -35,12 +41,28 @@ void AdminPanel::on_pushButton_close_clicked()
 
 void AdminPanel::on_pushButton_employees_clicked()
 {
-
+    ui->label_tableheader->setText("");
+    QString errormsg;
+    if(!m_dbmanager->SetQueryModel_Employees(m_model,errormsg)){
+        statusMessageError(errormsg,3000);
+        return;
+    }
+    m_proxymodel->setSourceModel(m_model);
+    ui->tableView->setModel(m_proxymodel);
+    ui->label_tableheader->setText("Çalışanların Listesi");
 }
 
 void AdminPanel::on_pushButton_managers_clicked()
 {
-
+    ui->label_tableheader->setText("");
+    QString errormsg;
+    if(!m_dbmanager->SetQueryModel_Managers(m_model,errormsg)){
+        statusMessageError(errormsg,3000);
+        return;
+    }
+    m_proxymodel->setSourceModel(m_model);
+    ui->tableView->setModel(m_proxymodel);
+    ui->label_tableheader->setText("Yöneticilerin Listesi");
 }
 
 void AdminPanel::on_pushButton_newUser_clicked()
@@ -80,4 +102,17 @@ void AdminPanel::on_pushButton_incomes_clicked()
 {
     window_toplamGelirler = new TotalIncomes(m_dbmanager,this);
     window_toplamGelirler->exec();
+}
+
+void AdminPanel::on_pushButton_payments_clicked()
+{
+    ui->label_tableheader->setText("");
+    QString errormsg;
+    if(!m_dbmanager->SetQUeryModel_Payments(m_model,errormsg)){
+        statusMessageError(errormsg,3000);
+        return;
+    }
+    m_proxymodel->setSourceModel(m_model);
+    ui->tableView->setModel(m_proxymodel);
+    ui->label_tableheader->setText("Yapılan Tüm Ödemelerin Listesi");
 }

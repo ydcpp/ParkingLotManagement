@@ -37,6 +37,7 @@ private:
     qint32 m_vehicleID;
     qint32 m_paymentID;
     qint64 m_minute;
+    float m_hours;
     QDateTime m_entryDate;
     QString m_currentPlan;
     float m_price;

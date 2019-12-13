@@ -33,7 +33,7 @@ bool ParkYerim::validateLoginInfo()
     QString username = ui->lineEdit_user->text();
     QString password = ui->lineEdit_password->text();
     QString errormessage;
-    if(!m_database->validateUserLogin(username,password,errormessage, &m_user)){
+    if(!m_database->ValidateUserLogin(username,password,errormessage, &m_user)){
         ui->label_status->setText(errormessage);
         return false;
     }else return true;

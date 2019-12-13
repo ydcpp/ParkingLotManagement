@@ -6,6 +6,7 @@
 
 #include "parkyerim.hpp"
 
+
 ApplicationWindow::ApplicationWindow(DatabaseManager* dbmanager, User* user, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ApplicationWindow)
@@ -16,7 +17,6 @@ ApplicationWindow::ApplicationWindow(DatabaseManager* dbmanager, User* user, QWi
     m_parent = static_cast<ParkYerim*>(parent);
     m_dbmanager = dbmanager;
     m_user = user;
-
     initializeAssetPaths();
     setupIcons();
     setupCustomComponents();
@@ -154,6 +154,10 @@ void ApplicationWindow::setupCustomComponents()
     // setting up admin panel button
     ui->label_user->setText(m_user->getFirstName() + " " + m_user->getLastName());
     if(m_user->getUserType() < 2) ui->toolButton_adminpanel->setEnabled(false);
+
+    // setting up pricing plans
+    QString errmsg;
+    if(!m_dbmanager->GetPricingPlans(m_pricingPlans,errmsg)) ui->label_status->setText(errmsg);
 }
 
 void ApplicationWindow::on_toolButton_adminpanel_clicked()
@@ -164,5 +168,6 @@ void ApplicationWindow::on_toolButton_adminpanel_clicked()
 
 void ApplicationWindow::on_toolButton_settings_clicked()
 {
-
+    m_window_settings = new SettingsPanel(m_dbmanager,m_pricingPlans,this);
+    m_window_settings->exec();
 }

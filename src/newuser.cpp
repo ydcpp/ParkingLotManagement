@@ -25,19 +25,22 @@ void NewUser::on_pushButton_submit_clicked()
 
     if(validateForm()){
         QString errormsg;
-        //TODO veritabanına yeni kullanıcıyı ekle
-        m_dbmanager->createUser(ui->lineEdit_firstname->text(),
-                                ui->lineEdit_lastname->text(),
-                                ui->lineEdit_phone->text(),
-                                ui->lineEdit_username->text(),
-                                ui->lineEdit_password->text(),
-                                ui->comboBox_usertypes->currentIndex(),
-                                errormsg);
-        ui->pushButton_submit->setEnabled(false);
-        ui->pushButton_cancel->setEnabled(false);
-        ui->label_status->setStyleSheet("color:green;");
-        ui->label_status->setText("Yeni kullanıcı kaydı eklendi.");
-        QTimer::singleShot(3000,this,&QDialog::close);
+        if(m_dbmanager->CreateUser(ui->lineEdit_firstname->text(),
+                                    ui->lineEdit_lastname->text(),
+                                    ui->lineEdit_phone->text(),
+                                    ui->lineEdit_username->text(),
+                                    ui->lineEdit_password->text(),
+                                    ui->comboBox_usertypes->currentIndex(),
+                                    errormsg)){
+            ui->pushButton_submit->setEnabled(false);
+            ui->pushButton_cancel->setEnabled(false);
+            ui->label_status->setStyleSheet("color:green;");
+            ui->label_status->setText("Yeni kullanıcı kaydı eklendi.");
+            QTimer::singleShot(2000,this,&QDialog::close);
+        }else{
+            ui->label_status->setStyleSheet("color:red;");
+            ui->label_status->setText(errormsg);
+        }
     }
 }
 

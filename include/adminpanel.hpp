@@ -9,6 +9,8 @@
 
 
 class DatabaseManager;
+class QSqlQueryModel;
+class QSortFilterProxyModel;
 
 namespace Ui {
 class AdminPanel;
@@ -38,6 +40,8 @@ private slots:
 
     void on_pushButton_incomes_clicked();
 
+    void on_pushButton_payments_clicked();
+
 protected slots:
 
     void updateStatusText(QString text, qint32 milliseconds);
@@ -50,6 +54,8 @@ private:
     NewUser* window_yenikullanici = nullptr;
     DeleteUser* window_kullaniciSil = nullptr;
     TotalIncomes* window_toplamGelirler = nullptr;
+    QSqlQueryModel* m_model = nullptr;
+    QSortFilterProxyModel* m_proxymodel = nullptr;
 };
 
 #endif // ADMINPANEL_HPP
