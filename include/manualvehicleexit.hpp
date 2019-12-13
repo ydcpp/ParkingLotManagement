@@ -19,7 +19,7 @@ public:
     ~ManualVehicleExit();
 
 signals:
-    float getCalculatedPrice(qint64 minutes, QString& currentPlan);
+    float getCalculatedPrice(qint64 minutes,bool isNight, QString& currentPlan);
 
 private slots:
     void on_pushButton_query_clicked();

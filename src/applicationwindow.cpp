@@ -27,7 +27,7 @@ ApplicationWindow::~ApplicationWindow()
     delete ui;
 }
 
-void ApplicationWindow::clearVehicleInStats()
+void ApplicationWindow::ClearVehicleInStats()
 {
     ui->lineEdit_in_plate->setText("");
     ui->lineEdit_in_color->setText("");
@@ -35,7 +35,7 @@ void ApplicationWindow::clearVehicleInStats()
     ui->lineEdit_in_type->setText("");
 }
 
-void ApplicationWindow::clearVehicleOutStats()
+void ApplicationWindow::ClearVehicleOutStats()
 {
     ui->lineEdit_out_plate->setText("");
     ui->lineEdit_out_color->setText("");
@@ -47,48 +47,29 @@ void ApplicationWindow::clearVehicleOutStats()
     ui->dateTimeEdit_out->setDateTime(QDateTime(QDate(2000,1,1),QTime(0,0)));
 }
 
-QMap<QString, QString> ApplicationWindow::getAssetPaths()
+QMap<QString, QString> ApplicationWindow::GetAssetPaths()
 {
     return m_assetPaths;
 }
 
-DatabaseManager *ApplicationWindow::getDBManager()
+DatabaseManager *ApplicationWindow::GetDBManager()
 {
     return m_dbmanager;
 }
 
-float ApplicationWindow::calculatePrice(qint64 minutes, QString& currentPlan)
+float ApplicationWindow::calculatePrice(qint64 minutes, bool isNight, QString& currentplan)
 {
-    float hour = float(minutes)/60.0f;
-    if(m_isNight){
-        // calculate price in night plan
-        currentPlan = "GECE";
-        return (m_pricePerHour*hour*m_nightPlanMultiplier);
-    }else{
-        // calculate price in day plan
-        currentPlan = "GÜNDÜZ";
-        return (m_pricePerHour*hour);
+    if(currentPricingPlan){
+        if(isNight) currentplan = currentPricingPlan->GetPlanName() + " (GECE)";
+        else currentplan = currentPricingPlan->GetPlanName() + " (GÜNDÜZ)";
     }
+    return this->getPricePlanCalculation(minutes,isNight);
 }
 
-float ApplicationWindow::getPricePerHour() const
-{
-    return m_pricePerHour;
-}
 
-float ApplicationWindow::getNightPlanMultiplier() const
+QList<PricingPlan *> ApplicationWindow::GetPricingPlanList()
 {
-    return m_nightPlanMultiplier;
-}
-
-void ApplicationWindow::setPricePerHour(float value)
-{
-    m_pricePerHour = value;
-}
-
-void ApplicationWindow::setNightPlanMultiplier(float value)
-{
-    m_nightPlanMultiplier = value;
+    return m_pricingPlans;
 }
 
 void ApplicationWindow::on_toolButton_quit_clicked()
@@ -158,6 +139,18 @@ void ApplicationWindow::setupCustomComponents()
     // setting up pricing plans
     QString errmsg;
     if(!m_dbmanager->GetPricingPlans(m_pricingPlans,errmsg)) ui->label_status->setText(errmsg);
+    else{
+        for(PricingPlan* plan : m_pricingPlans){
+            if(m_currentPlanID == plan->GetPlanID()){
+                currentPricingPlan = plan;
+                break;
+            }
+        }
+        if(!currentPricingPlan) ui->label_status->setText("Geçerli ücretlendirme planı veritabanında bulunamadı.");
+        else{
+            connect(this,&ApplicationWindow::getPricePlanCalculation,currentPricingPlan,&PricingPlan::CalculatePrice);
+        }
+    }
 }
 
 void ApplicationWindow::on_toolButton_adminpanel_clicked()

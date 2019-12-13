@@ -143,7 +143,7 @@ border-color : red;
        </rect>
       </property>
       <property name="text">
-       <string>PushButton</string>
+       <string>Geçerli Fiyat Tarifesi Detaylarını Göster</string>
       </property>
      </widget>
      <widget class="QPushButton" name="pushButton_2">
@@ -156,7 +156,7 @@ border-color : red;
        </rect>
       </property>
       <property name="text">
-       <string>PushButton</string>
+       <string>Park Alanlarını Göster</string>
       </property>
      </widget>
      <widget class="QPushButton" name="pushButton_3">
@@ -169,7 +169,7 @@ border-color : red;
        </rect>
       </property>
       <property name="text">
-       <string>PushButton</string>
+       <string>Tüm Güvenlik Kameralarını Görüntüle</string>
       </property>
      </widget>
      <widget class="QPushButton" name="pushButton_4">
@@ -182,7 +182,7 @@ border-color : red;
        </rect>
       </property>
       <property name="text">
-       <string>PushButton</string>
+       <string>İletişim / Yardım</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_20">
@@ -308,7 +308,7 @@ border-color : red;
        </rect>
       </property>
       <property name="text">
-       <string>STANDART</string>
+       <string>NULL</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>

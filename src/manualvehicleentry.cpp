@@ -34,7 +34,7 @@ void ManualVehicleEntry::on_pushButton_clicked()
             ui->label_error->setText(errormsg);
             return;
         }
-        if(!m_dbmanager->NewPaymentEntry(vehicleid,errormsg)){
+        if(!m_dbmanager->NewPaymentEntry(vehicleid,m_nightplan,errormsg)){
             ui->label_error->setText(errormsg);
             return;
         }

@@ -26,18 +26,15 @@ public:
     explicit ApplicationWindow(DatabaseManager* dbmanager, User* user, QWidget *parent = nullptr);
     ~ApplicationWindow();
 
-    void clearVehicleInStats();
-    void clearVehicleOutStats();
-    QMap<QString, QString> getAssetPaths();
-    DatabaseManager* getDBManager();
+    void ClearVehicleInStats();
+    void ClearVehicleOutStats();
+    QMap<QString, QString> GetAssetPaths();
+    DatabaseManager* GetDBManager();
 
-    float getPricePerHour() const;
-    float getNightPlanMultiplier() const;
-    void setPricePerHour(float value);
-    void setNightPlanMultiplier(float value);
+    QList<PricingPlan*> GetPricingPlanList();
 
 public slots:
-    float calculatePrice(qint64 minutes, QString& currentPlan);
+    float calculatePrice(qint64 minutes, bool isNight, QString& currentplan);
 
 private slots:
     void on_toolButton_quit_clicked();
@@ -51,6 +48,9 @@ private slots:
 
     void on_toolButton_settings_clicked();
 
+signals:
+    float getPricePlanCalculation(qint64 minutes, bool isNight);
+
 private:
     Ui::ApplicationWindow *ui;
     ParkYerim* m_parent = nullptr;
@@ -61,9 +61,9 @@ private:
     ManualVehicleExit* m_window_vehicle_out = nullptr;
     SettingsPanel* m_window_settings = nullptr;
     QList<PricingPlan*> m_pricingPlans;
-    bool m_isNight = true;
-    float m_pricePerHour = 10.0f;
-    float m_nightPlanMultiplier = 1.5f;
+    qint32 m_currentPlanID = 0;
+    PricingPlan* currentPricingPlan = nullptr;
+    bool m_isNight = false;
 
     void initializeAssetPaths();
     void setupIcons();

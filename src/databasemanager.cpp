@@ -168,11 +168,12 @@ bool DatabaseManager::NewVehicleEntry(QString plate, QString model, QString type
     }
 }
 
-bool DatabaseManager::NewPaymentEntry(qint32 vehicleID, QString& errmsg)
+bool DatabaseManager::NewPaymentEntry(qint32 vehicleID, bool isNight, QString& errmsg)
 {
     QSqlQuery query;
-    query.prepare("insert into Payments(fk_VehicleID) values(:id)");
+    query.prepare("insert into Payments(fk_VehicleID, isNightPlan) values(:id, :night)");
     query.bindValue(":id",vehicleID);
+    query.bindValue(":night",isNight);
     if(!query.exec()){
         errmsg = query.lastError().text();
         return false;
@@ -180,7 +181,7 @@ bool DatabaseManager::NewPaymentEntry(qint32 vehicleID, QString& errmsg)
     return true;
 }
 
-bool DatabaseManager::GetBillingResult(QString plate, QString& errmsg, qint32& out_paymentID, qint64& out_minutes, qint32& out_vehicleID, QDateTime& out_entryDate)
+bool DatabaseManager::GetBillingResult(QString plate, QString& errmsg, qint32& out_paymentID, qint64& out_minutes, qint32& out_vehicleID, QDateTime& out_entryDate, bool& isNight)
 {
     QSqlQuery query;
     qint32 vehicleID;
@@ -198,7 +199,7 @@ bool DatabaseManager::GetBillingResult(QString plate, QString& errmsg, qint32& o
     out_vehicleID = vehicleID;
     QDateTime entryDate;
     query.clear();
-    query.prepare("select ID, VehicleEntryDate from Payments where fk_VehicleID = :vid and isPaymentComplete = false");
+    query.prepare("select ID, VehicleEntryDate, isNightPlan from Payments where fk_VehicleID = :vid and isPaymentComplete = false");
     query.bindValue(":vid",vehicleID);
     if(!query.exec()){
         errmsg = query.lastError().text();
@@ -210,6 +211,7 @@ bool DatabaseManager::GetBillingResult(QString plate, QString& errmsg, qint32& o
     }else{
         out_paymentID = query.value(0).toInt();
         entryDate = query.value(1).toDateTime();
+        isNight = query.value(2).toBool();
         out_entryDate = entryDate;
         out_minutes = entryDate.secsTo(QDateTime::currentDateTime())/60;
         return true;
@@ -288,6 +290,28 @@ bool DatabaseManager::GetVehicleInformation(qint32 vehicleID, QString& errmsg, Q
 bool DatabaseManager::GetPricingPlans(QList<PricingPlan *> &out_plans, QString &errmsg)
 {
     QSqlQuery query;
+    query.prepare("select ID, PlanName, PricePerHour, m_NightTime, m_LessThanTwo, m_TwoThree, m_ThreeFour, m_FourFive, m_FiveSix, m_SixSeven, m_SevenEight, m_EightTen, m_TenTwelve, m_MoreThanTwelve"
+                  " from PricingPlans");
+    if(!query.exec()){
+        errmsg = query.lastError().text();
+        return false;
+    }
+    while(query.next()){
+        out_plans.append(new PricingPlan(query.value(0).toInt(),
+                                         query.value(1).toString(),
+                                         query.value(2).toFloat(),
+                                         query.value(3).toFloat(),
+                                         query.value(4).toFloat(),
+                                         query.value(5).toFloat(),
+                                         query.value(6).toFloat(),
+                                         query.value(7).toFloat(),
+                                         query.value(8).toFloat(),
+                                         query.value(9).toFloat(),
+                                         query.value(10).toFloat(),
+                                         query.value(11).toFloat(),
+                                         query.value(12).toFloat(),
+                                         query.value(13).toFloat()));
+    }
     return true;
 }
 

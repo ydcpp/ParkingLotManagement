@@ -26,7 +26,8 @@ void ManualVehicleExit::on_pushButton_query_clicked()
     if(validateForm()){
         QString errormsg;
         // query plate number,get vehicle id to m_vehicleID, get the info and calculate price
-        if(!m_dbmanager->GetBillingResult(ui->lineEdit_plateQuery->text(),errormsg,m_paymentID,m_minute,m_vehicleID,m_entryDate)){
+        bool isNight;
+        if(!m_dbmanager->GetBillingResult(ui->lineEdit_plateQuery->text(),errormsg,m_paymentID,m_minute,m_vehicleID,m_entryDate,isNight)){
             ui->label_result->setStyleSheet("color:red;");
             ui->label_result->setText(errormsg);
             return;
@@ -37,7 +38,7 @@ void ManualVehicleExit::on_pushButton_query_clicked()
             return;
         }
         m_hours = m_minute/60.f;
-        m_price = getCalculatedPrice(m_minute,m_currentPlan);
+        m_price = getCalculatedPrice(m_minute,isNight,m_currentPlan);
         // displaying the bill
         ui->lineEdit_plate->setText(m_plate);
         ui->lineEdit_color->setText(m_color);
