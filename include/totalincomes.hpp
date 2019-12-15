@@ -16,7 +16,7 @@ class TotalIncomes : public QDialog
     Q_OBJECT
 
 public:
-    explicit TotalIncomes(DatabaseManager* dbmanager, QWidget *parent = nullptr);
+    explicit TotalIncomes(DatabaseManager* dbmanager, QWidget *parent);
     ~TotalIncomes();
 
     float GetMonthlyIncomeAmount();

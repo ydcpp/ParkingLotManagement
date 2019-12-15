@@ -29,8 +29,8 @@ public:
     bool DeleteUser(QString username, QString& errmsg);
     bool CreateUser(QString firstname, QString lastname, QString phone, QString username, QString password, qint32 usertype, QString& errmsg);
     bool NewVehicleEntry(QString plate, QString model, QString type, QString color, QString& errmsg, qint32& vehicleID);
-    bool NewPaymentEntry(qint32 vehicleID, bool isNight, QString& errmsg);
-    bool GetBillingResult(QString plate, QString& errmsg, qint32& out_paymentID, qint64& out_minutes, qint32& out_vehicleID, QDateTime& out_entryDate, bool& isNight);
+    bool NewPaymentEntry(qint32 vehicleID, QString& errmsg);
+    bool GetBillingResult(QString plate, QString& errmsg, qint32& out_paymentID, qint64& out_minutes, qint32& out_vehicleID, QDateTime& out_entryDate);
     bool CompletePayment(qint32 vehicleID, QDateTime exitDate, qint64 minutes, float price, QString& errmsg, QString payerName = "");
     bool GetVehicleInformation(qint32 vehicleID, QString& errmsg, QString& out_plate, QString& out_color, QString& out_type, QString& out_model);
     bool GetPricingPlans(QList<PricingPlan*>& out_plans, QString& errmsg);
@@ -40,6 +40,8 @@ public:
     bool QueryMonthlyIncome(float& out_income, QString& errmsg);
     bool QueryWeeklyIncome(float& out_income, QString& errmsg);
     bool QueryDailyIncome(float& out_income, QString& errmsg);
+    bool SetQueryModel_TotalPaymentInfo(qint32 vehicleID, QSqlQueryModel* out_model, QString& errmsg);
+    bool GetVehicleInformationByPlate(QString plate, qint32& out_vehicleID, QString& out_color, QString& out_type, QString& out_model, QString& errmsg);
 
     bool isConnected();
 

@@ -265,7 +265,7 @@ border-color : red;
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QToolButton" name="toolButton_currentPlanDetails">
+     <widget class="QPushButton" name="pushButton_search">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -274,11 +274,24 @@ border-color : red;
         <height>41</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
       <property name="text">
-       <string>Geçerli Fiyat Tarifesi Detaylarını Göster</string>
+       <string>PLAKA VE FATURA BİLGİSİ SORGULA</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>../assets/images/search.png</normaloff>../assets/images/search.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>24</width>
+        <height>24</height>
+       </size>
       </property>
      </widget>
-     <widget class="QToolButton" name="toolButton_parkingSpots">
+     <widget class="QPushButton" name="pushButton_currentPlanDetails">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -288,10 +301,23 @@ border-color : red;
        </rect>
       </property>
       <property name="text">
-       <string>Park Alanlarını Göster</string>
+       <string>GEÇERLİ FİYAT TARİFESİ DETAYLARI</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>../assets/images/list.png</normaloff>../assets/images/list.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>24</width>
+        <height>24</height>
+       </size>
       </property>
      </widget>
-     <widget class="QToolButton" name="toolButton_securityCams">
+     <widget class="QPushButton" name="pushButton_parkingSpots">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -301,10 +327,23 @@ border-color : red;
        </rect>
       </property>
       <property name="text">
-       <string>Tüm Güvenlik Kameralarını Görüntüle</string>
+       <string>       PARK ALANLARINI GÖSTER       </string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>../assets/images/parking-icon.png</normaloff>../assets/images/parking-icon.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
       </property>
      </widget>
-     <widget class="QToolButton" name="toolButton_help">
+     <widget class="QPushButton" name="pushButton_securityCams">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -314,7 +353,17 @@ border-color : red;
        </rect>
       </property>
       <property name="text">
-       <string>İletişim / Yardım</string>
+       <string>   TÜM KAMERALARI GÖRÜNTÜLE   </string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>../assets/images/security-camera.png</normaloff>../assets/images/security-camera.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>24</width>
+        <height>24</height>
+       </size>
       </property>
      </widget>
     </widget>

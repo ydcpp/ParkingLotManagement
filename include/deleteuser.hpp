@@ -16,7 +16,7 @@ class DeleteUser : public QDialog
     Q_OBJECT
 
 public:
-    explicit DeleteUser(DatabaseManager* dbmanager, QWidget *parent = nullptr);
+    explicit DeleteUser(DatabaseManager* dbmanager, QWidget *parent);
     ~DeleteUser();
 
 private slots:

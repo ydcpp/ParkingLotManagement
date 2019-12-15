@@ -15,8 +15,11 @@ class ManualVehicleEntry : public QDialog
     Q_OBJECT
 
 public:
-    explicit ManualVehicleEntry(DatabaseManager* dbmanager, bool isNightPlan, QWidget *parent = nullptr);
+    explicit ManualVehicleEntry(DatabaseManager* dbmanager, QWidget *parent);
     ~ManualVehicleEntry();
+
+signals:
+    void decreaseCount();
 
 private slots:
     void on_pushButton_clicked();
@@ -24,7 +27,6 @@ private slots:
 private:
     Ui::ManualVehicleEntry *ui;
     DatabaseManager* m_dbmanager;
-    bool m_nightplan = false;
 
     bool validateForm();
 };

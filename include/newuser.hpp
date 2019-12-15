@@ -16,7 +16,7 @@ class NewUser : public QDialog
     Q_OBJECT
 
 public:
-    explicit NewUser(DatabaseManager* dbmanager, QWidget *parent = nullptr);
+    explicit NewUser(DatabaseManager* dbmanager, QWidget *parent);
     ~NewUser();
 
 

@@ -5,12 +5,11 @@ PricingPlan::PricingPlan(QObject *parent) : QObject(parent)
 
 }
 
-PricingPlan::PricingPlan(qint32 id, QString name, float pricePerHour, float nightTimeMultiplier, float lessthantwo, float twothree, float threefour, float fourfive, float fivesix, float sixseven, float seveneight, float eightten, float tentwelve, float morethantwelve)
+PricingPlan::PricingPlan(qint32 id, QString name, float pricePerHour, float lessthantwo, float twothree, float threefour, float fourfive, float fivesix, float sixseven, float seveneight, float eightten, float tentwelve, float morethantwelve)
 {
     m_planID = id;
     m_planName = name;
     m_pricePerHour = pricePerHour;
-    m_NightTimeMultiplier = nightTimeMultiplier;
     m_lessThanTwo = lessthantwo;
     m_TwoThree = twothree;
     m_ThreeFour = threefour;
@@ -38,46 +37,51 @@ float PricingPlan::GetPricePerHour() const
     return m_pricePerHour;
 }
 
-float PricingPlan::GetNightTimeMultiplier() const
+void PricingPlan::GetPricesPerHour(float &lessThanTwo, float &twoThree, float &threeFour, float &fourFive, float &fiveSix, float &sixSeven, float &sevenEight, float &eightTen, float &tenTwelve, float &moreThanTwelve)
 {
-    return m_NightTimeMultiplier;
+    lessThanTwo     = m_pricePerHour*m_lessThanTwo;
+    twoThree        = m_pricePerHour*m_TwoThree;
+    threeFour       = m_pricePerHour*m_ThreeFour;
+    fourFive        = m_pricePerHour*m_FourFive;
+    fiveSix         = m_pricePerHour*m_FiveSix;
+    sixSeven        = m_pricePerHour*m_SixSeven;
+    sevenEight      = m_pricePerHour*m_SevenEight;
+    eightTen        = m_pricePerHour*m_EightTen;
+    tenTwelve       = m_pricePerHour*m_TenTwelve;
+    moreThanTwelve  = m_pricePerHour*m_moreThanTwelve;
 }
 
-float PricingPlan::CalculatePrice(qint64 minutes, bool isNight)
+float PricingPlan::CalculatePrice(qint64 minutes)
 {
-    float night;
-    if(isNight) night = m_NightTimeMultiplier;
-    else night = 1.0f;
-
     int hour = int(minutes)/60;
     if(hour < 2){
-        return (float(minutes)/60.0f*night*m_pricePerHour*m_lessThanTwo);
+        return (float(minutes)/60.0f*m_pricePerHour*m_lessThanTwo);
     }else if(hour >= 12){
-        return (float(minutes)/60.0f*night*m_pricePerHour*m_moreThanTwelve);
+        return (float(minutes)/60.0f*m_pricePerHour*m_moreThanTwelve);
     }else{
         switch(hour){
         case 2:
-            return (float(minutes)/60.0f*night*m_pricePerHour*m_TwoThree);
+            return (float(minutes)/60.0f*m_pricePerHour*m_TwoThree);
         case 3:
-            return (float(minutes)/60.0f*night*m_pricePerHour*m_ThreeFour);
+            return (float(minutes)/60.0f*m_pricePerHour*m_ThreeFour);
         case 4:
-            return (float(minutes)/60.0f*night*m_pricePerHour*m_FourFive);
+            return (float(minutes)/60.0f*m_pricePerHour*m_FourFive);
         case 5:
-            return (float(minutes)/60.0f*night*m_pricePerHour*m_FiveSix);
+            return (float(minutes)/60.0f*m_pricePerHour*m_FiveSix);
         case 6:
-            return (float(minutes)/60.0f*night*m_pricePerHour*m_SixSeven);
+            return (float(minutes)/60.0f*m_pricePerHour*m_SixSeven);
         case 7:
-            return (float(minutes)/60.0f*night*m_pricePerHour*m_SevenEight);
+            return (float(minutes)/60.0f*m_pricePerHour*m_SevenEight);
         case 8:
-            return (float(minutes)/60.0f*night*m_pricePerHour*m_EightTen);
+            return (float(minutes)/60.0f*m_pricePerHour*m_EightTen);
         case 9:
-            return (float(minutes)/60.0f*night*m_pricePerHour*m_EightTen);
+            return (float(minutes)/60.0f*m_pricePerHour*m_EightTen);
         case 10:
-            return (float(minutes)/60.0f*night*m_pricePerHour*m_TenTwelve);
+            return (float(minutes)/60.0f*m_pricePerHour*m_TenTwelve);
         case 11:
-            return (float(minutes)/60.0f*night*m_pricePerHour*m_TenTwelve);
+            return (float(minutes)/60.0f*m_pricePerHour*m_TenTwelve);
         default:
-            return (float(minutes)/60.0f*night*m_pricePerHour);
+            return (float(minutes)/60.0f*m_pricePerHour);
         }
     }
 }

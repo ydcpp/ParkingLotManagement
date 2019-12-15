@@ -8,7 +8,7 @@ class PricingPlan : public QObject
     Q_OBJECT
 public:
     explicit PricingPlan(QObject *parent = nullptr);
-    PricingPlan(qint32 id, QString name, float pricePerHour, float nightTimeMultiplier,
+    PricingPlan(qint32 id, QString name, float pricePerHour,
                 float lessthantwo,
                 float twothree,
                 float threefour,
@@ -23,19 +23,18 @@ public:
     qint32 GetPlanID() const;
     QString GetPlanName() const;
     float GetPricePerHour() const;
-    float GetNightTimeMultiplier() const;
+    void GetPricesPerHour(float& lessThanTwo, float& twoThree, float& threeFour, float& fourFive, float& fiveSix, float& sixSeven, float& sevenEight, float& eightTen, float& tenTwelve, float& moreThanTwelve);
 
 signals:
 
 public slots:
 
-    float CalculatePrice(qint64 minutes, bool isNight);
+    float CalculatePrice(qint64 minutes);
 
 private:
     qint32 m_planID;
     QString m_planName;
     float m_pricePerHour;
-    float m_NightTimeMultiplier;
     float m_lessThanTwo;
     float m_TwoThree;
     float m_ThreeFour;

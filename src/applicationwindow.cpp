@@ -58,13 +58,35 @@ DatabaseManager *ApplicationWindow::GetDBManager()
     return m_dbmanager;
 }
 
-float ApplicationWindow::calculatePrice(qint64 minutes, bool isNight, QString& currentplan)
+float ApplicationWindow::calculatePrice(qint64 minutes, QString& currentplan)
 {
-    if(currentPricingPlan){
-        if(isNight) currentplan = currentPricingPlan->GetPlanName() + " (GECE)";
-        else currentplan = currentPricingPlan->GetPlanName() + " (GÜNDÜZ)";
-    }
-    return this->getPricePlanCalculation(minutes,isNight);
+    currentplan = currentPricingPlan->GetPlanName();
+
+    return this->getPricePlanCalculation(minutes);
+}
+
+void ApplicationWindow::updateRemainingSpots(qint32 value)
+{
+    m_remainingSpots = value;
+    ui->lcdNumber_freespacecount->display(m_remainingSpots);
+    if(m_remainingSpots <= 10) ui->lcdNumber_freespacecount->setStyleSheet("color:red;");
+    else if(m_remainingSpots > 30) ui->lcdNumber_freespacecount->setStyleSheet("color:black;");
+    else ui->lcdNumber_freespacecount->setStyleSheet("color:orange;");
+}
+
+void ApplicationWindow::increaseRemainingSpotCount()
+{
+    updateRemainingSpots(m_remainingSpots+1);
+}
+
+void ApplicationWindow::decreaseRemainingSpotCount()
+{
+    updateRemainingSpots(m_remainingSpots-1);
+}
+
+qint32 ApplicationWindow::getRemainingSpotCount() const
+{
+    return m_remainingSpots;
 }
 
 
@@ -88,12 +110,11 @@ void ApplicationWindow::showTime()
     QString text = time.toString("HH:mm");
     if ((time.second() % 2) == 0) text[2] = ' ';
     ui->lcdNumber->display(text);
-    // calculate if its day or night, then update m_isNight
 }
 
 void ApplicationWindow::on_toolButton_vehicle_in_clicked()
 {
-    m_window_vehicle_in = new ManualVehicleEntry(m_dbmanager,m_isNight,this);
+    m_window_vehicle_in = new ManualVehicleEntry(m_dbmanager,this);
     m_window_vehicle_in->exec();
 }
 
@@ -123,6 +144,10 @@ void ApplicationWindow::setupIcons()
     ui->toolButton_adminpanel->setIcon(QIcon(m_assetPaths["icon_adminpanel"]));
     ui->toolButton_vehicle_in->setIcon(QIcon(m_assetPaths["icon_vehicle_in"]));
     ui->toolButton_vehicle_out->setIcon(QIcon(m_assetPaths["icon_vehicle_out"]));
+    ui->pushButton_search->setIcon(QIcon(m_assetPaths["icon_search"]));
+    ui->pushButton_parkingSpots->setIcon(QIcon(m_assetPaths["icon_parkingspot"]));
+    ui->pushButton_currentPlanDetails->setIcon(QIcon(m_assetPaths["icon_list"]));
+    ui->pushButton_securityCams->setIcon(QIcon(m_assetPaths["icon_camera"]));
 }
 
 void ApplicationWindow::setupCustomComponents()
@@ -153,6 +178,9 @@ void ApplicationWindow::setupCustomComponents()
             connect(this,&ApplicationWindow::getPricePlanCalculation,currentPricingPlan,&PricingPlan::CalculatePrice);
         }
     }
+
+    // setting up remaining spot count
+    updateRemainingSpots(5);
 }
 
 void ApplicationWindow::on_toolButton_adminpanel_clicked()
@@ -167,22 +195,24 @@ void ApplicationWindow::on_toolButton_settings_clicked()
     m_window_settings->exec();
 }
 
-void ApplicationWindow::on_toolButton_currentPlanDetails_clicked()
+void ApplicationWindow::on_pushButton_search_clicked()
+{
+    m_window_vehiclesearch = new VehicleSearch(m_dbmanager,this);
+    m_window_vehiclesearch->exec();
+}
+
+void ApplicationWindow::on_pushButton_currentPlanDetails_clicked()
+{
+    m_window_currentplan = new CurrentPlanWindow(currentPricingPlan,this);
+    m_window_currentplan->exec();
+}
+
+void ApplicationWindow::on_pushButton_parkingSpots_clicked()
 {
 
 }
 
-void ApplicationWindow::on_toolButton_parkingSpots_clicked()
-{
-
-}
-
-void ApplicationWindow::on_toolButton_securityCams_clicked()
-{
-
-}
-
-void ApplicationWindow::on_toolButton_help_clicked()
+void ApplicationWindow::on_pushButton_securityCams_clicked()
 {
 
 }

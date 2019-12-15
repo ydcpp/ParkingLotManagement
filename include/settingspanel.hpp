@@ -15,7 +15,7 @@ class SettingsPanel : public QDialog
     Q_OBJECT
 
 public:
-    explicit SettingsPanel(DatabaseManager* dbmanager,QList<PricingPlan*>& plans,QWidget *parent = nullptr);
+    explicit SettingsPanel(DatabaseManager* dbmanager,QList<PricingPlan*>& plans,QWidget *parent);
     ~SettingsPanel();
 
 private:

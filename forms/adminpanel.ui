@@ -52,6 +52,9 @@
         <height>381</height>
        </rect>
       </property>
+      <property name="sortingEnabled">
+       <bool>true</bool>
+      </property>
      </widget>
      <widget class="QPushButton" name="pushButton_close">
       <property name="geometry">

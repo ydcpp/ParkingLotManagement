@@ -5,6 +5,8 @@
 #include "manualvehicleentry.hpp"
 #include "manualvehicleexit.hpp"
 #include "settingspanel.hpp"
+#include "currentplanwindow.hpp"
+#include "vehiclesearch.hpp"
 
 #include <QWidget>
 #include <QMap>
@@ -35,7 +37,13 @@ public:
     QList<PricingPlan*> GetPricingPlanList();
 
 public slots:
-    float calculatePrice(qint64 minutes, bool isNight, QString& currentplan);
+    float calculatePrice(qint64 minutes, QString& currentplan);
+
+    void updateRemainingSpots(qint32 value);
+    void increaseRemainingSpotCount();
+    void decreaseRemainingSpotCount();
+
+    qint32 getRemainingSpotCount() const;
 
 private slots:
     void on_toolButton_quit_clicked();
@@ -49,16 +57,17 @@ private slots:
 
     void on_toolButton_settings_clicked();
 
-    void on_toolButton_currentPlanDetails_clicked();
 
-    void on_toolButton_parkingSpots_clicked();
+    void on_pushButton_search_clicked();
 
-    void on_toolButton_securityCams_clicked();
+    void on_pushButton_currentPlanDetails_clicked();
 
-    void on_toolButton_help_clicked();
+    void on_pushButton_parkingSpots_clicked();
+
+    void on_pushButton_securityCams_clicked();
 
 signals:
-    float getPricePlanCalculation(qint64 minutes, bool isNight);
+    float getPricePlanCalculation(qint64 minutes);
 
 private:
     Ui::ApplicationWindow *ui;
@@ -70,10 +79,13 @@ private:
     ManualVehicleEntry* m_window_vehicle_in = nullptr;
     ManualVehicleExit* m_window_vehicle_out = nullptr;
     SettingsPanel* m_window_settings = nullptr;
+    CurrentPlanWindow* m_window_currentplan = nullptr;
+    VehicleSearch* m_window_vehiclesearch = nullptr;
+
+    qint32 m_remainingSpots = 0;
     QList<PricingPlan*> m_pricingPlans;
     qint32 m_currentPlanID = 0;
     PricingPlan* currentPricingPlan = nullptr;
-    bool m_isNight = false;
 
     void initializeAssetPaths();
     void setupIcons();
@@ -90,7 +102,11 @@ private:
         "icon_settings,     ./assets/images/settings.png",
         "icon_adminpanel,   ./assets/images/adminpanel.png",
         "icon_vehicle_in,   ./assets/images/add_vehicle.png",
-        "icon_vehicle_out,  ./assets/images/remove_vehicle.png"
+        "icon_vehicle_out,  ./assets/images/remove_vehicle.png",
+        "icon_search,       ./assets/images/search.png",
+        "icon_list,         ./assets/images/list.png",
+        "icon_parkingspot,  ./assets/images/parking-icon.png",
+        "icon_camera,       ./assets/images/security-camera.png"
     };
 };
 

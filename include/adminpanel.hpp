@@ -21,7 +21,7 @@ class AdminPanel : public QWidget
     Q_OBJECT
 
 public:
-    explicit AdminPanel(DatabaseManager* dbmanager, QWidget *parent = nullptr);
+    explicit AdminPanel(DatabaseManager* dbmanager, QWidget *parent);
     ~AdminPanel();
 
     void keyPressEvent(QKeyEvent* e);

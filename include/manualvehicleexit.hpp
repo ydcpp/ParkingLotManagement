@@ -15,11 +15,12 @@ class ManualVehicleExit : public QDialog
     Q_OBJECT
 
 public:
-    explicit ManualVehicleExit(DatabaseManager* dbmanager, QWidget *parent = nullptr);
+    explicit ManualVehicleExit(DatabaseManager* dbmanager, QWidget *parent);
     ~ManualVehicleExit();
 
 signals:
-    float getCalculatedPrice(qint64 minutes,bool isNight, QString& currentPlan);
+    float getCalculatedPrice(qint64 minutes, QString& currentPlan);
+    void increaseCount();
 
 private slots:
     void on_pushButton_query_clicked();

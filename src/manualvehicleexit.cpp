@@ -13,6 +13,7 @@ ManualVehicleExit::ManualVehicleExit(DatabaseManager* dbmanager, QWidget *parent
     this->setAttribute( Qt::WA_DeleteOnClose, true );
     m_dbmanager = dbmanager;
     connect(this,&ManualVehicleExit::getCalculatedPrice,static_cast<ApplicationWindow*>(parent),&ApplicationWindow::calculatePrice);
+    connect(this,&ManualVehicleExit::increaseCount,static_cast<ApplicationWindow*>(parent),&ApplicationWindow::increaseRemainingSpotCount);
 }
 
 ManualVehicleExit::~ManualVehicleExit()
@@ -26,8 +27,7 @@ void ManualVehicleExit::on_pushButton_query_clicked()
     if(validateForm()){
         QString errormsg;
         // query plate number,get vehicle id to m_vehicleID, get the info and calculate price
-        bool isNight;
-        if(!m_dbmanager->GetBillingResult(ui->lineEdit_plateQuery->text(),errormsg,m_paymentID,m_minutes,m_vehicleID,m_entryDate,isNight)){
+        if(!m_dbmanager->GetBillingResult(ui->lineEdit_plateQuery->text(),errormsg,m_paymentID,m_minutes,m_vehicleID,m_entryDate)){
             ui->label_result->setStyleSheet("color:red;");
             ui->label_result->setText(errormsg);
             return;
@@ -37,7 +37,7 @@ void ManualVehicleExit::on_pushButton_query_clicked()
             ui->label_result->setText(errormsg);
             return;
         }
-        m_price = getCalculatedPrice(m_minutes,isNight,m_currentPlan);
+        m_price = getCalculatedPrice(m_minutes,m_currentPlan);
         // displaying the bill
         ui->lineEdit_plate->setText(m_plate);
         ui->lineEdit_color->setText(m_color);
@@ -47,7 +47,7 @@ void ManualVehicleExit::on_pushButton_query_clicked()
         ui->dateTimeEdit_exitDate->setDateTime(QDateTime::currentDateTime());
         ui->lineEdit_totalminutes->setText(QString::number(m_minutes) + "  dk.");
         ui->lineEdit_plan->setText(m_currentPlan);
-        ui->lineEdit_price->setText(QString().setNum(m_price,'g',2));
+        ui->lineEdit_price->setText(QString().setNum(m_price,'f',2));
         ui->pushButton_completePayment->setEnabled(true);
     }
 }
@@ -63,6 +63,7 @@ void ManualVehicleExit::on_pushButton_completePayment_clicked()
     }else{
         ui->label_result->setStyleSheet("color:green;");
         ui->label_result->setText("ÖDEME TAMAMLANDI.");
+        increaseCount();
         QTimer::singleShot(2000,this,&QDialog::close);
     }
 }
