@@ -23,6 +23,8 @@ private slots:
 
     void on_pushButton_cancel_clicked();
 
+    void on_comboBox_currentIndexChanged(const QString &arg1);
+
 private:
     Ui::SettingsPanel *ui;
     QList<PricingPlan*> m_plans;

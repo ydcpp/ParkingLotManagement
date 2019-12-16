@@ -25,3 +25,8 @@ void SettingsPanel::on_pushButton_cancel_clicked()
 {
     this->close();
 }
+
+void SettingsPanel::on_comboBox_currentIndexChanged(const QString &arg1)
+{
+
+}
