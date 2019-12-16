@@ -96,17 +96,17 @@ private:
 
     // programda kullanılacak tüm asset'lerin adları ve dosya yolları burada girilmelidir.
     QList<QString> m_params = {
-        "icon_close,        ./assets/images/close.png",
-        "icon_print,        ./assets/images/settings.png",
-        "image_background,  ./assets/images/background.jpg",
-        "icon_settings,     ./assets/images/settings.png",
-        "icon_adminpanel,   ./assets/images/adminpanel.png",
-        "icon_vehicle_in,   ./assets/images/add_vehicle.png",
-        "icon_vehicle_out,  ./assets/images/remove_vehicle.png",
-        "icon_search,       ./assets/images/search.png",
-        "icon_list,         ./assets/images/list.png",
-        "icon_parkingspot,  ./assets/images/parking-icon.png",
-        "icon_camera,       ./assets/images/security-camera.png"
+        "icon_close,        :/Images/assets/images/close.png",
+        "icon_print,        :",
+        "image_background,  :",
+        "icon_settings,     :/Images/assets/images/settings.png",
+        "icon_adminpanel,   :/Images/assets/images/adminpanel.png",
+        "icon_vehicle_in,   :/Images/assets/images/add_vehicle.png",
+        "icon_vehicle_out,  :/Images/assets/images/remove_vehicle.png",
+        "icon_search,       :/Images/assets/images/search.png",
+        "icon_list,         :/Images/assets/images/list.png",
+        "icon_parkingspot,  :/Images/assets/images/parking-icon.png",
+        "icon_camera,       :/Images/assets/images/security-camera.png"
     };
 };
 

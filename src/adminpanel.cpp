@@ -114,5 +114,12 @@ void AdminPanel::on_pushButton_payments_clicked()
     }
     m_proxymodel->setSourceModel(m_model);
     ui->tableView->setModel(m_proxymodel);
+    ui->tableView->setColumnWidth(0,70);
+    ui->tableView->setColumnWidth(1,80);
+    ui->tableView->setColumnWidth(2,100);
+    ui->tableView->setColumnWidth(3,120);
+    ui->tableView->setColumnWidth(4,120);
+    ui->tableView->setColumnWidth(5,60);
+    ui->tableView->setColumnWidth(6,70);
     ui->label_tableheader->setText("Yapılan Tüm Ödemelerin Listesi");
 }

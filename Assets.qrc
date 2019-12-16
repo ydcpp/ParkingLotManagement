@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/Database/Current">
+        <file>assets/database/parkyerimdb.sqlite</file>
+    </qresource>
+    <qresource prefix="/Images">
+        <file>assets/images/add_vehicle.png</file>
+        <file>assets/images/adminpanel.png</file>
+        <file>assets/images/close.png</file>
+        <file>assets/images/list.png</file>
+        <file>assets/images/parking-icon.png</file>
+        <file>assets/images/remove_vehicle.png</file>
+        <file>assets/images/search.png</file>
+        <file>assets/images/security-camera.png</file>
+        <file>assets/images/settings.png</file>
+        <file>ParkYerimDesktop.ico</file>
+    </qresource>
+    <qresource prefix="/Database/Backups"/>
+</RCC>

@@ -10,15 +10,10 @@ ParkYerim::ParkYerim(QWidget *parent)
     , ui(new Ui::ParkYerim)
 {
     ui->setupUi(this);
-
-    // initialize database instance
-    m_database = new DatabaseManager(m_databasepath);
     m_logger = new Logger(m_logfilepath);
-    if(!m_database->isConnected()){
-        ui->label_status->setStyleSheet("color:red;");
-        ui->label_status->setText("Veritabanına bağlanılamadı.");
-        ui->pushButton->setEnabled(false);
-    }
+    initializeDatabase();
+    QPixmap pix(":/Images/ParkYerimDesktop.ico");
+    ui->label_image->setPixmap(pix.scaled(ui->label_image->width(),ui->label_image->height(),Qt::KeepAspectRatio));
 }
 
 ParkYerim::~ParkYerim()
@@ -50,4 +45,15 @@ void ParkYerim::launchProgram()
     ApplicationWindow* appwindow = new ApplicationWindow(m_database,m_user,m_logger);
     this->hide();
     appwindow->show();
+}
+
+void ParkYerim::initializeDatabase()
+{
+    // initialize database instance
+    m_database = new DatabaseManager();
+    if(!m_database->isConnected()){
+        ui->label_status->setStyleSheet("color:red;");
+        ui->label_status->setText("Veritabanına bağlanılamadı.");
+        ui->pushButton->setEnabled(false);
+    }
 }

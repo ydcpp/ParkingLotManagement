@@ -4,6 +4,8 @@
 
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QFile>
+#include <QFileDevice>
 #include <QDir>
 #include <QSql>
 #include <QSqlError>
@@ -22,7 +24,7 @@
 class DatabaseManager
 {
 public:
-    DatabaseManager(QString dbpath);
+    DatabaseManager();
     ~DatabaseManager();
 
     bool ValidateUserLogin(QString username, QString password, QString& errormsg, User** currentUser);
@@ -52,6 +54,12 @@ private:
     QSqlDatabase database;
     QMap<QString,qint32> m_colors;
     QMap<QString,qint32> m_vehicleTypes;
+    QFile m_file;
+    const QString m_dbfilepath = "./assets/db/current/";
+    const QString m_dbfilename = "parkyerimdb.sqlite";
+    const QString m_dbfile = m_dbfilepath + m_dbfilename;
+    const QString m_dbResourcePath = ":/Database/Current/assets/database/parkyerimdb.sqlite";
+    QString m_backupDBresourcepath;
 
     void getColorsFromDB();
     void getVehicleTypesFromDB();

@@ -1,12 +1,17 @@
 #include "databasemanager.hpp"
 
-DatabaseManager::DatabaseManager(QString dbpath)
+DatabaseManager::DatabaseManager()
 {
+    QDir().mkpath(m_dbfilepath);
+    QFile::copy(m_dbResourcePath,m_dbfile);
+    m_file.setFileName(m_dbfile);
+    m_file.setPermissions(QFileDevice::ReadOwner | QFileDevice::WriteOwner);
     database = QSqlDatabase::addDatabase("QSQLITE");
-    database.setDatabaseName(dbpath);
-    database.open();
-    getColorsFromDB();
-    getVehicleTypesFromDB();
+    database.setDatabaseName(m_dbfile);
+    if(database.open()){
+        getColorsFromDB();
+        getVehicleTypesFromDB();
+    }
 }
 
 

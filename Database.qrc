@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>assets/database/backups/parkyerimdb.sqlite</file>
+        <file>assets/database/current/parkyerimdb.sqlite</file>
+    </qresource>
+</RCC>
