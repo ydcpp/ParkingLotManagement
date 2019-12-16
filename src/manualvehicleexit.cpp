@@ -38,6 +38,7 @@ void ManualVehicleExit::on_pushButton_query_clicked()
             return;
         }
         m_price = getCalculatedPrice(m_minutes,m_currentPlan);
+        QTime parkingTime = QTime(0,0).addSecs(60*int(m_minutes));
         // displaying the bill
         ui->lineEdit_plate->setText(m_plate);
         ui->lineEdit_color->setText(m_color);
@@ -45,7 +46,7 @@ void ManualVehicleExit::on_pushButton_query_clicked()
         ui->lineEdit_model->setText(m_model);
         ui->dateTimeEdit_entryDate->setDateTime(m_entryDate);
         ui->dateTimeEdit_exitDate->setDateTime(QDateTime::currentDateTime());
-        ui->lineEdit_totalminutes->setText(QString::number(m_minutes) + "  dk.");
+        ui->lineEdit_totalminutes->setText(parkingTime.toString("HH:mm"));
         ui->lineEdit_plan->setText(m_currentPlan);
         ui->lineEdit_price->setText(QString().setNum(m_price,'f',2));
         ui->pushButton_completePayment->setEnabled(true);

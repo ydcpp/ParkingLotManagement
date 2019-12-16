@@ -4,8 +4,9 @@ DatabaseManager::DatabaseManager()
 {
     QDir().mkpath(m_dbfilepath);
     QFile::copy(m_dbResourcePath,m_dbfile);
-    m_file.setFileName(m_dbfile);
-    m_file.setPermissions(QFileDevice::ReadOwner | QFileDevice::WriteOwner);
+    QFile(m_dbfile).setPermissions(QFileDevice::ReadOwner | QFileDevice::WriteOwner);
+    //m_file.setFileName(m_dbfile);
+    //m_file.setPermissions(QFileDevice::ReadOwner | QFileDevice::WriteOwner);
     database = QSqlDatabase::addDatabase("QSQLITE");
     database.setDatabaseName(m_dbfile);
     if(database.open()){
@@ -18,6 +19,7 @@ DatabaseManager::DatabaseManager()
 DatabaseManager::~DatabaseManager()
 {
     if(database.isOpen()) database.close();
+    CreateDatabaseBackup();
 }
 
 bool DatabaseManager::ValidateUserLogin(QString username, QString password, QString& errormsg, User** currentUser)
@@ -482,6 +484,35 @@ bool DatabaseManager::GetVehicleInformationByPlate(QString plate, qint32 &out_ve
     return true;
 }
 
+bool DatabaseManager::ChangePassword(qint32 accountID, QString oldPassword, QString newPassword, QString &errmsg)
+{
+    QSqlQuery query;
+    query.prepare("select Password from Accounts where ID = :id");
+    query.bindValue(":id",accountID);
+    if(!query.exec()){
+        errmsg = query.lastError().text();
+        return false;
+    }
+    if(!query.next()){
+        errmsg = "Hatalı kullanıcı ID";
+        return false;
+    }
+    if(oldPassword != query.value(0).toString()){
+        errmsg = "Hatalı şifre.";
+        return false;
+    }
+    // apply new password
+    query.clear();
+    query.prepare("update Accounts set Password = :pw where ID = :id");
+    query.bindValue(":pw",newPassword);
+    query.bindValue(":id",accountID);
+    if(!query.exec()){
+        errmsg = query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
 
 bool DatabaseManager::isConnected()
 {
@@ -496,6 +527,14 @@ QMap<QString,qint32> DatabaseManager::getColors()
 QMap<QString,qint32> DatabaseManager::getVehicleTypes()
 {
     return m_vehicleTypes;
+}
+
+void DatabaseManager::CreateDatabaseBackup()
+{
+    QDir().mkpath(m_dbbackuppath);
+    QString backupfile = m_dbbackuppath + QDateTime::currentDateTime().toString("dd_MM_yyyy_HH_mm_ss") + ".sqlite";
+    QFile::copy(m_dbfile,backupfile);
+    QFile(backupfile).setPermissions(QFileDevice::ReadOwner | QFileDevice::WriteOwner);
 }
 
 void DatabaseManager::getColorsFromDB()

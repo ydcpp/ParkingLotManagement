@@ -3,9 +3,10 @@
 
 
 #include "databasemanager.hpp"
+#include "applicationwindow.hpp"
 
 
-SettingsPanel::SettingsPanel(DatabaseManager* dbmanager, QList<PricingPlan*>& plans, QWidget *parent) :
+SettingsPanel::SettingsPanel(DatabaseManager* dbmanager, QList<PricingPlan*>& plans, ApplicationWindow *parent) :
     QDialog(parent),
     ui(new Ui::SettingsPanel)
 {
@@ -18,4 +19,9 @@ SettingsPanel::SettingsPanel(DatabaseManager* dbmanager, QList<PricingPlan*>& pl
 SettingsPanel::~SettingsPanel()
 {
     delete ui;
+}
+
+void SettingsPanel::on_pushButton_cancel_clicked()
+{
+    this->close();
 }

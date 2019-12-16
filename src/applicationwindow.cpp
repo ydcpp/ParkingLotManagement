@@ -16,7 +16,7 @@ ApplicationWindow::ApplicationWindow(DatabaseManager* dbmanager, User* user, Log
     this->setAttribute( Qt::WA_DeleteOnClose, true );
     m_parent = static_cast<ParkYerim*>(parent);
     m_dbmanager = dbmanager;
-    m_user = user;
+    m_currentuser = user;
     m_logger = logger;
     initializeAssetPaths();
     setupIcons();
@@ -56,6 +56,11 @@ QMap<QString, QString> ApplicationWindow::GetAssetPaths()
 DatabaseManager *ApplicationWindow::GetDBManager()
 {
     return m_dbmanager;
+}
+
+User *ApplicationWindow::GetCurrentUser()
+{
+    return m_currentuser;
 }
 
 float ApplicationWindow::calculatePrice(qint64 minutes, QString& currentplan)
@@ -159,8 +164,8 @@ void ApplicationWindow::setupCustomComponents()
     showTime();
 
     // setting up admin panel button
-    ui->label_user->setText(m_user->getFirstName() + " " + m_user->getLastName());
-    if(m_user->getUserType() < 2) ui->toolButton_adminpanel->setEnabled(false);
+    ui->label_user->setText(m_currentuser->getFirstName() + " " + m_currentuser->getLastName());
+    if(m_currentuser->getUserType() < 2) ui->toolButton_adminpanel->setEnabled(false);
 
     // setting up pricing plans
     QString errmsg;

@@ -44,11 +44,13 @@ public:
     bool QueryDailyIncome(float& out_income, QString& errmsg);
     bool SetQueryModel_TotalPaymentInfo(qint32 vehicleID, QSqlQueryModel* out_model, QString& errmsg);
     bool GetVehicleInformationByPlate(QString plate, qint32& out_vehicleID, QString& out_color, QString& out_type, QString& out_model, QString& errmsg);
+    bool ChangePassword(qint32 accountID, QString oldPassword, QString newPassword, QString& errmsg);
 
     bool isConnected();
 
     QMap<QString,qint32> getColors();
     QMap<QString,qint32> getVehicleTypes();
+    void CreateDatabaseBackup();
 
 private:
     QSqlDatabase database;
@@ -56,6 +58,7 @@ private:
     QMap<QString,qint32> m_vehicleTypes;
     QFile m_file;
     const QString m_dbfilepath = "./assets/db/current/";
+    const QString m_dbbackuppath = "./assets/db/backups/";
     const QString m_dbfilename = "parkyerimdb.sqlite";
     const QString m_dbfile = m_dbfilepath + m_dbfilename;
     const QString m_dbResourcePath = ":/Database/Current/assets/database/parkyerimdb.sqlite";

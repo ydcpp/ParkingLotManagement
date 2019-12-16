@@ -33,7 +33,7 @@ public:
     void ClearVehicleOutStats();
     QMap<QString, QString> GetAssetPaths();
     DatabaseManager* GetDBManager();
-
+    User* GetCurrentUser();
     QList<PricingPlan*> GetPricingPlanList();
 
 public slots:
@@ -73,7 +73,7 @@ private:
     Ui::ApplicationWindow *ui;
     ParkYerim* m_parent = nullptr;
     DatabaseManager* m_dbmanager = nullptr;
-    User* m_user = nullptr;
+    User* m_currentuser = nullptr;
     Logger* m_logger = nullptr;
     AdminPanel* m_window_admin = nullptr;
     ManualVehicleEntry* m_window_vehicle_in = nullptr;
