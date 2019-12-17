@@ -37,6 +37,56 @@ float PricingPlan::GetPricePerHour() const
     return m_pricePerHour;
 }
 
+float PricingPlan::Getlessthantwo() const
+{
+    return m_lessThanTwo;
+}
+
+float PricingPlan::Gettwothree() const
+{
+    return m_TwoThree;
+}
+
+float PricingPlan::Getthreefour() const
+{
+    return  m_ThreeFour;
+}
+
+float PricingPlan::Getfourfive() const
+{
+    return m_FourFive;
+}
+
+float PricingPlan::Getfivesix() const
+{
+    return m_FiveSix;
+}
+
+float PricingPlan::Getsixseven() const
+{
+    return m_SixSeven;
+}
+
+float PricingPlan::Getseveneight() const
+{
+    return m_SevenEight;
+}
+
+float PricingPlan::Geteightten() const
+{
+    return m_EightTen;
+}
+
+float PricingPlan::Gettentwelve() const
+{
+    return m_TenTwelve;
+}
+
+float PricingPlan::Getmorethantwelve() const
+{
+    return m_moreThanTwelve;
+}
+
 void PricingPlan::GetPricesPerHour(float &lessThanTwo, float &twoThree, float &threeFour, float &fourFive, float &fiveSix, float &sixSeven, float &sevenEight, float &eightTen, float &tenTwelve, float &moreThanTwelve)
 {
     lessThanTwo     = m_pricePerHour*m_lessThanTwo;

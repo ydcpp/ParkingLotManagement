@@ -36,6 +36,12 @@ private slots:
 
     void on_pushButton_saveplan_clicked();
 
+    void on_pushButton_createnewplan_clicked();
+
+    void on_comboBox_existingplans_2_currentTextChanged(const QString &arg1);
+
+    void on_pushButton_deleteplan_clicked();
+
 private:
     Ui::SettingsPanel *ui;
     QList<PricingPlan*> m_plans;

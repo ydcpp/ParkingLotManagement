@@ -299,6 +299,11 @@ bool DatabaseManager::GetVehicleInformation(qint32 vehicleID, QString& errmsg, Q
 
 bool DatabaseManager::GetPricingPlans(QList<PricingPlan *> &out_plans, QString &errmsg)
 {
+    // clearing the list first
+    for(PricingPlan* plan : out_plans){
+        if(plan) delete plan;
+    }
+    out_plans.clear();
     QSqlQuery query;
     query.prepare("select ID, PlanName, PricePerHour, m_LessThanTwo, m_TwoThree, m_ThreeFour, m_FourFive, m_FiveSix, m_SixSeven, m_SevenEight, m_EightTen, m_TenTwelve, m_MoreThanTwelve"
                   " from PricingPlans");
@@ -321,6 +326,82 @@ bool DatabaseManager::GetPricingPlans(QList<PricingPlan *> &out_plans, QString &
                                          query.value(11).toFloat(),
                                          query.value(12).toFloat()));
     }
+    return true;
+}
+
+bool DatabaseManager::CreateNewPricingPlan(QString name,float priceperhour,float lessthantwo, float twothree, float threefour, float fourfive, float fivesix, float sixseven, float seveneight, float eightten, float tentwelve, float morethantwelve, QList<PricingPlan*>& plans, QString& errmsg)
+{
+    QSqlQuery query;
+    query.prepare("insert into PricingPlans (PlanName, PricePerHour, m_LessThanTwo, m_TwoThree, m_ThreeFour, m_FourFive, m_FiveSix, m_SixSeven, m_SevenEight, m_EightTen, m_TenTwelve, m_MoreThanTwelve)"
+                  " values (:name, :priceperhour, :lessthantwo, :twothree, :threefour, :fourfive, :fivesix, :sixseven, :seveneight, :eightten, :tentwelve, :morethantwelve)");
+    query.bindValue(":name",name);
+    query.bindValue(":priceperhour",priceperhour);
+    query.bindValue(":lessthantwo",lessthantwo);
+    query.bindValue(":twothree",twothree);
+    query.bindValue(":threefour",threefour);
+    query.bindValue(":fourfive",fourfive);
+    query.bindValue(":fivesix",fivesix);
+    query.bindValue(":sixseven",sixseven);
+    query.bindValue(":seveneight",seveneight);
+    query.bindValue(":eightten",eightten);
+    query.bindValue(":tentwelve",tentwelve);
+    query.bindValue(":morethantwelve",morethantwelve);
+    if(!query.exec()){
+        errmsg = query.lastError().text();
+        return false;
+    }
+    if(!GetPricingPlans(plans,errmsg)) return false;
+    return true;
+}
+
+bool DatabaseManager::DeletePricingPlan(qint32 planID, QList<PricingPlan*>& out_plans,QString &errmsg)
+{
+    if(planID == 0){
+        errmsg = "Default plan cannot be removed.";
+        return false;
+    }
+    QSqlQuery query;
+    query.prepare("delete from PricingPlans where ID = :id");
+    query.bindValue(":id",planID);
+    if(!query.exec()){
+        errmsg = query.lastError().text();
+        return false;
+    }
+    if(!GetPricingPlans(out_plans,errmsg)) return false;
+    return true;
+}
+
+bool DatabaseManager::UpdatePricingPlan(qint32 planID, float lessthantwo, float twothree, float threefour, float fourfive, float fivesix, float sixseven, float seveneight, float eightten, float tentwelve, float morethantwelve, QList<PricingPlan *> &out_plans, QString &errmsg)
+{
+    QSqlQuery query;
+    query.prepare("update PricingPlans set"
+                  " m_LessThanTwo = :lessthantwo,"
+                  " m_TwoThree = :twothree,"
+                  " m_ThreeFour = :threefour,"
+                  " m_FourFive = :fourfive,"
+                  " m_FiveSix = :fivesix,"
+                  " m_SixSeven = :sixseven,"
+                  " m_SevenEight = :seveneight,"
+                  " m_EightTen = :eightten,"
+                  " m_TenTwelve = :tentwelve,"
+                  " m_MoreThanTwelve = :morethantwelve"
+                  " where ID = :id");
+    query.bindValue(":lessthantwo",lessthantwo);
+    query.bindValue(":twothree",twothree);
+    query.bindValue(":threefour",threefour);
+    query.bindValue(":fourfive",fourfive);
+    query.bindValue(":fivesix",fivesix);
+    query.bindValue(":sixseven",sixseven);
+    query.bindValue(":seveneight",seveneight);
+    query.bindValue(":eightten",eightten);
+    query.bindValue(":tentwelve",tentwelve);
+    query.bindValue(":morethantwelve",morethantwelve);
+    query.bindValue(":id",planID);
+    if(!query.exec()){
+        errmsg = query.lastError().text();
+        return false;
+    }
+    if(!GetPricingPlans(out_plans,errmsg)) return false;
     return true;
 }
 

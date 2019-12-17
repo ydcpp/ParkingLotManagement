@@ -34,7 +34,7 @@ public:
     QMap<QString, QString> GetAssetPaths();
     DatabaseManager* GetDBManager();
     User* GetCurrentUser();
-    QList<PricingPlan*> GetPricingPlanList();
+    QList<PricingPlan*>& GetPricingPlanList();
     void updateCurrentPlan(qint32 planID);
     qint32 getCurrentPlanID() const;
 

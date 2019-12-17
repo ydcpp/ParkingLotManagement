@@ -30,15 +30,39 @@ SettingsPanel::~SettingsPanel()
 
 void SettingsPanel::on_comboBox_existingplans_currentTextChanged(const QString &arg1)
 {
-
+    if(arg1 == "Seçiniz..."){
+        clearPriceList();
+        return;
+    }
+    for(PricingPlan* plan : m_parent->GetPricingPlanList()){
+        if(plan->GetPlanName() == arg1){
+            ui->label_currentplanname->setText(arg1);
+            float lessthantwo, twothree, threefour, fourfive, fivesix, sixseven, seveneight, eightten, tentwelve, morethantwelve;
+            plan->GetPricesPerHour(lessthantwo, twothree, threefour, fourfive, fivesix, sixseven, seveneight, eightten, tentwelve, morethantwelve);
+            ui->doubleSpinBox_lessthantwo->setValue(lessthantwo);
+            ui->doubleSpinBox_twothree->setValue(twothree);
+            ui->doubleSpinBox_threefour->setValue(threefour);
+            ui->doubleSpinBox_fourfive->setValue(fourfive);
+            ui->doubleSpinBox_fivesix->setValue(fivesix);
+            ui->doubleSpinBox_sixseven->setValue(sixseven);
+            ui->doubleSpinBox_seveneight->setValue(seveneight);
+            ui->doubleSpinBox_eightten->setValue(eightten);
+            ui->doubleSpinBox_tentwelve->setValue(tentwelve);
+            ui->doubleSpinBox_morethantwelve->setValue(morethantwelve);
+            return;
+        }
+    }
 }
 
 void SettingsPanel::on_comboBox_chooseplan_currentTextChanged(const QString &arg1)
 {
+    ui->pushButton_saveplan->setEnabled(false);
+    setEditingEnabled(false);
     ui->pushButton_setdefaultplan->setEnabled(false);
     ui->groupBox_newplan->setEnabled(false);
     if(arg1 == "Yeni Plan Ekle"){
         ui->groupBox_newplan->setEnabled(true);
+        setEditingEnabled(true);
         clearPriceList();
         return;
     }
@@ -48,6 +72,7 @@ void SettingsPanel::on_comboBox_chooseplan_currentTextChanged(const QString &arg
     }
     for(PricingPlan* plan : m_parent->GetPricingPlanList()){
         if(plan->GetPlanName() == arg1){
+            ui->pushButton_saveplan->setEnabled(true);
             ui->label_currentplanname->setText(arg1);
             float lessthantwo, twothree, threefour, fourfive, fivesix, sixseven, seveneight, eightten, tentwelve, morethantwelve;
             plan->GetPricesPerHour(lessthantwo, twothree, threefour, fourfive, fivesix, sixseven, seveneight, eightten, tentwelve, morethantwelve);
@@ -90,6 +115,9 @@ void SettingsPanel::loadPlanList()
     ui->comboBox_chooseplan->addItem("Seçiniz...");
     ui->comboBox_chooseplan->addItems(planlist);
     ui->comboBox_chooseplan->addItem("Yeni Plan Ekle");
+    ui->comboBox_existingplans_2->clear();
+    ui->comboBox_existingplans_2->addItem("Seçiniz...");
+    ui->comboBox_existingplans_2->addItems(planlist);
 }
 
 void SettingsPanel::clearPriceList()
@@ -170,7 +198,10 @@ void SettingsPanel::on_pushButton_changepassword_clicked()
 void SettingsPanel::on_checkBox_copyexistingplan_stateChanged(int arg1)
 {
     if(arg1) ui->comboBox_existingplans->setEnabled(true);
-    else ui->comboBox_existingplans->setEnabled(false);
+    else{
+        ui->comboBox_existingplans->setCurrentIndex(0);
+        ui->comboBox_existingplans->setEnabled(false);
+    }
 }
 
 void SettingsPanel::on_pushButton_enablechange_clicked()
@@ -191,5 +222,96 @@ void SettingsPanel::on_pushButton_setdefaultplan_clicked()
 
 void SettingsPanel::on_pushButton_saveplan_clicked()
 {
-    clearPriceList();
+    qint32 planID = -1;
+    float priceperhour;
+    for(PricingPlan* plan : m_parent->GetPricingPlanList()){
+        if(ui->comboBox_chooseplan->currentText() == plan->GetPlanName()){
+            planID = plan->GetPlanID();
+            priceperhour = plan->GetPricePerHour();
+            break;
+        }
+    }
+    if(planID == -1) return;
+    QString errormsg;
+    if(!m_dbmanager->UpdatePricingPlan(planID,ui->doubleSpinBox_lessthantwo->value()/priceperhour,
+                                       ui->doubleSpinBox_twothree->value()/priceperhour,
+                                       ui->doubleSpinBox_threefour->value()/priceperhour,
+                                       ui->doubleSpinBox_fourfive->value()/priceperhour,
+                                       ui->doubleSpinBox_fivesix->value()/priceperhour,
+                                       ui->doubleSpinBox_sixseven->value()/priceperhour,
+                                       ui->doubleSpinBox_seveneight->value()/priceperhour,
+                                       ui->doubleSpinBox_eightten->value()/priceperhour,
+                                       ui->doubleSpinBox_tentwelve->value()/priceperhour,
+                                       ui->doubleSpinBox_morethantwelve->value()/priceperhour,
+                                       m_parent->GetPricingPlanList(),errormsg)){
+        setErrorMessage(errormsg);
+    }else setSuccessMessage("Kaydedildi.");
+}
+
+void SettingsPanel::on_pushButton_createnewplan_clicked()
+{
+    // name check
+    for(PricingPlan* plan : m_parent->GetPricingPlanList()){
+        if(ui->lineEdit_newplanname->text().toLower() == plan->GetPlanName().toLower()){
+            setErrorMessage("Var olan planlardan farklı bir plan adı seçmelisiniz.");
+            return;
+        }
+    }
+    QString errormsg;
+    float pricePerHour = ui->doubleSpinBox_newplanprice->value();
+    if(!m_dbmanager->CreateNewPricingPlan(ui->lineEdit_newplanname->text(),ui->doubleSpinBox_newplanprice->value(),
+                                      ui->doubleSpinBox_lessthantwo->value()/pricePerHour,
+                                      ui->doubleSpinBox_twothree->value()/pricePerHour,
+                                      ui->doubleSpinBox_threefour->value()/pricePerHour,
+                                      ui->doubleSpinBox_fourfive->value()/pricePerHour,
+                                      ui->doubleSpinBox_fivesix->value()/pricePerHour,
+                                      ui->doubleSpinBox_sixseven->value()/pricePerHour,
+                                      ui->doubleSpinBox_seveneight->value()/pricePerHour,
+                                      ui->doubleSpinBox_eightten->value()/pricePerHour,
+                                      ui->doubleSpinBox_tentwelve->value()/pricePerHour,
+                                      ui->doubleSpinBox_morethantwelve->value()/pricePerHour,
+                                      m_parent->GetPricingPlanList(), errormsg)){
+        setErrorMessage(errormsg);
+    }else{
+        loadPlanList();
+        setSuccessMessage("Yeni Ücretlendirme Planı oluşturuldu.");
+    }
+}
+
+void SettingsPanel::on_comboBox_existingplans_2_currentTextChanged(const QString &arg1)
+{
+    if(arg1 == "Seçiniz..."){
+        ui->label_selectedplanname->clear();
+        ui->label_selectedplanID->clear();
+        ui->doubleSpinBox_selectedplanprice->clear();
+        return;
+    }
+    for(PricingPlan* plan : m_parent->GetPricingPlanList()){
+        if(plan->GetPlanName() == arg1){
+            ui->label_selectedplanname->setText(arg1);
+            ui->label_selectedplanID->setText(QString::number(plan->GetPlanID()));
+            ui->doubleSpinBox_selectedplanprice->setValue(plan->GetPricePerHour());
+            return;
+        }
+    }
+}
+
+void SettingsPanel::on_pushButton_deleteplan_clicked()
+{
+    if(ui->comboBox_existingplans_2->currentIndex() == 0) return;
+    qint32 planID = -1;
+    for(PricingPlan* plan : m_parent->GetPricingPlanList()){
+        if(plan->GetPlanName() == ui->comboBox_existingplans_2->currentText()){
+            planID = plan->GetPlanID();
+            break;
+        }
+    }
+    if(planID == -1) return;
+    QString errormsg;
+    if(!m_dbmanager->DeletePricingPlan(planID,m_parent->GetPricingPlanList(),errormsg)) setErrorMessage(errormsg);
+    else {
+        loadPlanList();
+        ui->comboBox_existingplans_2->setCurrentIndex(0);
+        setSuccessMessage("Seçilen plan silindi.");
+    }
 }

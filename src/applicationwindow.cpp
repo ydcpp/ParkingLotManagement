@@ -26,6 +26,7 @@ ApplicationWindow::ApplicationWindow(DatabaseManager* dbmanager, User* user, Log
 ApplicationWindow::~ApplicationWindow()
 {
     delete ui;
+    for(PricingPlan* plan : m_pricingPlans) if(plan) delete plan;
 }
 
 void ApplicationWindow::ClearVehicleInStats()
@@ -95,7 +96,7 @@ qint32 ApplicationWindow::getRemainingSpotCount() const
 }
 
 
-QList<PricingPlan *> ApplicationWindow::GetPricingPlanList()
+QList<PricingPlan *>& ApplicationWindow::GetPricingPlanList()
 {
     return m_pricingPlans;
 }
@@ -103,6 +104,13 @@ QList<PricingPlan *> ApplicationWindow::GetPricingPlanList()
 void ApplicationWindow::updateCurrentPlan(qint32 planID)
 {
     m_currentPlanID = planID;
+    for(PricingPlan* plan : m_pricingPlans){
+        if(m_currentPlanID == plan->GetPlanID()){
+            currentPricingPlan = plan;
+            break;
+        }
+    }
+    ui->label_currentPlan->setText(currentPricingPlan->GetPlanName());
 }
 
 qint32 ApplicationWindow::getCurrentPlanID() const

@@ -36,7 +36,7 @@ private:
     float n_tentwelve;
     float n_morethantwelve;
 
-    void SetPrices();
+    void ShowPrices();
 };
 
 #endif // CURRENTPLANWINDOW_HPP

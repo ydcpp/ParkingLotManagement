@@ -1535,7 +1535,7 @@ border-color : red;
    <widget class="QLabel" name="label_user">
     <property name="geometry">
      <rect>
-      <x>60</x>
+      <x>70</x>
       <y>0</y>
       <width>261</width>
       <height>16</height>
@@ -1553,7 +1553,7 @@ border-color : red;
    <widget class="QLabel" name="label_19">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>10</x>
       <y>0</y>
       <width>61</width>
       <height>16</height>

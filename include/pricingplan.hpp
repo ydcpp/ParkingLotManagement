@@ -23,6 +23,16 @@ public:
     qint32 GetPlanID() const;
     QString GetPlanName() const;
     float GetPricePerHour() const;
+    float Getlessthantwo() const;
+    float Gettwothree() const;
+    float Getthreefour() const;
+    float Getfourfive() const;
+    float Getfivesix() const;
+    float Getsixseven() const;
+    float Getseveneight() const;
+    float Geteightten() const;
+    float Gettentwelve() const;
+    float Getmorethantwelve() const;
     void GetPricesPerHour(float& lessThanTwo, float& twoThree, float& threeFour, float& fourFive, float& fiveSix, float& sixSeven, float& sevenEight, float& eightTen, float& tenTwelve, float& moreThanTwelve);
 
 signals:
