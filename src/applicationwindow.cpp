@@ -100,6 +100,16 @@ QList<PricingPlan *> ApplicationWindow::GetPricingPlanList()
     return m_pricingPlans;
 }
 
+void ApplicationWindow::updateCurrentPlan(qint32 planID)
+{
+    m_currentPlanID = planID;
+}
+
+qint32 ApplicationWindow::getCurrentPlanID() const
+{
+    return m_currentPlanID;
+}
+
 void ApplicationWindow::on_toolButton_quit_clicked()
 {
     QMessageBox::StandardButton reply;

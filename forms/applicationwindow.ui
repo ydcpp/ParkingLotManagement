@@ -228,7 +228,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>220</x>
-        <y>192</y>
+        <y>193</y>
         <width>101</width>
         <height>16</height>
        </rect>
@@ -250,16 +250,16 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>220</x>
-        <y>212</y>
+        <y>210</y>
         <width>101</width>
-        <height>22</height>
+        <height>20</height>
        </rect>
       </property>
       <property name="text">
        <string>NULL</string>
       </property>
       <property name="alignment">
-       <set>Qt::AlignHCenter|Qt::AlignTop</set>
+       <set>Qt::AlignCenter</set>
       </property>
       <property name="wordWrap">
        <bool>true</bool>

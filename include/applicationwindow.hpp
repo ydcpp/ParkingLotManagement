@@ -35,6 +35,8 @@ public:
     DatabaseManager* GetDBManager();
     User* GetCurrentUser();
     QList<PricingPlan*> GetPricingPlanList();
+    void updateCurrentPlan(qint32 planID);
+    qint32 getCurrentPlanID() const;
 
 public slots:
     float calculatePrice(qint64 minutes, QString& currentplan);

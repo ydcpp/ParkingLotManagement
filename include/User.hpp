@@ -2,7 +2,7 @@
 #define USER_HPP
 
 #include <QString>
-
+#include <QDateTime>
 
 class User
 {
@@ -15,18 +15,25 @@ public:
     };
 
     User::USERTYPES getUserType();
+    QString getUserType_string();
     QString getUsername() const;
     QString getFirstName() const;
     QString getLastName() const;
     qint32 getAccountID() const;
+    QDateTime getDateCreated() const;
+    QString getCurrentPassword() const;
 
-    User(QString username, QString firstname, QString lastname, qint32 accID, qint32 usertype);
+    void updatePassword(QString pw);
+
+    User(QString username, QString firstname, QString lastname, qint32 accID, qint32 usertype, QDateTime createDate, QString password);
     ~User();
 private:
     QString m_username;
     QString m_firstName;
     QString m_lastName;
+    QString m_password;
     qint32 m_accountID;
+    QDateTime m_date;
     USERTYPES m_type;
 };
 

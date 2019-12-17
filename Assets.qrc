@@ -13,6 +13,8 @@
         <file>assets/images/security-camera.png</file>
         <file>assets/images/settings.png</file>
         <file>ParkYerimDesktop.ico</file>
+        <file>assets/images/closed-lock-red.png</file>
+        <file>assets/images/open-lock-green.png</file>
     </qresource>
     <qresource prefix="/Database/Backups"/>
 </RCC>

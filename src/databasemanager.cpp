@@ -55,8 +55,10 @@ bool DatabaseManager::ValidateUserLogin(QString username, QString password, QStr
                 QString lastname;
                 qint32 accountID;
                 qint32 accType;
+                QDateTime creationDate;
+                QString password;
                 query.clear();
-                query.prepare("SELECT Person.FirstName, Person.LastName, Accounts.ID, Accounts.AccountType FROM Person"
+                query.prepare("SELECT Person.FirstName, Person.LastName, Accounts.ID, Accounts.AccountType, Accounts.DateCreated, Accounts.Password FROM Person"
                               " LEFT JOIN Accounts ON Person.ID = Accounts.fk_PersonID"
                               " WHERE Accounts.Username = :usr");
                 query.bindValue(":usr",username);
@@ -70,7 +72,9 @@ bool DatabaseManager::ValidateUserLogin(QString username, QString password, QStr
                 lastname = query.value(1).toString();
                 accountID = query.value(2).toInt();
                 accType = query.value(3).toInt();
-                *currentUser = new User(username,firstname,lastname,accountID,accType);
+                creationDate = query.value(4).toDateTime();
+                password = query.value(5).toString();
+                *currentUser = new User(username,firstname,lastname,accountID,accType,creationDate,password);
                 return true;
             }
         }
@@ -486,6 +490,10 @@ bool DatabaseManager::GetVehicleInformationByPlate(QString plate, qint32 &out_ve
 
 bool DatabaseManager::ChangePassword(qint32 accountID, QString oldPassword, QString newPassword, QString &errmsg)
 {
+    if(oldPassword == newPassword){
+        errmsg = "Eski şifre ile Yeni şifre aynı.";
+        return false;
+    }
     QSqlQuery query;
     query.prepare("select Password from Accounts where ID = :id");
     query.bindValue(":id",accountID);

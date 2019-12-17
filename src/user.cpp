@@ -1,11 +1,13 @@
 #include "User.hpp"
 
-User::User(QString username, QString firstname, QString lastname, qint32 accID, qint32 usertype)
+User::User(QString username, QString firstname, QString lastname, qint32 accID, qint32 usertype, QDateTime date, QString password)
 {
     m_username = username;
     m_firstName = firstname;
     m_lastName = lastname;
     m_accountID = accID;
+    m_date = date;
+    m_password = password;
     switch (usertype) {
     case 0:
         m_type = USER_NULL;
@@ -35,6 +37,22 @@ User::USERTYPES User::getUserType()
     return m_type;
 }
 
+QString User::getUserType_string()
+{
+    switch (m_type) {
+    case USER_NULL:
+        return "NULL";
+    case USER_NORMAL:
+        return "ÇALIŞAN";
+    case USER_MANAGER:
+        return "YÖNETİCİ";
+    case USER_ADMIN:
+        return "ADMIN";
+    default:
+        return "";
+    }
+}
+
 QString User::getUsername() const
 {
     return m_username;
@@ -53,4 +71,19 @@ QString User::getLastName() const
 qint32 User::getAccountID() const
 {
     return m_accountID;
+}
+
+QDateTime User::getDateCreated() const
+{
+    return m_date;
+}
+
+QString User::getCurrentPassword() const
+{
+    return m_password;
+}
+
+void User::updatePassword(QString pw)
+{
+    m_password = pw;
 }
