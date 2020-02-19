@@ -26,7 +26,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>ParkYerim Otopark - v0.01 Desktop</string>
+   <string>ParkYerim Otopark Yönetim Sistemi - v0.01 Desktop</string>
   </property>
   <widget class="QFrame" name="frame_mainFrame">
    <property name="geometry">

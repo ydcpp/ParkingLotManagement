@@ -5,8 +5,6 @@ DatabaseManager::DatabaseManager()
     QDir().mkpath(m_dbfilepath);
     QFile::copy(m_dbResourcePath,m_dbfile);
     QFile(m_dbfile).setPermissions(QFileDevice::ReadOwner | QFileDevice::WriteOwner);
-    //m_file.setFileName(m_dbfile);
-    //m_file.setPermissions(QFileDevice::ReadOwner | QFileDevice::WriteOwner);
     database = QSqlDatabase::addDatabase("QSQLITE");
     database.setDatabaseName(m_dbfile);
     if(database.open()){

@@ -38,8 +38,6 @@ private:
     void launchProgram();
     void initializeDatabase();
 
-    const QString m_dbpath = "./assets/db/current/parkyerimdb.sqlite";
-    const QString m_dbresourcepath = ":/Database/Current/assets/database/current/parkyerimdb.sqlite";
     const QString m_logfilepath = "./assets/other/applicationlog.txt";
 
 };

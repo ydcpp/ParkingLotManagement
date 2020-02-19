@@ -15,7 +15,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-INCLUDEPATH += ./include
+INCLUDEPATH += ./include \
+                $$PWD/opencv-build/include \
+
+
+LIBS += -L$$PWD/opencv-build/x64/mingw/lib \
+        -lopencv_core420        \
+        -lopencv_highgui420     \
+        -lopencv_imgcodecs420   \
+        -lopencv_imgproc420     \
+        -lopencv_features2d420  \
+        -lopencv_calib3d420
 
 
 HEADERS += \
@@ -41,4 +51,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     Assets.qrc
+
 

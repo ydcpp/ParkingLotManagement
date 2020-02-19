@@ -4,7 +4,6 @@
 #include <QTime>
 #include <QDebug>
 
-
 ParkYerim::ParkYerim(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::ParkYerim)
