@@ -7,6 +7,7 @@
 #include "settingspanel.hpp"
 #include "currentplanwindow.hpp"
 #include "vehiclesearch.hpp"
+#include "ThreadManager.hpp"
 
 #include <QWidget>
 #include <QMap>
@@ -16,6 +17,10 @@ class DatabaseManager;
 class User;
 class PricingPlan;
 class Logger;
+class QCamera;
+class QCameraViewfinder;
+class CameraVehicleIn;
+
 
 namespace Ui {
 class ApplicationWindow;
@@ -44,13 +49,15 @@ public slots:
     void updateRemainingSpots(qint32 value);
     void increaseRemainingSpotCount();
     void decreaseRemainingSpotCount();
+    void drawCamInput_vehicle_in(QPixmap pixmap);
+    void drawCamInput_vehicle_out(QPixmap pixmap);
 
     qint32 getRemainingSpotCount() const;
 
 private slots:
     void on_toolButton_quit_clicked();
     void showTime();
-
+    void enableToggleCameraButton();
     void on_toolButton_vehicle_in_clicked();
 
     void on_toolButton_vehicle_out_clicked();
@@ -66,10 +73,11 @@ private slots:
 
     void on_pushButton_parkingSpots_clicked();
 
-    void on_pushButton_securityCams_clicked();
+    void on_pushButton_toggleCameras_clicked();
 
 signals:
     float getPricePlanCalculation(qint64 minutes);
+    void terminateAllThreads();
 
 private:
     Ui::ApplicationWindow *ui;
@@ -83,15 +91,22 @@ private:
     SettingsPanel* m_window_settings = nullptr;
     CurrentPlanWindow* m_window_currentplan = nullptr;
     VehicleSearch* m_window_vehiclesearch = nullptr;
+    ThreadManager* m_threadManager = nullptr;
 
     qint32 m_remainingSpots = 0;
     QList<PricingPlan*> m_pricingPlans;
     qint32 m_currentPlanID = 0;
     PricingPlan* currentPricingPlan = nullptr;
 
+    // camera
+    bool m_isCameraInputOn = false;
+    QCamera* m_camera = nullptr;
+    QCameraViewfinder* m_camViewfinder = nullptr;
+
     void initializeAssetPaths();
     void setupIcons();
     void setupCustomComponents();
+    void setupCameraComponents();
 
 
     QMap<QString, QString> m_assetPaths;

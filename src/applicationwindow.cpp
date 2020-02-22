@@ -3,9 +3,20 @@
 
 #include <QMessageBox>
 #include <QTimer>
+#include <QMediaService>
+#include <QCamera>
+#include <QCameraViewfinder>
+#include <QCameraInfo>
+#include <QGraphicsScene>
+#include <QPushButton>
+#include <QCameraViewfinder>
 
 #include "parkyerim.hpp"
 
+
+#include <QDebug>
+
+Q_DECLARE_METATYPE(QCameraInfo)
 
 ApplicationWindow::ApplicationWindow(DatabaseManager* dbmanager, User* user, Logger* logger, QWidget *parent) :
     QWidget(parent),
@@ -18,15 +29,19 @@ ApplicationWindow::ApplicationWindow(DatabaseManager* dbmanager, User* user, Log
     m_dbmanager = dbmanager;
     m_currentuser = user;
     m_logger = logger;
+    m_threadManager = ThreadManager::getInstance(this);
+    connect(this,&ApplicationWindow::terminateAllThreads,m_threadManager,&ThreadManager::terminateAllThreads);
     initializeAssetPaths();
     setupIcons();
     setupCustomComponents();
+    setupCameraComponents();
 }
 
 ApplicationWindow::~ApplicationWindow()
 {
-    delete ui;
     for(PricingPlan* plan : m_pricingPlans) if(plan) delete plan;
+    delete m_threadManager;
+    delete ui;
 }
 
 void ApplicationWindow::ClearVehicleInStats()
@@ -90,6 +105,18 @@ void ApplicationWindow::decreaseRemainingSpotCount()
     updateRemainingSpots(m_remainingSpots-1);
 }
 
+void ApplicationWindow::drawCamInput_vehicle_in(QPixmap pixmap)
+{
+    pixmap = pixmap.scaled(ui->label_vehicle_in->width(),ui->label_vehicle_in->height());
+    ui->label_vehicle_in->setPixmap(pixmap);
+}
+
+void ApplicationWindow::drawCamInput_vehicle_out(QPixmap pixmap)
+{
+    pixmap = pixmap.scaled(ui->label_vehicle_out->width(),ui->label_vehicle_out->height());
+    ui->label_vehicle_out->setPixmap(pixmap);
+}
+
 qint32 ApplicationWindow::getRemainingSpotCount() const
 {
     return m_remainingSpots;
@@ -123,6 +150,7 @@ void ApplicationWindow::on_toolButton_quit_clicked()
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, "Çıkış", "Programı kapatmak istediğinizden emin misiniz?", QMessageBox::Yes|QMessageBox::Cancel);
     if(reply == QMessageBox::Yes){
+        emit terminateAllThreads();
         QApplication::quit();
     }
 }
@@ -133,6 +161,11 @@ void ApplicationWindow::showTime()
     QString text = time.toString("HH:mm");
     if ((time.second() % 2) == 0) text[2] = ' ';
     ui->lcdNumber->display(text);
+}
+
+void ApplicationWindow::enableToggleCameraButton()
+{
+    ui->pushButton_toggleCameras->setEnabled(true);
 }
 
 void ApplicationWindow::on_toolButton_vehicle_in_clicked()
@@ -170,7 +203,7 @@ void ApplicationWindow::setupIcons()
     ui->pushButton_search->setIcon(QIcon(m_assetPaths["icon_search"]));
     ui->pushButton_parkingSpots->setIcon(QIcon(m_assetPaths["icon_parkingspot"]));
     ui->pushButton_currentPlanDetails->setIcon(QIcon(m_assetPaths["icon_list"]));
-    ui->pushButton_securityCams->setIcon(QIcon(m_assetPaths["icon_camera"]));
+    ui->pushButton_toggleCameras->setIcon(QIcon(m_assetPaths["icon_camera"]));
 }
 
 void ApplicationWindow::setupCustomComponents()
@@ -206,6 +239,12 @@ void ApplicationWindow::setupCustomComponents()
     updateRemainingSpots(5);
 }
 
+void ApplicationWindow::setupCameraComponents()
+{
+
+}
+
+
 void ApplicationWindow::on_toolButton_adminpanel_clicked()
 {
     m_window_admin = new AdminPanel(m_dbmanager,this);
@@ -235,7 +274,24 @@ void ApplicationWindow::on_pushButton_parkingSpots_clicked()
 
 }
 
-void ApplicationWindow::on_pushButton_securityCams_clicked()
+void ApplicationWindow::on_pushButton_toggleCameras_clicked()
 {
+    ui->pushButton_toggleCameras->setEnabled(false);
+    m_isCameraInputOn = !m_isCameraInputOn;
+    if(m_isCameraInputOn){
+        // toggle camera input on
+        m_threadManager->startCamVehicleIn();
+        ui->label_vehicle_in->setVisible(true);
+        //m_threadManager->startCamVehicleOut();
+        //ui->label_vehicle_out->setVisible(true);
+        QTimer::singleShot(2000,this,&ApplicationWindow::enableToggleCameraButton);
+    }else{
+        // toggle camera input off
+        m_threadManager->stopCamVehicleIn();
+        ui->label_vehicle_in->setVisible(false);
+        //m_threadManager->stopCamVehicleOut();
+        //ui->label_vehicle_out->setVisible(false);
+        QTimer::singleShot(2000,this,&ApplicationWindow::enableToggleCameraButton);
 
+    }
 }

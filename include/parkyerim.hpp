@@ -34,8 +34,10 @@ private:
     User* m_user = nullptr;
     Logger* m_logger = nullptr;
 
+    bool m_skipLogin = true;
+
     bool validateLoginInfo();
-    void launchProgram();
+    void launchProgram(bool debugmode = false);
     void initializeDatabase();
 
     const QString m_logfilepath = "./assets/other/applicationlog.txt";

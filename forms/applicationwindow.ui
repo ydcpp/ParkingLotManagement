@@ -269,7 +269,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>420</y>
+        <y>470</y>
         <width>321</width>
         <height>41</height>
        </rect>
@@ -283,29 +283,6 @@ border-color : red;
       <property name="icon">
        <iconset>
         <normaloff>../assets/images/search.png</normaloff>../assets/images/search.png</iconset>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>24</width>
-        <height>24</height>
-       </size>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton_currentPlanDetails">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>470</y>
-        <width>321</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>GEÇERLİ FİYAT TARİFESİ DETAYLARI</string>
-      </property>
-      <property name="icon">
-       <iconset>
-        <normaloff>../assets/images/list.png</normaloff>../assets/images/list.png</iconset>
       </property>
       <property name="iconSize">
        <size>
@@ -340,10 +317,33 @@ border-color : red;
        </size>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_securityCams">
+     <widget class="QPushButton" name="pushButton_toggleCameras">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>420</y>
+        <width>321</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>        KAMERALARI AÇ / KAPAT         </string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>../assets/images/security-camera.png</normaloff>../assets/images/security-camera.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>24</width>
+        <height>24</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_currentPlanDetails">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -353,11 +353,11 @@ border-color : red;
        </rect>
       </property>
       <property name="text">
-       <string>   TÜM KAMERALARI GÖRÜNTÜLE   </string>
+       <string>GEÇERLİ FİYAT TARİFESİ DETAYLARI</string>
       </property>
       <property name="icon">
        <iconset>
-        <normaloff>../assets/images/security-camera.png</normaloff>../assets/images/security-camera.png</iconset>
+        <normaloff>../assets/images/list.png</normaloff>../assets/images/list.png</iconset>
       </property>
       <property name="iconSize">
        <size>
@@ -382,16 +382,6 @@ border-color : red;
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <widget class="QGraphicsView" name="graphicsView_vehicle_in">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>411</width>
-        <height>231</height>
-       </rect>
-      </property>
-     </widget>
      <widget class="QLabel" name="label_6">
       <property name="geometry">
        <rect>
@@ -646,6 +636,19 @@ border-color : red;
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
+     <widget class="QLabel" name="label_vehicle_in">
+      <property name="geometry">
+       <rect>
+        <x>2</x>
+        <y>2</y>
+        <width>408</width>
+        <height>240</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
     </widget>
     <widget class="QFrame" name="frame_exit">
      <property name="geometry">
@@ -662,16 +665,6 @@ border-color : red;
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <widget class="QGraphicsView" name="graphicsView_vehicle_out">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>411</width>
-        <height>231</height>
-       </rect>
-      </property>
-     </widget>
      <widget class="Line" name="line_5">
       <property name="geometry">
        <rect>
@@ -1245,6 +1238,19 @@ border-color : red;
       </property>
       <property name="readOnly">
        <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_vehicle_out">
+      <property name="geometry">
+       <rect>
+        <x>2</x>
+        <y>2</y>
+        <width>408</width>
+        <height>240</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
       </property>
      </widget>
     </widget>

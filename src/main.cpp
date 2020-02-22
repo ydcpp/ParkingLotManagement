@@ -1,4 +1,5 @@
 #include "parkyerim.hpp"
+#include "CameraVehicleIn.hpp"
 
 #include <QApplication>
 
