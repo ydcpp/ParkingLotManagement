@@ -20,9 +20,14 @@ ImageProcess::~ImageProcess()
 void ImageProcess::run()
 {
     m_keepRunning = true;
+    unsigned int test = 0;
     while(m_keepRunning)
     {
+        waitKey(100);
         m_frame = emit getFrame();
+        /* do image processing and plate reading */
+        emit sendPlateString("deneme" + QString::number(test++));
+        waitKey(2000);
     }
 }
 

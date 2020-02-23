@@ -26,7 +26,6 @@ ApplicationWindow::ApplicationWindow(DatabaseManager* dbmanager, User* user, Log
     m_currentuser = user;
     m_logger = logger;
     m_threadManager = ThreadManager::getInstance(this,m_vehicleInCameraDeviceIndex,m_vehicleOutCameraDeviceIndex);
-    connect(this,&ApplicationWindow::terminateAllThreads,m_threadManager,&ThreadManager::terminateAllThreads);
     initializeAssetPaths();
     setupIcons();
     setupCustomComponents();
@@ -292,16 +291,14 @@ void ApplicationWindow::on_pushButton_toggleCameras_clicked()
     m_isCameraInputOn = !m_isCameraInputOn;
     if(m_isCameraInputOn){
         // toggle camera input on
-        m_threadManager->startCamVehicleIn();
+        m_threadManager->startCameraSystem();
         ui->label_vehicle_in->setVisible(true);
-        m_threadManager->startCamVehicleOut();
         ui->label_vehicle_out->setVisible(true);
         QTimer::singleShot(2000,this,&ApplicationWindow::enableToggleCameraButton);
     }else{
         // toggle camera input off
-        m_threadManager->stopCamVehicleIn();
+        emit terminateAllThreads();
         ui->label_vehicle_in->setVisible(false);
-        m_threadManager->stopCamVehicleOut();
         ui->label_vehicle_out->setVisible(false);
         QTimer::singleShot(2000,this,&ApplicationWindow::enableToggleCameraButton);
 

@@ -20,14 +20,7 @@ public:
     ~ThreadManager();
     static ThreadManager* getInstance(ApplicationWindow* appwindow, unsigned int vehicle_in_CamIndex, unsigned int vehicle_out_CamIndex);
     ApplicationWindow* getAppWindow();
-
-
-public slots:
-    void terminateAllThreads();
-    void capturedFrame_vehicle_in(cv::Mat);
-    void capturedFrame_vehicle_out(cv::Mat);
-    cv::Mat sendFrame_vehicle_in();
-    cv::Mat sendFrame_vehicle_out();
+    void startCameraSystem();
 
 signals:
     //cam stream vehicle in thread
@@ -44,6 +37,15 @@ signals:
     void stopImageProcessingIn();
     void stopImageProcessingOut();
 
+private slots:
+    void terminateAllThreads();
+    void capturedFrame_vehicle_in(cv::Mat);
+    void capturedFrame_vehicle_out(cv::Mat);
+    cv::Mat sendFrame_vehicle_in();
+    cv::Mat sendFrame_vehicle_out();
+
+
+
 private:
     ThreadManager(ApplicationWindow* appwindow, unsigned int vehicle_in_CamIndex, unsigned int vehicle_out_CamIndex);
 
@@ -56,6 +58,8 @@ private:
 
     cv::Mat m_Frame_vehicle_in;
     cv::Mat m_Frame_vehicle_out;
+
+
 };
 
 #endif // THREADMANAGER_HPP
