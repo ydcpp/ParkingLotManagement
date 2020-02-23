@@ -11,15 +11,13 @@
 
 #include <QWidget>
 #include <QMap>
+#include <QString>
 
 class ParkYerim;
 class DatabaseManager;
 class User;
 class PricingPlan;
 class Logger;
-class QCamera;
-class QCameraViewfinder;
-class CameraVehicleIn;
 
 
 namespace Ui {
@@ -46,11 +44,15 @@ public:
 public slots:
     float calculatePrice(qint64 minutes, QString& currentplan);
 
-    void updateRemainingSpots(qint32 value);
+    void updateRemainingSpots(qint32);
     void increaseRemainingSpotCount();
     void decreaseRemainingSpotCount();
-    void drawCamInput_vehicle_in(QPixmap pixmap);
-    void drawCamInput_vehicle_out(QPixmap pixmap);
+    void drawCamInput_vehicle_in(QPixmap);
+    void drawCamInput_vehicle_out(QPixmap);
+    void displayLicensePlateString_vehicle_in(QString);
+    void displayLicensePlateString_vehicle_out(QString);
+    void changeCamera_in_statusText(QString,QString);
+    void changeCamera_out_statusText(QString,QString);
 
     qint32 getRemainingSpotCount() const;
 
@@ -98,15 +100,14 @@ private:
     qint32 m_currentPlanID = 0;
     PricingPlan* currentPricingPlan = nullptr;
 
-    // camera
+    // camera settings
     bool m_isCameraInputOn = false;
-    QCamera* m_camera = nullptr;
-    QCameraViewfinder* m_camViewfinder = nullptr;
+    unsigned int m_vehicleInCameraDeviceIndex = 0;
+    unsigned int m_vehicleOutCameraDeviceIndex = 1;
 
     void initializeAssetPaths();
     void setupIcons();
     void setupCustomComponents();
-    void setupCameraComponents();
 
 
     QMap<QString, QString> m_assetPaths;

@@ -14,10 +14,6 @@
 #include "parkyerim.hpp"
 
 
-#include <QDebug>
-
-Q_DECLARE_METATYPE(QCameraInfo)
-
 ApplicationWindow::ApplicationWindow(DatabaseManager* dbmanager, User* user, Logger* logger, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ApplicationWindow)
@@ -29,12 +25,11 @@ ApplicationWindow::ApplicationWindow(DatabaseManager* dbmanager, User* user, Log
     m_dbmanager = dbmanager;
     m_currentuser = user;
     m_logger = logger;
-    m_threadManager = ThreadManager::getInstance(this);
+    m_threadManager = ThreadManager::getInstance(this,m_vehicleInCameraDeviceIndex,m_vehicleOutCameraDeviceIndex);
     connect(this,&ApplicationWindow::terminateAllThreads,m_threadManager,&ThreadManager::terminateAllThreads);
     initializeAssetPaths();
     setupIcons();
     setupCustomComponents();
-    setupCameraComponents();
 }
 
 ApplicationWindow::~ApplicationWindow()
@@ -115,6 +110,28 @@ void ApplicationWindow::drawCamInput_vehicle_out(QPixmap pixmap)
 {
     pixmap = pixmap.scaled(ui->label_vehicle_out->width(),ui->label_vehicle_out->height());
     ui->label_vehicle_out->setPixmap(pixmap);
+}
+
+void ApplicationWindow::displayLicensePlateString_vehicle_in(QString plate)
+{
+    ui->lineEdit_in_plate->setText(plate);
+}
+
+void ApplicationWindow::displayLicensePlateString_vehicle_out(QString plate)
+{
+    ui->lineEdit_out_plate->setText(plate);
+}
+
+void ApplicationWindow::changeCamera_in_statusText(QString tx, QString stylesheet)
+{
+    ui->label_cam_in_status->setStyleSheet(stylesheet);
+    ui->label_cam_in_status->setText(tx);
+}
+
+void ApplicationWindow::changeCamera_out_statusText(QString tx, QString stylesheet)
+{
+    ui->label_cam_out_status->setStyleSheet(stylesheet);
+    ui->label_cam_out_status->setText(tx);
 }
 
 qint32 ApplicationWindow::getRemainingSpotCount() const
@@ -239,11 +256,6 @@ void ApplicationWindow::setupCustomComponents()
     updateRemainingSpots(5);
 }
 
-void ApplicationWindow::setupCameraComponents()
-{
-
-}
-
 
 void ApplicationWindow::on_toolButton_adminpanel_clicked()
 {
@@ -282,15 +294,15 @@ void ApplicationWindow::on_pushButton_toggleCameras_clicked()
         // toggle camera input on
         m_threadManager->startCamVehicleIn();
         ui->label_vehicle_in->setVisible(true);
-        //m_threadManager->startCamVehicleOut();
-        //ui->label_vehicle_out->setVisible(true);
+        m_threadManager->startCamVehicleOut();
+        ui->label_vehicle_out->setVisible(true);
         QTimer::singleShot(2000,this,&ApplicationWindow::enableToggleCameraButton);
     }else{
         // toggle camera input off
         m_threadManager->stopCamVehicleIn();
         ui->label_vehicle_in->setVisible(false);
-        //m_threadManager->stopCamVehicleOut();
-        //ui->label_vehicle_out->setVisible(false);
+        m_threadManager->stopCamVehicleOut();
+        ui->label_vehicle_out->setVisible(false);
         QTimer::singleShot(2000,this,&ApplicationWindow::enableToggleCameraButton);
 
     }

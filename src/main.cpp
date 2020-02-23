@@ -1,5 +1,5 @@
 #include "parkyerim.hpp"
-#include "CameraVehicleIn.hpp"
+#include "CameraStream.hpp"
 
 #include <QApplication>
 

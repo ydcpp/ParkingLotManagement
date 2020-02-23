@@ -1,5 +1,5 @@
-#ifndef CAMERAVEHICLEOUT_HPP
-#define CAMERAVEHICLEOUT_HPP
+#ifndef CAMERAVEHICLEIN_HPP
+#define CAMERAVEHICLEIN_HPP
 
 #include <QThread>
 #include <QImage>
@@ -11,13 +11,12 @@
 
 class ThreadManager;
 
-class CameraVehicleOut : public QThread
+class CameraStream : public QThread
 {
     Q_OBJECT
 
 public:
-    CameraVehicleOut(ThreadManager* app);
-    ~CameraVehicleOut() override;
+    CameraStream(ThreadManager* app, unsigned int cameraIndex);
 
     int getFPS() const;
     void setFPS(int value);
@@ -28,13 +27,16 @@ public slots:
     void startThread();
 
 signals:
-    void updateCameraDisplay_vehicle_out(QPixmap);
+    void updateCameraDisplay(QPixmap);
+    void captureLicensePlate(cv::Mat);
+    void updateCamStatusText(QString,QString);
 
 private:
     ThreadManager* m_tmanager;
     cv::VideoCapture m_vidcap;
 
-    int m_MaxFPS = 50;
+    unsigned int m_camIndex;
+    unsigned int m_MaxFPS = 50;
     bool m_keepStreaming = true;
 
     cv::Mat frame;
@@ -42,4 +44,4 @@ private:
 
 };
 
-#endif // CAMERAVEHICLEOUT_HPP
+#endif // CAMERAVEHICLEIN_HPP

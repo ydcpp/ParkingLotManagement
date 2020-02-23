@@ -1447,8 +1447,8 @@ border-color : red;
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>100</x>
-      <y>30</y>
+      <x>90</x>
+      <y>20</y>
       <width>231</width>
       <height>31</height>
      </rect>
@@ -1471,7 +1471,7 @@ border-color : red;
     <property name="geometry">
      <rect>
       <x>520</x>
-      <y>30</y>
+      <y>20</y>
       <width>231</width>
       <height>31</height>
      </rect>
@@ -1573,6 +1573,52 @@ border-color : red;
     </property>
     <property name="text">
      <string>Kullanıcı : </string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_cam_in_status">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>50</y>
+      <width>121</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_cam_out_status">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>50</y>
+      <width>121</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
     </property>
    </widget>
   </widget>
