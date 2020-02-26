@@ -21,28 +21,24 @@ public:
     static ThreadManager* getInstance(ApplicationWindow* appwindow, unsigned int vehicle_in_CamIndex, unsigned int vehicle_out_CamIndex);
     ApplicationWindow* getAppWindow();
     void startCameraSystem();
+    cv::Mat getFrame_in();
+    cv::Mat getFrame_out();
 
 signals:
     //cam stream vehicle in thread
-    void startCamVehicleIn();
-    void stopCamVehicleIn();
-
-    // cam stream vehicle out thread
-    void startCamVehicleOut();
-    void stopCamVehicleOut();
+    void startCameraStream();
+    void stopCameraStream();
 
     // license plate reader thread
-    void readPlateVehicleIn();
-    void readPlateVehicleOut();
-    void stopImageProcessingIn();
-    void stopImageProcessingOut();
+    void readPlateVehicle();
+    void stopImageProcessing();
 
 private slots:
     void terminateAllThreads();
     void capturedFrame_vehicle_in(cv::Mat);
     void capturedFrame_vehicle_out(cv::Mat);
-    cv::Mat sendFrame_vehicle_in();
-    cv::Mat sendFrame_vehicle_out();
+    void sendFrame_vehicle_in(cv::Mat*);
+    void sendFrame_vehicle_out(cv::Mat*);
 
 
 

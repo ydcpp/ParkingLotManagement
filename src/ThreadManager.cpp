@@ -18,26 +18,22 @@ ThreadManager::ThreadManager(ApplicationWindow* appwindow, unsigned int vehicle_
     connect(m_appwindow,&ApplicationWindow::terminateAllThreads,this,&ThreadManager::terminateAllThreads);
     qRegisterMetaType<cv::Mat>("cv::Mat");
     // incoming vehicles camera setup
-    connect(this,&ThreadManager::startCamVehicleIn,m_camVehicleIn,&CameraStream::startThread);
-    connect(this,&ThreadManager::stopCamVehicleIn,m_camVehicleIn,&CameraStream::stopCameraStream);
+
     connect(m_camVehicleIn,&CameraStream::updateCameraDisplay,m_appwindow,&ApplicationWindow::drawCamInput_vehicle_in);
     connect(m_camVehicleIn,&CameraStream::captureLicensePlate,this,&ThreadManager::capturedFrame_vehicle_in);
-    connect(m_camVehicleIn,&CameraStream::updateCamStatusText,m_appwindow,&ApplicationWindow::changeCamera_in_statusText);
+    connect(m_camVehicleIn,&CameraStream::cameraIsOpen,m_appwindow,&ApplicationWindow::openCameraStream_in);
+    connect(m_camVehicleIn,&CameraStream::cameraIsClosed,m_appwindow,&ApplicationWindow::closeCameraStream_in);
     // outgoing vehicles camera setup
-    connect(this,&ThreadManager::startCamVehicleOut,m_camVehicleOut,&CameraStream::startThread);
-    connect(this,&ThreadManager::stopCamVehicleOut,m_camVehicleOut,&CameraStream::stopCameraStream);
     connect(m_camVehicleOut,&CameraStream::updateCameraDisplay,m_appwindow,&ApplicationWindow::drawCamInput_vehicle_out);
     connect(m_camVehicleOut,&CameraStream::captureLicensePlate,this,&ThreadManager::capturedFrame_vehicle_out);
-    connect(m_camVehicleOut,&CameraStream::updateCamStatusText,m_appwindow,&ApplicationWindow::changeCamera_out_statusText);
+    connect(m_camVehicleOut,&CameraStream::cameraIsOpen,m_appwindow,&ApplicationWindow::openCameraStream_out);
+    connect(m_camVehicleOut,&CameraStream::cameraIsClosed,m_appwindow,&ApplicationWindow::closeCameraStream_out);
     // image process thread setup
-    connect(this,&ThreadManager::readPlateVehicleIn,m_plateReaderVehicleIn,&ImageProcess::startThread);
-    connect(this,&ThreadManager::stopImageProcessingIn,m_plateReaderVehicleIn,&ImageProcess::stopThread);
-    connect(this,&ThreadManager::readPlateVehicleOut,m_plateReaderVehicleOut,&ImageProcess::startThread);
-    connect(this,&ThreadManager::stopImageProcessingOut,m_plateReaderVehicleOut,&ImageProcess::stopThread);
     connect(m_plateReaderVehicleIn,&ImageProcess::sendPlateString,m_appwindow,&ApplicationWindow::displayLicensePlateString_vehicle_in);
     connect(m_plateReaderVehicleOut,&ImageProcess::sendPlateString,m_appwindow,&ApplicationWindow::displayLicensePlateString_vehicle_out);
     connect(m_plateReaderVehicleIn,&ImageProcess::getFrame,this,&ThreadManager::sendFrame_vehicle_in);
     connect(m_plateReaderVehicleOut,&ImageProcess::getFrame,this,&ThreadManager::sendFrame_vehicle_out);
+
 }
 
 ThreadManager::~ThreadManager()
@@ -59,21 +55,28 @@ ApplicationWindow* ThreadManager::getAppWindow()
     return m_appwindow;
 }
 
+
 void ThreadManager::startCameraSystem()
 {
-    emit startCamVehicleIn();
-    emit startCamVehicleOut();
-    emit readPlateVehicleIn();
-    emit readPlateVehicleOut();
+    emit startCameraStream();
+    emit readPlateVehicle();
+}
+
+cv::Mat ThreadManager::getFrame_in()
+{
+    return m_Frame_vehicle_in;
+}
+
+cv::Mat ThreadManager::getFrame_out()
+{
+    return m_Frame_vehicle_out;
 }
 
 
 void ThreadManager::terminateAllThreads()
 {
-    emit stopCamVehicleIn();
-    emit stopCamVehicleOut();
-    emit stopImageProcessingIn();
-    emit stopImageProcessingOut();
+    emit stopCameraStream();
+    emit stopImageProcessing();
 }
 
 void ThreadManager::capturedFrame_vehicle_in(cv::Mat frame)
@@ -86,13 +89,13 @@ void ThreadManager::capturedFrame_vehicle_out(cv::Mat frame)
     m_Frame_vehicle_out = frame;
 }
 
-cv::Mat ThreadManager::sendFrame_vehicle_in()
+void ThreadManager::sendFrame_vehicle_in(cv::Mat* frame)
 {
-    return m_Frame_vehicle_in;
+    *frame = m_Frame_vehicle_in;
 }
 
-cv::Mat ThreadManager::sendFrame_vehicle_out()
+void ThreadManager::sendFrame_vehicle_out(cv::Mat* frame)
 {
-    return m_Frame_vehicle_out;
+    *frame = m_Frame_vehicle_out;
 }
 

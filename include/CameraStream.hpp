@@ -22,14 +22,16 @@ public:
     void setFPS(int value);
     void run() override;
 
-public slots:
-    void stopCameraStream();
-    void startThread();
 
 signals:
     void updateCameraDisplay(QPixmap);
     void captureLicensePlate(cv::Mat);
-    void updateCamStatusText(QString,QString);
+    void cameraIsClosed();
+    void cameraIsOpen();
+
+private slots:
+    void stopCameraStream();
+    void startThread();
 
 private:
     ThreadManager* m_tmanager;

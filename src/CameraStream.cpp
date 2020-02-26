@@ -10,6 +10,8 @@ using namespace cv;
 CameraStream::CameraStream(ThreadManager* tmanager, unsigned int cameraIndex)
     : m_tmanager(tmanager), m_camIndex(cameraIndex)
 {
+    connect(m_tmanager,&ThreadManager::startCameraStream,this,&CameraStream::startThread);
+    connect(m_tmanager,&ThreadManager::stopCameraStream,this,&CameraStream::stopCameraStream);
 }
 
 int CameraStream::getFPS() const
@@ -25,16 +27,15 @@ void CameraStream::setFPS(int value)
 
 void CameraStream::run()
 {
-    m_vidcap.open(m_camIndex);
+    m_vidcap.open("assets/testvid.mp4");
     if(!m_vidcap.isOpened()){
         qDebug() << "camera on device index (" <<  m_camIndex << ") could not open.";
-        emit updateCamStatusText("Kamera kapalı", "color:red;");
+        emit cameraIsClosed();
     }else{
-        emit updateCamStatusText("Kamera açık", "color:green;");
+        emit cameraIsOpen();
         m_keepStreaming = true;
         qDebug() << "Video stream from camera device (" << m_camIndex << ") is started.";
-        while(m_keepStreaming){
-            m_vidcap >> frame;
+        while(m_keepStreaming && m_vidcap.read(frame)){
             emit captureLicensePlate(frame);
             cvtColor(frame,frame,COLOR_BGR2RGB);
             qt_image = QImage((const unsigned char*) (frame.data), frame.cols, frame.rows, QImage::Format_RGB888);
@@ -43,7 +44,7 @@ void CameraStream::run()
         }
         qDebug() << "Video stream is stopped.(" << m_camIndex << ")";
         m_vidcap.release();
-        emit updateCamStatusText("Kamera kapalı", "color:red;");
+        emit cameraIsClosed();
     }
 }
 

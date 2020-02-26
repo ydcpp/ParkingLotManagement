@@ -121,17 +121,34 @@ void ApplicationWindow::displayLicensePlateString_vehicle_out(QString plate)
     ui->lineEdit_out_plate->setText(plate);
 }
 
-void ApplicationWindow::changeCamera_in_statusText(QString tx, QString stylesheet)
+void ApplicationWindow::openCameraStream_in()
 {
-    ui->label_cam_in_status->setStyleSheet(stylesheet);
-    ui->label_cam_in_status->setText(tx);
+    ui->label_cam_in_status->setStyleSheet("color:green;");
+    ui->label_cam_in_status->setText("Kamera açık");
+    ui->label_vehicle_in->setVisible(true);
 }
 
-void ApplicationWindow::changeCamera_out_statusText(QString tx, QString stylesheet)
+void ApplicationWindow::closeCameraStream_in()
 {
-    ui->label_cam_out_status->setStyleSheet(stylesheet);
-    ui->label_cam_out_status->setText(tx);
+    ui->label_cam_in_status->setStyleSheet("color:red;");
+    ui->label_cam_in_status->setText("Kamera kapalı");
+    ui->label_vehicle_in->setVisible(false);
 }
+
+void ApplicationWindow::openCameraStream_out()
+{
+    ui->label_cam_out_status->setStyleSheet("color:green;");
+    ui->label_cam_out_status->setText("Kamera açık");
+    ui->label_vehicle_out->setVisible(true);
+}
+
+void ApplicationWindow::closeCameraStream_out()
+{
+    ui->label_cam_out_status->setStyleSheet("color:red;");
+    ui->label_cam_out_status->setText("Kamera kapalı");
+    ui->label_vehicle_out->setVisible(false);
+}
+
 
 qint32 ApplicationWindow::getRemainingSpotCount() const
 {
@@ -287,19 +304,16 @@ void ApplicationWindow::on_pushButton_parkingSpots_clicked()
 
 void ApplicationWindow::on_pushButton_toggleCameras_clicked()
 {
+    if(!m_threadManager) return;
     ui->pushButton_toggleCameras->setEnabled(false);
     m_isCameraInputOn = !m_isCameraInputOn;
     if(m_isCameraInputOn){
         // toggle camera input on
         m_threadManager->startCameraSystem();
-        ui->label_vehicle_in->setVisible(true);
-        ui->label_vehicle_out->setVisible(true);
         QTimer::singleShot(2000,this,&ApplicationWindow::enableToggleCameraButton);
     }else{
         // toggle camera input off
         emit terminateAllThreads();
-        ui->label_vehicle_in->setVisible(false);
-        ui->label_vehicle_out->setVisible(false);
         QTimer::singleShot(2000,this,&ApplicationWindow::enableToggleCameraButton);
 
     }

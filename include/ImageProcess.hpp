@@ -24,9 +24,9 @@ public:
 
 signals:
     void sendPlateString(QString);
-    cv::Mat getFrame();
+    void getFrame(cv::Mat*);
 
-public slots:
+private slots:
     void stopThread();
     void startThread();
 
@@ -34,6 +34,7 @@ private:
     ThreadManager* m_tmanager;
     bool m_keepRunning = true;
 
+    QImage qt_image;
     cv::Mat m_frame;
 };
 

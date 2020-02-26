@@ -51,8 +51,10 @@ public slots:
     void drawCamInput_vehicle_out(QPixmap);
     void displayLicensePlateString_vehicle_in(QString);
     void displayLicensePlateString_vehicle_out(QString);
-    void changeCamera_in_statusText(QString,QString);
-    void changeCamera_out_statusText(QString,QString);
+    void openCameraStream_in();
+    void closeCameraStream_in();
+    void openCameraStream_out();
+    void closeCameraStream_out();
 
     qint32 getRemainingSpotCount() const;
 

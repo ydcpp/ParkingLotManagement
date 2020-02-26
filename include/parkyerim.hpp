@@ -37,7 +37,8 @@ private:
     bool m_skipLogin = true;
 
     bool validateLoginInfo();
-    void launchProgram(bool debugmode = false);
+    void launchProgram();
+    void launchDebugMode();
     void initializeDatabase();
 
     const QString m_logfilepath = "./assets/other/applicationlog.txt";

@@ -9,7 +9,8 @@ using namespace cv;
 ImageProcess::ImageProcess(ThreadManager* tmanager)
     : m_tmanager(tmanager)
 {
-
+    connect(m_tmanager,&ThreadManager::readPlateVehicle,this,&ImageProcess::startThread);
+    connect(m_tmanager,&ThreadManager::stopImageProcessing,this,&ImageProcess::stopThread);
 }
 
 ImageProcess::~ImageProcess()
@@ -20,14 +21,20 @@ ImageProcess::~ImageProcess()
 void ImageProcess::run()
 {
     m_keepRunning = true;
+    m_frame.release();
     unsigned int test = 0;
     while(m_keepRunning)
     {
-        waitKey(100);
-        m_frame = emit getFrame();
-        /* do image processing and plate reading */
+        waitKey(1000);
+        emit getFrame(&m_frame);
+        if(m_frame.empty()){
+            qDebug() << "frame is empty.";
+            waitKey(1000);
+            continue;
+        }
+        /* do image processing with m_frame and read the license plate */
         emit sendPlateString("deneme" + QString::number(test++));
-        waitKey(2000);
+        waitKey(1000);
     }
 }
 
