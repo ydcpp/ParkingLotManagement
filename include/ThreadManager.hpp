@@ -19,13 +19,12 @@ public:
 
     ~ThreadManager();
     static ThreadManager* getInstance(ApplicationWindow* appwindow, unsigned int vehicle_in_CamIndex, unsigned int vehicle_out_CamIndex);
-    ApplicationWindow* getAppWindow();
     void startCameraSystem();
     cv::Mat getFrame_in();
     cv::Mat getFrame_out();
 
 signals:
-    //cam stream vehicle in thread
+    //camera streaming thread
     void startCameraStream();
     void stopCameraStream();
 

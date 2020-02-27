@@ -18,7 +18,7 @@ ManualVehicleEntry::ManualVehicleEntry(DatabaseManager* dbmanager, QWidget *pare
     QStringList types;
     for(qint32 id : m_dbmanager->getVehicleTypes()) types.append(m_dbmanager->getVehicleTypes().key(id));
     ui->comboBox_types->addItems(types);
-    connect(this,&ManualVehicleEntry::decreaseCount,static_cast<ApplicationWindow*>(parent),&ApplicationWindow::decreaseRemainingSpotCount);
+
 }
 
 ManualVehicleEntry::~ManualVehicleEntry()

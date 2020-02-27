@@ -29,6 +29,7 @@ ApplicationWindow::ApplicationWindow(DatabaseManager* dbmanager, User* user, Log
     initializeAssetPaths();
     setupIcons();
     setupCustomComponents();
+    connect(m_window_vehicle_in,&ManualVehicleEntry::decreaseCount,this,&ApplicationWindow::decreaseRemainingSpotCount);
 }
 
 ApplicationWindow::~ApplicationWindow()

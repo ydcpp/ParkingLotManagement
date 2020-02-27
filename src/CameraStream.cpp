@@ -42,6 +42,8 @@ void CameraStream::run()
             waitKey(1000/m_MaxFPS);
             emit updateCameraDisplay(QPixmap::fromImage(qt_image));
         }
+        frame.release();
+        emit captureLicensePlate(frame);
         qDebug() << "Video stream is stopped.(" << m_camIndex << ")";
         m_vidcap.release();
         emit cameraIsClosed();

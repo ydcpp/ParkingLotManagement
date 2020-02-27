@@ -25,9 +25,9 @@ public:
 signals:
     void sendPlateString(QString);
     void getFrame(cv::Mat*);
-
-private slots:
+public slots:
     void stopThread();
+private slots:
     void startThread();
 
 private:

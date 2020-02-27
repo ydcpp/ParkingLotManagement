@@ -41,7 +41,7 @@ public:
     void updateCurrentPlan(qint32 planID);
     qint32 getCurrentPlanID() const;
 
-public slots:
+private slots:
     float calculatePrice(qint64 minutes, QString& currentplan);
 
     void updateRemainingSpots(qint32);
