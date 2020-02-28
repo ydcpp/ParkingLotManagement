@@ -8,6 +8,7 @@
 
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
+#include "alpr.h"
 
 
 class ThreadManager;
@@ -33,6 +34,12 @@ private slots:
 private:
     ThreadManager* m_tmanager;
     bool m_keepRunning = true;
+    alpr::Alpr m_openalpr = alpr::Alpr("eu","openalpr.conf");
+    alpr::AlprResults m_results;
+    alpr::AlprPlateResult m_plateResult;
+
+    void testOpenALPR();
+
 
     QImage qt_image;
     cv::Mat m_frame;

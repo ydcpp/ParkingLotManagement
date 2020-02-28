@@ -23,8 +23,6 @@ public:
     ParkYerim(QWidget *parent = nullptr);
     ~ParkYerim();
 
-
-
 private slots:
     void on_pushButton_clicked();
 
@@ -44,4 +42,6 @@ private:
     const QString m_logfilepath = "./assets/other/applicationlog.txt";
 
 };
+
+
 #endif // PARKYERIM_HPP

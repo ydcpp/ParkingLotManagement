@@ -29,7 +29,6 @@ ApplicationWindow::ApplicationWindow(DatabaseManager* dbmanager, User* user, Log
     initializeAssetPaths();
     setupIcons();
     setupCustomComponents();
-    connect(m_window_vehicle_in,&ManualVehicleEntry::decreaseCount,this,&ApplicationWindow::decreaseRemainingSpotCount);
 }
 
 ApplicationWindow::~ApplicationWindow()
@@ -151,12 +150,6 @@ void ApplicationWindow::closeCameraStream_out()
 }
 
 
-qint32 ApplicationWindow::getRemainingSpotCount() const
-{
-    return m_remainingSpots;
-}
-
-
 QList<PricingPlan *>& ApplicationWindow::GetPricingPlanList()
 {
     return m_pricingPlans;
@@ -205,12 +198,15 @@ void ApplicationWindow::enableToggleCameraButton()
 void ApplicationWindow::on_toolButton_vehicle_in_clicked()
 {
     m_window_vehicle_in = new ManualVehicleEntry(m_dbmanager,this);
+    connect(m_window_vehicle_in,&ManualVehicleEntry::decreaseCount,this,&ApplicationWindow::decreaseRemainingSpotCount);
     m_window_vehicle_in->exec();
 }
 
 void ApplicationWindow::on_toolButton_vehicle_out_clicked()
 {
     m_window_vehicle_out = new ManualVehicleExit(m_dbmanager,this);
+    connect(m_window_vehicle_out,&ManualVehicleExit::getCalculatedPrice,this,&ApplicationWindow::calculatePrice);
+    connect(m_window_vehicle_out,&ManualVehicleExit::increaseCount,this,&ApplicationWindow::increaseRemainingSpotCount);
     m_window_vehicle_out->exec();
 }
 

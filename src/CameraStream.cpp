@@ -27,7 +27,7 @@ void CameraStream::setFPS(int value)
 
 void CameraStream::run()
 {
-    m_vidcap.open("assets/testvid.mp4");
+    m_vidcap.open("assets/other/testvid.mp4");
     if(!m_vidcap.isOpened()){
         qDebug() << "camera on device index (" <<  m_camIndex << ") could not open.";
         emit cameraIsClosed();

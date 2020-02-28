@@ -42,7 +42,7 @@ void ManualVehicleEntry::on_pushButton_clicked()
         ui->pushButton->setEnabled(false);
         ui->label_error->setStyleSheet("color:green;");
         ui->label_error->setText("Giriş yapıldı.");
-        decreaseCount();
+        emit decreaseCount();
         QTimer::singleShot(2000,this,&QDialog::close);
     }
 }

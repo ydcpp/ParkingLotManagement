@@ -4,6 +4,8 @@
 
 #include <QDebug>
 
+
+
 using namespace cv;
 
 ImageProcess::ImageProcess(ThreadManager* tmanager)
@@ -11,6 +13,7 @@ ImageProcess::ImageProcess(ThreadManager* tmanager)
 {
     connect(m_tmanager,&ThreadManager::readPlateVehicle,this,&ImageProcess::startThread);
     connect(m_tmanager,&ThreadManager::stopImageProcessing,this,&ImageProcess::stopThread);
+
 }
 
 ImageProcess::~ImageProcess()
@@ -25,16 +28,23 @@ void ImageProcess::run()
     unsigned int test = 0;
     while(m_keepRunning)
     {
-        waitKey(1000);
+        if (!m_openalpr.isLoaded())
+        {
+            qDebug() << "OpenALPR is not loaded.";
+            break;
+        }
         emit getFrame(&m_frame);
+        cv::waitKey(1000);
         if(m_frame.empty()){
             qDebug() << "frame is empty.";
-            waitKey(1000);
+            cv::waitKey(1000);
             continue;
         }
-        /* do image processing with m_frame and read the license plate */
-        emit sendPlateString("deneme" + QString::number(test++));
-        waitKey(1000);
+        cv::waitKey(1000);
+        m_results = m_openalpr.recognize("./assets/other/alpr_test_data/test_plaka.jpg");
+        m_plateResult = m_results.plates[0];
+        QString plateresult = QString::fromStdString(m_plateResult.bestPlate.characters);
+        emit sendPlateString(plateresult + " - " + QString::number(test++));
     }
 }
 
@@ -52,3 +62,5 @@ void ImageProcess::startThread()
 {
     this->start();
 }
+
+

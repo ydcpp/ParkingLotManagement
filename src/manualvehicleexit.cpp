@@ -12,8 +12,6 @@ ManualVehicleExit::ManualVehicleExit(DatabaseManager* dbmanager, QWidget *parent
     ui->setupUi(this);
     this->setAttribute( Qt::WA_DeleteOnClose, true );
     m_dbmanager = dbmanager;
-    connect(this,&ManualVehicleExit::getCalculatedPrice,static_cast<ApplicationWindow*>(parent),&ApplicationWindow::calculatePrice);
-    connect(this,&ManualVehicleExit::increaseCount,static_cast<ApplicationWindow*>(parent),&ApplicationWindow::increaseRemainingSpotCount);
 }
 
 ManualVehicleExit::~ManualVehicleExit()
@@ -64,7 +62,7 @@ void ManualVehicleExit::on_pushButton_completePayment_clicked()
     }else{
         ui->label_result->setStyleSheet("color:green;");
         ui->label_result->setText("ÖDEME TAMAMLANDI.");
-        increaseCount();
+        emit increaseCount();
         QTimer::singleShot(2000,this,&QDialog::close);
     }
 }

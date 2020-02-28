@@ -16,10 +16,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 INCLUDEPATH += $$PWD/include \
-                $$PWD/opencv-build/include \
+               $$PWD/opencv-build/msvc/include \
+               $$PWD/openalpr_64/include
+
+DEPENDPATH += $$PWD/openalpr_64/include \
+              $$PWD/opencv-build/msvc/include
 
 
-LIBS += -L$$PWD/opencv-build/x64/mingw/lib \
+LIBS += -L$$PWD/opencv-build/msvc/x64/vc15/lib      \
         -lopencv_calib3d420     \
         -lopencv_core420        \
         -lopencv_dnn420         \
@@ -34,13 +38,14 @@ LIBS += -L$$PWD/opencv-build/x64/mingw/lib \
         -lopencv_photo420       \
         -lopencv_stitching420   \
         -lopencv_video420       \
-        -lopencv_videoio420
+        -lopencv_videoio420     \
+        -L$$PWD/openalpr_64     \
+        -lopenalpr
 
 
 
 HEADERS += \
     $$PWD/include/*.hpp
-
 
 SOURCES += \
     $$PWD/src/*.cpp
@@ -61,5 +66,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     Assets.qrc
-
 

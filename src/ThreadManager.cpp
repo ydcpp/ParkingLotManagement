@@ -18,7 +18,6 @@ ThreadManager::ThreadManager(ApplicationWindow* appwindow, unsigned int vehicle_
     connect(m_appwindow,&ApplicationWindow::terminateAllThreads,this,&ThreadManager::terminateAllThreads);
     qRegisterMetaType<cv::Mat>("cv::Mat");
     // incoming vehicles camera setup
-
     connect(m_camVehicleIn,&CameraStream::updateCameraDisplay,m_appwindow,&ApplicationWindow::drawCamInput_vehicle_in);
     connect(m_camVehicleIn,&CameraStream::captureLicensePlate,this,&ThreadManager::capturedFrame_vehicle_in);
     connect(m_camVehicleIn,&CameraStream::cameraIsOpen,m_appwindow,&ApplicationWindow::openCameraStream_in);

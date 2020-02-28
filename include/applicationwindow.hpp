@@ -41,27 +41,26 @@ public:
     void updateCurrentPlan(qint32 planID);
     qint32 getCurrentPlanID() const;
 
-private slots:
-    float calculatePrice(qint64 minutes, QString& currentplan);
-
-    void updateRemainingSpots(qint32);
-    void increaseRemainingSpotCount();
-    void decreaseRemainingSpotCount();
-    void drawCamInput_vehicle_in(QPixmap);
-    void drawCamInput_vehicle_out(QPixmap);
-    void displayLicensePlateString_vehicle_in(QString);
-    void displayLicensePlateString_vehicle_out(QString);
+public slots:
     void openCameraStream_in();
     void closeCameraStream_in();
     void openCameraStream_out();
     void closeCameraStream_out();
-
-    qint32 getRemainingSpotCount() const;
+    void drawCamInput_vehicle_in(QPixmap);
+    void drawCamInput_vehicle_out(QPixmap);
+    void displayLicensePlateString_vehicle_in(QString);
+    void displayLicensePlateString_vehicle_out(QString);
 
 private slots:
     void on_toolButton_quit_clicked();
     void showTime();
     void enableToggleCameraButton();
+    float calculatePrice(qint64 minutes, QString& currentplan);
+    void updateRemainingSpots(qint32);
+    void increaseRemainingSpotCount();
+    void decreaseRemainingSpotCount();
+
+
     void on_toolButton_vehicle_in_clicked();
 
     void on_toolButton_vehicle_out_clicked();
@@ -69,7 +68,6 @@ private slots:
     void on_toolButton_adminpanel_clicked();
 
     void on_toolButton_settings_clicked();
-
 
     void on_pushButton_search_clicked();
 
