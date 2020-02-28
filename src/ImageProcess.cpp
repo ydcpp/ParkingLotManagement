@@ -41,9 +41,14 @@ void ImageProcess::run()
             continue;
         }
         cv::waitKey(1000);
-        m_results = m_openalpr.recognize("./assets/other/alpr_test_data/test_plaka.jpg");
-        m_plateResult = m_results.plates[0];
-        QString plateresult = QString::fromStdString(m_plateResult.bestPlate.characters);
+        alpr::AlprResults results = m_openalpr.recognize("./assets/other/alpr_test_data/7.jpg");
+        if(results.plates.empty()){
+            qDebug() << "Plate could not be recognized.";
+            emit sendPlateString(" - ");
+            continue;
+        }
+        alpr::AlprPlateResult plateResult = results.plates[0];
+        QString plateresult = QString::fromStdString(plateResult.bestPlate.characters);
         emit sendPlateString(plateresult + " - " + QString::number(test++));
     }
 }
