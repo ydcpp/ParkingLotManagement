@@ -80,6 +80,7 @@ private slots:
 signals:
     float getPricePlanCalculation(qint64 minutes);
     void terminateAllThreads();
+    void stopAllThreads();
 
 private:
     Ui::ApplicationWindow *ui;

@@ -11,9 +11,9 @@ using namespace cv;
 ImageProcess::ImageProcess(ThreadManager* tmanager)
     : m_tmanager(tmanager)
 {
-    connect(m_tmanager,&ThreadManager::readPlateVehicle,this,&ImageProcess::startThread);
-    connect(m_tmanager,&ThreadManager::stopImageProcessing,this,&ImageProcess::stopThread);
-
+    connect(m_tmanager,&ThreadManager::startThreads,this,&ImageProcess::startThread);
+    connect(m_tmanager,&ThreadManager::stopThreads,this,&ImageProcess::stopThread);
+    connect(m_tmanager,&ThreadManager::terminateThreads,this,&ImageProcess::terminateThread);
 }
 
 ImageProcess::~ImageProcess()
@@ -56,16 +56,21 @@ void ImageProcess::run()
 void ImageProcess::stopThread()
 {
     m_keepRunning = false;
-    wait(1000);
-    if(this->isRunning()){
-        this->terminate();
-        wait(1000);
-    }
 }
 
 void ImageProcess::startThread()
 {
     this->start();
+}
+
+void ImageProcess::terminateThread()
+{
+    m_keepRunning = false;
+    wait(1000);
+    if(this->isRunning()){
+        this->terminate();
+        wait(1000);
+    }
 }
 
 

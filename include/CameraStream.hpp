@@ -30,8 +30,9 @@ signals:
     void cameraIsOpen();
 
 private slots:
-    void stopCameraStream();
+    void stopThread();
     void startThread();
+    void terminateThread();
 
 private:
     ThreadManager* m_tmanager;

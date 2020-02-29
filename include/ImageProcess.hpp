@@ -26,10 +26,12 @@ public:
 signals:
     void sendPlateString(QString);
     void getFrame(cv::Mat*);
+
 public slots:
     void stopThread();
 private slots:
     void startThread();
+    void terminateThread();
 
 private:
     ThreadManager* m_tmanager;

@@ -15,6 +15,7 @@ ThreadManager::ThreadManager(ApplicationWindow* appwindow, unsigned int vehicle_
     m_camVehicleOut = new CameraStream(this, vehicle_out_CamIndex);
     m_plateReaderVehicleIn = new ImageProcess(this);
     m_plateReaderVehicleOut = new ImageProcess(this);
+    connect(m_appwindow,&ApplicationWindow::stopAllThreads,this,&ThreadManager::stopAllThreads);
     connect(m_appwindow,&ApplicationWindow::terminateAllThreads,this,&ThreadManager::terminateAllThreads);
     qRegisterMetaType<cv::Mat>("cv::Mat");
     // incoming vehicles camera setup
@@ -39,6 +40,7 @@ ThreadManager::ThreadManager(ApplicationWindow* appwindow, unsigned int vehicle_
 
 ThreadManager::~ThreadManager()
 {
+    emit terminateAllThreads();
     delete m_camVehicleIn;
     delete m_camVehicleOut;
     delete m_plateReaderVehicleIn;
@@ -53,8 +55,7 @@ ThreadManager* ThreadManager::getInstance(ApplicationWindow* appwindow, unsigned
 
 void ThreadManager::startCameraSystem()
 {
-    emit startCameraStream();
-    emit readPlateVehicle();
+    emit startThreads();
 }
 
 cv::Mat ThreadManager::getFrame_in()
@@ -67,11 +68,15 @@ cv::Mat ThreadManager::getFrame_out()
     return m_Frame_vehicle_out;
 }
 
+void ThreadManager::stopAllThreads()
+{
+    emit stopThreads();
+}
+
 
 void ThreadManager::terminateAllThreads()
 {
-    emit stopCameraStream();
-    emit stopImageProcessing();
+    emit terminateThreads();
 }
 
 void ThreadManager::capturedFrame_vehicle_in(cv::Mat frame)

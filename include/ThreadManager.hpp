@@ -24,21 +24,17 @@ public:
     cv::Mat getFrame_out();
 
 signals:
-    //camera streaming thread
-    void startCameraStream();
-    void stopCameraStream();
-
-    // license plate reader thread
-    void readPlateVehicle();
-    void stopImageProcessing();
+    void startThreads();
+    void stopThreads();
+    void terminateThreads();
 
 private slots:
+    void stopAllThreads();
     void terminateAllThreads();
     void capturedFrame_vehicle_in(cv::Mat);
     void capturedFrame_vehicle_out(cv::Mat);
     void sendFrame_vehicle_in(cv::Mat*);
     void sendFrame_vehicle_out(cv::Mat*);
-
 
 
 private:

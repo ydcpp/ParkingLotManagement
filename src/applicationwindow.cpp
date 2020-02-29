@@ -310,7 +310,7 @@ void ApplicationWindow::on_pushButton_toggleCameras_clicked()
         QTimer::singleShot(2000,this,&ApplicationWindow::enableToggleCameraButton);
     }else{
         // toggle camera input off
-        emit terminateAllThreads();
+        emit stopAllThreads();
         QTimer::singleShot(2000,this,&ApplicationWindow::enableToggleCameraButton);
 
     }

@@ -10,8 +10,9 @@ using namespace cv;
 CameraStream::CameraStream(ThreadManager* tmanager, unsigned int cameraIndex)
     : m_tmanager(tmanager), m_camIndex(cameraIndex)
 {
-    connect(m_tmanager,&ThreadManager::startCameraStream,this,&CameraStream::startThread);
-    connect(m_tmanager,&ThreadManager::stopCameraStream,this,&CameraStream::stopCameraStream);
+    connect(m_tmanager,&ThreadManager::startThreads,this,&CameraStream::startThread);
+    connect(m_tmanager,&ThreadManager::stopThreads,this,&CameraStream::stopThread);
+    connect(m_tmanager,&ThreadManager::terminateThreads,this,&CameraStream::terminateThread);
 }
 
 int CameraStream::getFPS() const
@@ -50,7 +51,17 @@ void CameraStream::run()
     }
 }
 
-void CameraStream::stopCameraStream()
+void CameraStream::stopThread()
+{
+    m_keepStreaming = false;
+}
+
+void CameraStream::startThread()
+{
+    this->start();
+}
+
+void CameraStream::terminateThread()
 {
     m_keepStreaming = false;
     wait(1000);
@@ -58,11 +69,6 @@ void CameraStream::stopCameraStream()
         this->terminate();
         wait(1000);
     }
-}
-
-void CameraStream::startThread()
-{
-    this->start();
 }
 
 
