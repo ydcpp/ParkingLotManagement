@@ -71,3 +71,6 @@ Thumbs.db
 *.dll
 *.exe
 
+#########
+/assets/database
+/assets/db
