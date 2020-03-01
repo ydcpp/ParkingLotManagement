@@ -8,7 +8,8 @@
 
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
-#include "alpr.h"
+#include <leptonica/allheaders.h>
+#include <tesseract/baseapi.h>
 
 
 class ThreadManager;
@@ -36,11 +37,9 @@ private slots:
 private:
     ThreadManager* m_tmanager;
     bool m_keepRunning = true;
-    alpr::Alpr m_openalpr = alpr::Alpr("eu","openalpr.conf");
-
-
-    void testOpenALPR();
-
+    tesseract::TessBaseAPI* m_tessapi = nullptr;
+    char* m_outText = nullptr;
+    Pix* m_image = nullptr;
 
     QImage qt_image;
     cv::Mat m_frame;

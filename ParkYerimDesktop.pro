@@ -16,36 +16,51 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 INCLUDEPATH += $$PWD/include \
-               $$PWD/opencv-build/msvc/include \
-               $$PWD/openalpr_64/include
+               $$PWD/libexternal/opencv-build/msvc/include \
+               $$PWD/libexternal/openalpr_64/include \
+               $$PWD/libexternal/tesseract/include
 
-DEPENDPATH += $$PWD/openalpr_64/include \
-              $$PWD/opencv-build/msvc/include
+DEPENDPATH +=  $$PWD/include \
+               $$PWD/libexternal/openalpr_64/include \
+               $$PWD/libexternal/opencv-build/msvc/include \
+               $$PWD/libexternal/tesseract/include
 
 
-LIBS += -L$$PWD/opencv-build/msvc/x64/vc15/lib      \
-        -lopencv_calib3d420     \
-        -lopencv_core420        \
-        -lopencv_dnn420         \
-        -lopencv_features2d420  \
-        -lopencv_flann420       \
-        -lopencv_gapi420        \
+#OpenCV
+LIBS += -L$$PWD/libexternal/opencv-build/msvc/x64/vc15/lib      \
         -lopencv_highgui420     \
-        -lopencv_imgcodecs420   \
         -lopencv_imgproc420     \
-        -lopencv_ml420          \
-        -lopencv_objdetect420   \
-        -lopencv_photo420       \
-        -lopencv_stitching420   \
+        -lopencv_core420        \
         -lopencv_video420       \
-        -lopencv_videoio420     \
-        -L$$PWD/openalpr_64     \
+        -lopencv_videoio420
+
+#        -lopencv_ml420          \
+#        -lopencv_calib3d420     \
+#        -lopencv_dnn420         \
+#        -lopencv_features2d420  \
+#        -lopencv_flann420       \
+#        -lopencv_gapi420        \
+#        -lopencv_imgcodecs420   \
+#        -lopencv_objdetect420   \
+#        -lopencv_photo420       \
+#        -lopencv_stitching420   \
+
+
+#OpenALPR
+LIBS += -L$$PWD/libexternal/openalpr_64     \
         -lopenalpr
+
+
+#Tesseract
+LIBS += -L$$PWD/libexternal/tesseract/lib     \
+        -ltesseract41           \
+        -lleptonica-1.78.0
 
 
 
 HEADERS += \
     $$PWD/include/*.hpp
+
 
 SOURCES += \
     $$PWD/src/*.cpp
@@ -66,4 +81,3 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     Assets.qrc
-

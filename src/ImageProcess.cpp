@@ -2,6 +2,9 @@
 #include "ThreadManager.hpp"
 
 
+
+
+
 #include <QDebug>
 
 
@@ -14,26 +17,29 @@ ImageProcess::ImageProcess(ThreadManager* tmanager)
     connect(m_tmanager,&ThreadManager::startThreads,this,&ImageProcess::startThread);
     connect(m_tmanager,&ThreadManager::stopThreads,this,&ImageProcess::stopThread);
     connect(m_tmanager,&ThreadManager::terminateThreads,this,&ImageProcess::terminateThread);
+    m_tessapi = new tesseract::TessBaseAPI();
 }
 
 ImageProcess::~ImageProcess()
 {
-    stopThread();
+    terminateThread();
+    if(m_outText) delete [] m_outText;
+    if(m_image) pixDestroy(&m_image);
+    delete m_tessapi;
 }
 
 void ImageProcess::run()
 {
     m_keepRunning = true;
     m_frame.release();
-    unsigned int test = 0;
-    while(m_keepRunning)
-    {
-        if (!m_openalpr.isLoaded())
-        {
-            qDebug() << "OpenALPR is not loaded.";
-            break;
-        }
+    // Initialize tesseract-ocr with English, without specifying tessdata path
+    if (m_tessapi->Init(NULL, "tur")) {
+        qDebug() << "Could not initialize tesseract.";
+        return;
+    }
+    while(m_keepRunning){
         emit getFrame(&m_frame);
+
         cv::waitKey(1000);
         if(m_frame.empty()){
             qDebug() << "frame is empty.";
@@ -41,16 +47,15 @@ void ImageProcess::run()
             continue;
         }
         cv::waitKey(1000);
-        alpr::AlprResults results = m_openalpr.recognize("./assets/other/alpr_test_data/7.jpg");
-        if(results.plates.empty()){
-            qDebug() << "Plate could not be recognized.";
-            emit sendPlateString(" - ");
-            continue;
-        }
-        alpr::AlprPlateResult plateResult = results.plates[0];
-        QString plateresult = QString::fromStdString(plateResult.bestPlate.characters);
-        emit sendPlateString(plateresult + " - " + QString::number(test++));
+        // Open input image with leptonica library
+        m_image = pixRead("test.tif");
+        m_tessapi->SetImage(m_image);
+        // Get OCR result
+        m_outText = m_tessapi->GetUTF8Text();
+        QString resultplate = QString::fromStdString(m_outText);
+        emit sendPlateString(resultplate);
     }
+    m_tessapi->End();
 }
 
 void ImageProcess::stopThread()
@@ -71,6 +76,8 @@ void ImageProcess::terminateThread()
         this->terminate();
         wait(1000);
     }
+    m_tessapi->End();
 }
+
 
 
