@@ -9,6 +9,6 @@ NOTE: This project is still in development.
 - OpenCV 4.2.0
 - Tesseract OCR 4.1 (with Leptonica 1.78.0)
 
-<b>Building Project</b>
+<b>Building Project</b><br>
  To build the project, you need to build required external libraries above and point their path in ParkYerimDesktop.pro file.
  To run the prject, add required dlls in the same directory with ParkYerimDesktop.exe
