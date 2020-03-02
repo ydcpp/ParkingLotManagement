@@ -11,4 +11,4 @@ NOTE: This project is still in development.
 
 <b>Building Project</b>
 <br> To build the project, you need to build required external libraries above and point their path in ParkYerimDesktop.pro file.
-<br> To run the prject, add required dlls in the same directory with ParkYerimDesktop.exe
+<br> To run the project, add required dlls in the same directory with ParkYerimDesktop.exe
