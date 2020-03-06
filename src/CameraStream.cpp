@@ -28,7 +28,8 @@ void CameraStream::setFPS(int value)
 
 void CameraStream::run()
 {
-    m_vidcap.open("assets/other/testvid.mp4");
+//    m_vidcap.open("assets/other/testvid.mp4");
+    m_vidcap.open(m_camIndex);
     if(!m_vidcap.isOpened()){
         qDebug() << "camera on device index (" <<  m_camIndex << ") could not open.";
         emit cameraIsClosed();
@@ -36,19 +37,22 @@ void CameraStream::run()
         emit cameraIsOpen();
         m_keepStreaming = true;
         qDebug() << "Video stream from camera device (" << m_camIndex << ") is started.";
-        while(m_keepStreaming && m_vidcap.read(frame)){
-            emit captureLicensePlate(frame);
-            cvtColor(frame,frame,COLOR_BGR2RGB);
-            qt_image = QImage((const unsigned char*) (frame.data), frame.cols, frame.rows, QImage::Format_RGB888);
-            waitKey(1000/m_MaxFPS);
+        while(m_vidcap.read(m_frame) && m_keepStreaming){
+            cvtColor(m_frame,m_frame,COLOR_BGR2RGB);
+            qt_image = QImage((const unsigned char*) (m_frame.data), m_frame.cols, m_frame.rows, QImage::Format_RGB888);
             emit updateCameraDisplay(QPixmap::fromImage(qt_image));
+            waitKey(1000/m_MaxFPS);
         }
-        frame.release();
-        emit captureLicensePlate(frame);
-        qDebug() << "Video stream is stopped.(" << m_camIndex << ")";
+        m_frame.release();
         m_vidcap.release();
+        qDebug() << "Video stream is stopped.(" << m_camIndex << ")";
         emit cameraIsClosed();
     }
+}
+
+void CameraStream::getCurrentFrame(cv::Mat* frame)
+{
+    *frame = m_frame;
 }
 
 void CameraStream::stopThread()
@@ -64,10 +68,10 @@ void CameraStream::startThread()
 void CameraStream::terminateThread()
 {
     m_keepStreaming = false;
-    wait(1000);
+    wait(100);
     if(this->isRunning()){
         this->terminate();
-        wait(1000);
+        wait();
     }
 }
 

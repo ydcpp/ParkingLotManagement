@@ -3,8 +3,6 @@
 
 
 
-
-
 #include <QDebug>
 
 
@@ -14,7 +12,6 @@ using namespace cv;
 ImageProcess::ImageProcess(ThreadManager* tmanager)
     : m_tmanager(tmanager)
 {
-    connect(m_tmanager,&ThreadManager::startThreads,this,&ImageProcess::startThread);
     connect(m_tmanager,&ThreadManager::stopThreads,this,&ImageProcess::stopThread);
     connect(m_tmanager,&ThreadManager::terminateThreads,this,&ImageProcess::terminateThread);
     m_tessapi = new tesseract::TessBaseAPI();
@@ -30,51 +27,48 @@ ImageProcess::~ImageProcess()
 
 void ImageProcess::run()
 {
-    m_keepRunning = true;
-    m_frame.release();
     // Initialize tesseract-ocr with English, without specifying tessdata path
     if (m_tessapi->Init(NULL, "tur")) {
         qDebug() << "Could not initialize tesseract.";
         return;
     }
-    while(m_keepRunning){
-        emit getFrame(&m_frame);
-
-        cv::waitKey(1000);
-        if(m_frame.empty()){
-            qDebug() << "frame is empty.";
-            cv::waitKey(1000);
-            continue;
-        }
-        cv::waitKey(1000);
-        // Open input image with leptonica library
-        m_image = pixRead("test.tif");
-        m_tessapi->SetImage(m_image);
-        // Get OCR result
-        m_outText = m_tessapi->GetUTF8Text();
-        QString resultplate = QString::fromStdString(m_outText);
-        emit sendPlateString(resultplate);
+    if(m_frame.empty()){
+        qDebug() << "frame is empty.";
+        emit sendPlateString(" - ");
+        while(m_frame.empty()){ }
     }
+    emit sendPlateString("Processing...");
+    cv::Mat licensePlate;
+    //TODO extract plate region and send thresholded image to tesseract
+    licensePlate = m_frame;
+    //Get OCR result
+    m_tessapi->SetImage((uchar*)licensePlate.data, licensePlate.size().width, licensePlate.size().height, licensePlate.channels(), (int)licensePlate.step1());
+    m_tessapi->SetSourceResolution(70); //1280x720 ppi=70, 1920x1080 ppi=100
+    m_outText = m_tessapi->GetUTF8Text();
+    QString resultplate = QString::fromStdString(m_outText);
+    emit sendPlateString(resultplate);
+    m_frame.release();
     m_tessapi->End();
 }
 
 void ImageProcess::stopThread()
 {
-    m_keepRunning = false;
+    this->quit();
 }
 
-void ImageProcess::startThread()
+void ImageProcess::startThread(cv::Mat& frameToProcess)
 {
+    m_frame = frameToProcess;
     this->start();
 }
 
 void ImageProcess::terminateThread()
 {
-    m_keepRunning = false;
-    wait(1000);
+    this->quit();
+    wait(100);
     if(this->isRunning()){
         this->terminate();
-        wait(1000);
+        wait();
     }
     m_tessapi->End();
 }

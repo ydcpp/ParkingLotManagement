@@ -8,9 +8,8 @@
 
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
-#include <leptonica/allheaders.h>
 #include <tesseract/baseapi.h>
-
+#include <leptonica/allheaders.h>
 
 class ThreadManager;
 
@@ -23,20 +22,18 @@ public:
     ~ImageProcess() override;
 
     void run() override;
+    void startThread(cv::Mat& frameToProcess);
 
 signals:
     void sendPlateString(QString);
-    void getFrame(cv::Mat*);
 
 public slots:
     void stopThread();
 private slots:
-    void startThread();
     void terminateThread();
 
 private:
     ThreadManager* m_tmanager;
-    bool m_keepRunning = true;
     tesseract::TessBaseAPI* m_tessapi = nullptr;
     char* m_outText = nullptr;
     Pix* m_image = nullptr;

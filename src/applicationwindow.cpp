@@ -126,6 +126,7 @@ void ApplicationWindow::openCameraStream_in()
     ui->label_cam_in_status->setStyleSheet("color:green;");
     ui->label_cam_in_status->setText("Kamera açık");
     ui->label_vehicle_in->setVisible(true);
+    ui->pushButton_plakatani_in->setEnabled(true);
 }
 
 void ApplicationWindow::closeCameraStream_in()
@@ -133,6 +134,7 @@ void ApplicationWindow::closeCameraStream_in()
     ui->label_cam_in_status->setStyleSheet("color:red;");
     ui->label_cam_in_status->setText("Kamera kapalı");
     ui->label_vehicle_in->setVisible(false);
+    ui->pushButton_plakatani_in->setEnabled(false);
 }
 
 void ApplicationWindow::openCameraStream_out()
@@ -140,6 +142,7 @@ void ApplicationWindow::openCameraStream_out()
     ui->label_cam_out_status->setStyleSheet("color:green;");
     ui->label_cam_out_status->setText("Kamera açık");
     ui->label_vehicle_out->setVisible(true);
+    ui->pushButton_plakatani_out->setEnabled(true);
 }
 
 void ApplicationWindow::closeCameraStream_out()
@@ -147,6 +150,7 @@ void ApplicationWindow::closeCameraStream_out()
     ui->label_cam_out_status->setStyleSheet("color:red;");
     ui->label_cam_out_status->setText("Kamera kapalı");
     ui->label_vehicle_out->setVisible(false);
+    ui->pushButton_plakatani_out->setEnabled(false);
 }
 
 
@@ -306,7 +310,8 @@ void ApplicationWindow::on_pushButton_toggleCameras_clicked()
     m_isCameraInputOn = !m_isCameraInputOn;
     if(m_isCameraInputOn){
         // toggle camera input on
-        m_threadManager->startCameraSystem();
+        emit m_threadManager->startThreads();
+        //m_threadManager->startCameraSystem();
         QTimer::singleShot(2000,this,&ApplicationWindow::enableToggleCameraButton);
     }else{
         // toggle camera input off
@@ -314,4 +319,14 @@ void ApplicationWindow::on_pushButton_toggleCameras_clicked()
         QTimer::singleShot(2000,this,&ApplicationWindow::enableToggleCameraButton);
 
     }
+}
+
+void ApplicationWindow::on_pushButton_plakatani_in_clicked()
+{
+    emit recognizePlate_in();
+}
+
+void ApplicationWindow::on_pushButton_plakatani_out_clicked()
+{
+    emit recognizePlate_out();
 }

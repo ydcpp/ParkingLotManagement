@@ -77,10 +77,16 @@ private slots:
 
     void on_pushButton_toggleCameras_clicked();
 
+    void on_pushButton_plakatani_in_clicked();
+
+    void on_pushButton_plakatani_out_clicked();
+
 signals:
     float getPricePlanCalculation(qint64 minutes);
     void terminateAllThreads();
     void stopAllThreads();
+    void recognizePlate_in();
+    void recognizePlate_out();
 
 private:
     Ui::ApplicationWindow *ui;

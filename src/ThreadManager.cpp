@@ -15,26 +15,24 @@ ThreadManager::ThreadManager(ApplicationWindow* appwindow, unsigned int vehicle_
     m_camVehicleOut = new CameraStream(this, vehicle_out_CamIndex);
     m_plateReaderVehicleIn = new ImageProcess(this);
     m_plateReaderVehicleOut = new ImageProcess(this);
+    // main window connections
     connect(m_appwindow,&ApplicationWindow::stopAllThreads,this,&ThreadManager::stopAllThreads);
     connect(m_appwindow,&ApplicationWindow::terminateAllThreads,this,&ThreadManager::terminateAllThreads);
-    qRegisterMetaType<cv::Mat>("cv::Mat");
+    connect(m_appwindow,&ApplicationWindow::recognizePlate_in,this,&ThreadManager::recognizePlate_in);
+    connect(m_appwindow,&ApplicationWindow::recognizePlate_out,this,&ThreadManager::recognizePlate_out);
     // incoming vehicles camera setup
     connect(m_camVehicleIn,&CameraStream::updateCameraDisplay,m_appwindow,&ApplicationWindow::drawCamInput_vehicle_in);
-    connect(m_camVehicleIn,&CameraStream::captureLicensePlate,this,&ThreadManager::capturedFrame_vehicle_in);
     connect(m_camVehicleIn,&CameraStream::cameraIsOpen,m_appwindow,&ApplicationWindow::openCameraStream_in);
     connect(m_camVehicleIn,&CameraStream::cameraIsClosed,m_appwindow,&ApplicationWindow::closeCameraStream_in);
     connect(m_camVehicleIn,&CameraStream::cameraIsClosed,m_plateReaderVehicleIn,&ImageProcess::stopThread);
     // outgoing vehicles camera setup
     connect(m_camVehicleOut,&CameraStream::updateCameraDisplay,m_appwindow,&ApplicationWindow::drawCamInput_vehicle_out);
-    connect(m_camVehicleOut,&CameraStream::captureLicensePlate,this,&ThreadManager::capturedFrame_vehicle_out);
     connect(m_camVehicleOut,&CameraStream::cameraIsOpen,m_appwindow,&ApplicationWindow::openCameraStream_out);
     connect(m_camVehicleOut,&CameraStream::cameraIsClosed,m_appwindow,&ApplicationWindow::closeCameraStream_out);
     connect(m_camVehicleOut,&CameraStream::cameraIsClosed,m_plateReaderVehicleOut,&ImageProcess::stopThread);
     // image process thread setup
     connect(m_plateReaderVehicleIn,&ImageProcess::sendPlateString,m_appwindow,&ApplicationWindow::displayLicensePlateString_vehicle_in);
     connect(m_plateReaderVehicleOut,&ImageProcess::sendPlateString,m_appwindow,&ApplicationWindow::displayLicensePlateString_vehicle_out);
-    connect(m_plateReaderVehicleIn,&ImageProcess::getFrame,this,&ThreadManager::sendFrame_vehicle_in);
-    connect(m_plateReaderVehicleOut,&ImageProcess::getFrame,this,&ThreadManager::sendFrame_vehicle_out);
 
 }
 
@@ -53,20 +51,6 @@ ThreadManager* ThreadManager::getInstance(ApplicationWindow* appwindow, unsigned
     return m_instance;
 }
 
-void ThreadManager::startCameraSystem()
-{
-    emit startThreads();
-}
-
-cv::Mat ThreadManager::getFrame_in()
-{
-    return m_Frame_vehicle_in;
-}
-
-cv::Mat ThreadManager::getFrame_out()
-{
-    return m_Frame_vehicle_out;
-}
 
 void ThreadManager::stopAllThreads()
 {
@@ -79,23 +63,18 @@ void ThreadManager::terminateAllThreads()
     emit terminateThreads();
 }
 
-void ThreadManager::capturedFrame_vehicle_in(cv::Mat frame)
+
+void ThreadManager::recognizePlate_in()
 {
-    m_Frame_vehicle_in = frame;
+    cv::Mat capturedFrame;
+    m_camVehicleIn->getCurrentFrame(&capturedFrame);
+    m_plateReaderVehicleIn->startThread(capturedFrame);
 }
 
-void ThreadManager::capturedFrame_vehicle_out(cv::Mat frame)
+void ThreadManager::recognizePlate_out()
 {
-    m_Frame_vehicle_out = frame;
-}
-
-void ThreadManager::sendFrame_vehicle_in(cv::Mat* frame)
-{
-    *frame = m_Frame_vehicle_in;
-}
-
-void ThreadManager::sendFrame_vehicle_out(cv::Mat* frame)
-{
-    *frame = m_Frame_vehicle_out;
+    cv::Mat capturedFrame;
+    m_camVehicleOut->getCurrentFrame(&capturedFrame);
+    m_plateReaderVehicleOut->startThread(capturedFrame);
 }
 

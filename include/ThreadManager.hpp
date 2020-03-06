@@ -19,9 +19,6 @@ public:
 
     ~ThreadManager();
     static ThreadManager* getInstance(ApplicationWindow* appwindow, unsigned int vehicle_in_CamIndex, unsigned int vehicle_out_CamIndex);
-    void startCameraSystem();
-    cv::Mat getFrame_in();
-    cv::Mat getFrame_out();
 
 signals:
     void startThreads();
@@ -31,10 +28,8 @@ signals:
 private slots:
     void stopAllThreads();
     void terminateAllThreads();
-    void capturedFrame_vehicle_in(cv::Mat);
-    void capturedFrame_vehicle_out(cv::Mat);
-    void sendFrame_vehicle_in(cv::Mat*);
-    void sendFrame_vehicle_out(cv::Mat*);
+    void recognizePlate_in();
+    void recognizePlate_out();
 
 
 private:
@@ -46,9 +41,6 @@ private:
     ImageProcess* m_plateReaderVehicleIn = nullptr;
     ImageProcess* m_plateReaderVehicleOut = nullptr;
     static ThreadManager* m_instance;
-
-    cv::Mat m_Frame_vehicle_in;
-    cv::Mat m_Frame_vehicle_out;
 
 
 };

@@ -21,11 +21,10 @@ public:
     int getFPS() const;
     void setFPS(int value);
     void run() override;
-
+    void getCurrentFrame(cv::Mat* frame);
 
 signals:
     void updateCameraDisplay(QPixmap);
-    void captureLicensePlate(cv::Mat);
     void cameraIsClosed();
     void cameraIsOpen();
 
@@ -42,7 +41,7 @@ private:
     unsigned int m_MaxFPS = 50;
     bool m_keepStreaming = true;
 
-    cv::Mat frame;
+    cv::Mat m_frame;
     QImage qt_image;
 
 };

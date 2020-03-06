@@ -1621,6 +1621,38 @@ border-color : red;
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton_plakatani_in">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>40</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Plakayı Tanı</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_plakatani_out">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>730</x>
+      <y>40</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Plakayı Tanı</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>
