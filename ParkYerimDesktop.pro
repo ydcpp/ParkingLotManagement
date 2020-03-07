@@ -17,22 +17,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 INCLUDEPATH += $$PWD/include \
                $$PWD/libexternal/opencv-build/msvc/include \
-               $$PWD/libexternal/openalpr_64/include \
-               $$PWD/libexternal/tesseract/include
+               $$PWD/libexternal/openalpr_x64/include
 
 DEPENDPATH +=  $$PWD/include \
-               $$PWD/libexternal/openalpr_64/include \
-               $$PWD/libexternal/opencv-build/msvc/include \
-               $$PWD/libexternal/tesseract/include
+               $$PWD/libexternal/openalpr_x64/include \
+               $$PWD/libexternal/opencv-build/msvc/include
 
 
-#OpenCV
+#OpenCV 4.20
 LIBS += -L$$PWD/libexternal/opencv-build/msvc/x64/vc15/lib      \
         -lopencv_highgui420     \
         -lopencv_imgproc420     \
         -lopencv_core420        \
         -lopencv_video420       \
-        -lopencv_videoio420
+        -lopencv_videoio420     \
+        -lopencv_imgcodecs420
 
 #        -lopencv_ml420          \
 #        -lopencv_calib3d420     \
@@ -40,22 +39,14 @@ LIBS += -L$$PWD/libexternal/opencv-build/msvc/x64/vc15/lib      \
 #        -lopencv_features2d420  \
 #        -lopencv_flann420       \
 #        -lopencv_gapi420        \
-#        -lopencv_imgcodecs420   \
 #        -lopencv_objdetect420   \
 #        -lopencv_photo420       \
 #        -lopencv_stitching420   \
 
 
 #OpenALPR
-LIBS += -L$$PWD/libexternal/openalpr_64     \
+LIBS += -L$$PWD/libexternal/openalpr_x64/lib     \
         -lopenalpr
-
-
-#Tesseract
-LIBS += -L$$PWD/libexternal/tesseract/lib     \
-        -ltesseract41           \
-        -lleptonica-1.78.0
-
 
 
 HEADERS += \

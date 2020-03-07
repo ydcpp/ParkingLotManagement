@@ -1,8 +1,6 @@
 #include "ImageProcess.hpp"
 #include "ThreadManager.hpp"
 
-
-
 #include <QDebug>
 
 
@@ -14,41 +12,62 @@ ImageProcess::ImageProcess(ThreadManager* tmanager)
 {
     connect(m_tmanager,&ThreadManager::stopThreads,this,&ImageProcess::stopThread);
     connect(m_tmanager,&ThreadManager::terminateThreads,this,&ImageProcess::terminateThread);
-    m_tessapi = new tesseract::TessBaseAPI();
 }
 
 ImageProcess::~ImageProcess()
 {
     terminateThread();
     if(m_outText) delete [] m_outText;
-    if(m_image) pixDestroy(&m_image);
-    delete m_tessapi;
 }
 
 void ImageProcess::run()
 {
-    // Initialize tesseract-ocr with English, without specifying tessdata path
-    if (m_tessapi->Init(NULL, "tur")) {
-        qDebug() << "Could not initialize tesseract.";
+    emit sendPlateString("Processing...");
+    // Initialize the library using United States style license plates.
+    // You can use other countries/regions as well (for example: "eu", "au", or "kr")
+    alpr::Alpr openalpr("eu", "./openalpr.conf");
+
+    // Optionally specify the top N possible plates to return (with confidences).  Default is 10
+    //openalpr.setTopN(20);
+
+    // Optionally, provide the library with a region for pattern matching.  This improves accuracy by
+    // comparing the plate text with the regional pattern.
+    openalpr.setDefaultRegion("tr");
+
+    // Make sure the library loaded before continuing.
+    // For example, it could fail if the config/runtime_data is not found
+    if (openalpr.isLoaded() == false)
+    {
+        qDebug() << "Error loading OpenALPR";
+        emit sendPlateString(" ERROR ");
         return;
     }
-    if(m_frame.empty()){
-        qDebug() << "frame is empty.";
+
+    // Recognize an image file.  You could alternatively provide the image bytes in-memory.
+    alpr::AlprResults results = openalpr.recognize("./test.tif");
+    if(results.plates.empty()){
+        qDebug() << "Could not find a plate.";
         emit sendPlateString(" - ");
-        while(m_frame.empty()){ }
+        return;
     }
-    emit sendPlateString("Processing...");
-    cv::Mat licensePlate;
-    //TODO extract plate region and send thresholded image to tesseract
-    licensePlate = m_frame;
-    //Get OCR result
-    m_tessapi->SetImage((uchar*)licensePlate.data, licensePlate.size().width, licensePlate.size().height, licensePlate.channels(), (int)licensePlate.step1());
-    m_tessapi->SetSourceResolution(70); //1280x720 ppi=70, 1920x1080 ppi=100
-    m_outText = m_tessapi->GetUTF8Text();
-    QString resultplate = QString::fromStdString(m_outText);
+    alpr::AlprPlateResult plate = results.plates[0];
+    QString resultplate = QString::fromStdString(plate.topNPlates[0].characters);
     emit sendPlateString(resultplate);
-    m_frame.release();
-    m_tessapi->End();
+
+    // Iterate through the results.  There may be multiple plates in an image,
+    // and each plate return sthe top N candidates.
+//    for (unsigned int i = 0; i < results.plates.size(); i++)
+//    {
+//      alpr::AlprPlateResult plate = results.plates[i];
+//      qDebug() << "plate" << i << ": " << plate.topNPlates.size() << " results";
+
+//        for (unsigned int k = 0; k < plate.topNPlates.size(); k++)
+//        {
+//          alpr::AlprPlate candidate = plate.topNPlates[k];
+//          qDebug() << "    - " << QString::fromStdString(candidate.characters) << "\t confidence: " << candidate.overall_confidence;
+//          qDebug() << "\t pattern_match: " << candidate.matches_template;
+//        }
+//    }
 }
 
 void ImageProcess::stopThread()
@@ -70,7 +89,6 @@ void ImageProcess::terminateThread()
         this->terminate();
         wait();
     }
-    m_tessapi->End();
 }
 
 
