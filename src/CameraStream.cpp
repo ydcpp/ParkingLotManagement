@@ -1,6 +1,5 @@
 #include "CameraStream.hpp"
 #include "ThreadManager.hpp"
-#include "applicationwindow.hpp"
 
 
 #include <QDebug>

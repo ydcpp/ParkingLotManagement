@@ -1,11 +1,10 @@
 #include "ImageProcess.hpp"
 #include "ThreadManager.hpp"
+#include <alpr.h>
 
 #include <QDebug>
 
 
-
-using namespace cv;
 
 ImageProcess::ImageProcess(ThreadManager* tmanager)
     : m_tmanager(tmanager)
@@ -23,28 +22,24 @@ ImageProcess::~ImageProcess()
 void ImageProcess::run()
 {
     emit sendPlateString("Processing...");
-    // Initialize the library using United States style license plates.
-    // You can use other countries/regions as well (for example: "eu", "au", or "kr")
     alpr::Alpr openalpr("eu", "./openalpr.conf");
-
-    // Optionally specify the top N possible plates to return (with confidences).  Default is 10
-    //openalpr.setTopN(20);
-
-    // Optionally, provide the library with a region for pattern matching.  This improves accuracy by
-    // comparing the plate text with the regional pattern.
     openalpr.setDefaultRegion("tr");
 
-    // Make sure the library loaded before continuing.
-    // For example, it could fail if the config/runtime_data is not found
     if (openalpr.isLoaded() == false)
     {
         qDebug() << "Error loading OpenALPR";
         emit sendPlateString(" ERROR ");
         return;
     }
+    if(m_frame.empty()){
+        qDebug() << "Could not retrieve a frame to process.";
+        return;
+    }
 
     // Recognize an image file.  You could alternatively provide the image bytes in-memory.
     alpr::AlprResults results = openalpr.recognize("./test.tif");
+    //std::vector<alpr::AlprRegionOfInterest> emptyRoi;
+    //alpr::AlprResults results = openalpr.recognize(m_frame.data,m_frame.elemSize(),m_frame.cols,m_frame.rows,emptyRoi);
     if(results.plates.empty()){
         qDebug() << "Could not find a plate.";
         emit sendPlateString(" - ");

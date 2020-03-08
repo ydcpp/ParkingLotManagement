@@ -3,12 +3,11 @@
 
 #include <QThread>
 #include <QImage>
-#include <QPixmap>
 #include <QString>
 
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
-#include <alpr.h>
+
 
 class ThreadManager;
 

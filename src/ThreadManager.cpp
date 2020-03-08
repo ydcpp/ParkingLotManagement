@@ -4,8 +4,6 @@
 #include "CameraStream.hpp"
 #include "ImageProcess.hpp"
 
-#include <QTimer>
-#include <QMetaType>
 
 ThreadManager* ThreadManager::m_instance(0);
 
