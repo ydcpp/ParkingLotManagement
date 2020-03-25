@@ -38,8 +38,8 @@ void ImageProcess::run()
 
     // Recognize an image file.  You could alternatively provide the image bytes in-memory.
     alpr::AlprResults results = openalpr.recognize("./test.tif");
-    //std::vector<alpr::AlprRegionOfInterest> emptyRoi;
-    //alpr::AlprResults results = openalpr.recognize(m_frame.data,m_frame.elemSize(),m_frame.cols,m_frame.rows,emptyRoi);
+//    std::vector<alpr::AlprRegionOfInterest> emptyRoi;
+//    alpr::AlprResults results = openalpr.recognize(m_frame.data,m_frame.elemSize(),m_frame.cols,m_frame.rows,emptyRoi);
     if(results.plates.empty()){
         qDebug() << "Could not find a plate.";
         emit sendPlateString(" - ");
@@ -67,6 +67,7 @@ void ImageProcess::run()
 
 void ImageProcess::stopThread()
 {
+    emit sendPlateString(" - ");
     this->quit();
 }
 

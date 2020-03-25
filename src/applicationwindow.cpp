@@ -13,6 +13,8 @@
 
 #include "parkyerim.hpp"
 
+#include "d_ConnectionDialog.hpp"
+
 
 ApplicationWindow::ApplicationWindow(DatabaseManager* dbmanager, User* user, Logger* logger, QWidget *parent) :
     QWidget(parent),
@@ -329,4 +331,16 @@ void ApplicationWindow::on_pushButton_plakatani_in_clicked()
 void ApplicationWindow::on_pushButton_plakatani_out_clicked()
 {
     emit recognizePlate_out();
+}
+
+void ApplicationWindow::on_pushButton_connectserver_clicked()
+{
+    d_ConnectionDialog dialog("127.0.0.1",26789);
+    dialog.exec();
+}
+
+void ApplicationWindow::on_pushButton_connectserver_2_clicked()
+{
+    d_ConnectionDialog dialog("127.0.0.1",16789);
+    dialog.exec();
 }

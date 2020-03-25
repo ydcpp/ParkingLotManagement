@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-
+class TCPClient;
 class CameraStream;
 class ImageProcess;
 class ApplicationWindow;
@@ -37,6 +37,7 @@ private:
     CameraStream* m_camVehicleOut = nullptr;
     ImageProcess* m_plateReaderVehicleIn = nullptr;
     ImageProcess* m_plateReaderVehicleOut = nullptr;
+    TCPClient* m_client = nullptr;
     static ThreadManager* m_instance;
 
 

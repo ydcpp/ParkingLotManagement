@@ -649,6 +649,32 @@ border-color : red;
        <string/>
       </property>
      </widget>
+     <widget class="QPushButton" name="pushButton_connectserver">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>450</y>
+        <width>91</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>DesktopServer</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_connectserver_2">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>490</y>
+        <width>91</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>MobileServer</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QFrame" name="frame_exit">
      <property name="geometry">

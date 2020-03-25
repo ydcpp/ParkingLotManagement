@@ -81,6 +81,10 @@ private slots:
 
     void on_pushButton_plakatani_out_clicked();
 
+    void on_pushButton_connectserver_clicked();
+
+    void on_pushButton_connectserver_2_clicked();
+
 signals:
     float getPricePlanCalculation(qint64 minutes);
     void terminateAllThreads();
