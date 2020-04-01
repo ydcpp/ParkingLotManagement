@@ -1,4 +1,4 @@
-QT       += core gui sql multimedia multimediawidgets network
+QT       += core gui sql multimedia multimediawidgets network websockets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -51,17 +51,17 @@ LIBS += -L$$PWD/libexternal/openalpr_x64/lib     \
 
 HEADERS += \
     $$PWD/include/*.hpp \
-    d_ConnectionDialog.hpp
+    d_TCPServer.hpp
 
 
 SOURCES += \
     $$PWD/src/*.cpp \
-    d_ConnectionDialog.cpp
+    d_TCPServer.cpp
 
 
 FORMS += \
     $$PWD/forms/*.ui \
-    d_ConnectionDialog.ui
+    d_TCPServer.ui
 
 
 

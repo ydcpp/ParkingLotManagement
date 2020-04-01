@@ -24,8 +24,11 @@ void ManualVehicleExit::on_pushButton_query_clicked()
     clearResults();
     if(validateForm()){
         QString errormsg;
+        QString platequery = ui->lineEdit_plateQuery->text();
+        platequery = platequery.simplified();
+        platequery = platequery.replace(" ","");
         // query plate number,get vehicle id to m_vehicleID, get the info and calculate price
-        if(!m_dbmanager->GetBillingResult(ui->lineEdit_plateQuery->text(),errormsg,m_paymentID,m_minutes,m_vehicleID,m_entryDate)){
+        if(!m_dbmanager->GetBillingResult(platequery,errormsg,m_paymentID,m_minutes,m_vehicleID,m_entryDate)){
             ui->label_result->setStyleSheet("color:red;");
             ui->label_result->setText(errormsg);
             return;

@@ -9,13 +9,13 @@ class TCPClient : public QObject
 {
     Q_OBJECT
 public:
-    static TCPClient* getInstance(QString hostip, qint16 port);
+    static TCPClient* getInstance(QString hostip, qint16 port, qint32 remoteDBid);
     static void releaseInstance();
 
     void startConnection();
     void terminateConnection();
+    QAbstractSocket::SocketState getCurrentSocketState();
     void sendData(QString data);
-    QString readData();
 
 signals:
     void dataReceived(QString);
@@ -26,12 +26,16 @@ private slots:
     void socketStateChanged(QAbstractSocket::SocketState socketState);
 
 private:
-    TCPClient(QString hostip, qint16 port);
+    TCPClient(QString hostip, qint16 port, qint32 remoteDBid);
     ~TCPClient();
     QString m_hostip;
     qint16 m_port;
     QTcpSocket m_socket;
     QByteArray m_receivedData;
+    qint32 m_remoteID;
+
+
+    QString readData();
 
     static TCPClient* m_instance;
     static int _refCounter;

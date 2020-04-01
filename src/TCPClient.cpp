@@ -9,8 +9,9 @@
 TCPClient* TCPClient::m_instance(0);
 int TCPClient::_refCounter = 0;
 
-TCPClient::TCPClient(QString hostip, qint16 port)
-    : m_hostip(hostip), m_port(port)
+TCPClient::TCPClient(QString hostip, qint16 port, qint32 remoteDBid)
+    : m_hostip(hostip), m_port(port), m_remoteID(remoteDBid)
+    //: m_hostip("localhost"), m_port(26789), m_remoteID(remoteDBid)
 {
     connect(&m_socket, &QTcpSocket::readyRead, this, &TCPClient::onReadyRead);
     connect(&m_socket,&QTcpSocket::stateChanged,this,&TCPClient::socketStateChanged);
@@ -21,9 +22,9 @@ TCPClient::~TCPClient()
 }
 
 
-TCPClient* TCPClient::getInstance(QString hostip, qint16 port)
+TCPClient* TCPClient::getInstance(QString hostip, qint16 port, qint32 remoteDBid)
 {
-    if(!m_instance) m_instance = new TCPClient(hostip,port);
+    if(!m_instance) m_instance = new TCPClient(hostip,port, remoteDBid);
     ++_refCounter;
     return m_instance;
 }
@@ -40,7 +41,9 @@ void TCPClient::releaseInstance()
 
 void TCPClient::startConnection()
 {
-    m_socket.connectToHost(QHostAddress(m_hostip), m_port);
+    qDebug() << "starting connection";
+    qDebug() << "address:" << m_hostip << "port:" << m_port << "databaseID:" << m_remoteID;
+    m_socket.connectToHost(m_hostip, m_port);
 }
 
 void TCPClient::terminateConnection()
@@ -53,7 +56,6 @@ void TCPClient::onReadyRead()
     m_receivedData = m_socket.readAll();
     qDebug() << m_receivedData;
     emit dataReceived(m_receivedData);
-    //m_socket->write(QByteArray("ok !\n"));
 }
 
 void TCPClient::socketStateChanged(QAbstractSocket::SocketState socketState)
@@ -78,4 +80,9 @@ QString TCPClient::readData()
         return "";
     }
     return m_receivedData;
+}
+
+QAbstractSocket::SocketState TCPClient::getCurrentSocketState()
+{
+    return m_socket.state();
 }

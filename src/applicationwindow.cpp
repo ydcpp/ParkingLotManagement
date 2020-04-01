@@ -13,28 +13,29 @@
 
 #include "parkyerim.hpp"
 
-#include "d_ConnectionDialog.hpp"
+#include <QDebug>
+#include "d_TCPServer.hpp"
 
 
 ApplicationWindow::ApplicationWindow(DatabaseManager* dbmanager, User* user, Logger* logger, QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::ApplicationWindow)
+    QMainWindow(parent),
+    ui(new Ui::ApplicationWindow) , m_dbmanager(dbmanager), m_currentuser(user), m_logger(logger)
 {
     ui->setupUi(this);
     this->setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint | Qt::WindowMaximizeButtonHint | Qt::CustomizeWindowHint);
     this->setAttribute( Qt::WA_DeleteOnClose, true );
     m_parent = static_cast<ParkYerim*>(parent);
-    m_dbmanager = dbmanager;
-    m_currentuser = user;
-    m_logger = logger;
     m_threadManager = ThreadManager::getInstance(this,m_vehicleInCameraDeviceIndex,m_vehicleOutCameraDeviceIndex);
     initializeAssetPaths();
     setupIcons();
     setupCustomComponents();
+    SetupTCPConnection();
 }
 
 ApplicationWindow::~ApplicationWindow()
 {
+    m_client->terminateConnection();
+    m_client->releaseInstance();
     for(PricingPlan* plan : m_pricingPlans) if(plan) delete plan;
     delete m_threadManager;
     delete ui;
@@ -94,11 +95,33 @@ void ApplicationWindow::updateRemainingSpots(qint32 value)
 void ApplicationWindow::increaseRemainingSpotCount()
 {
     updateRemainingSpots(m_remainingSpots+1);
+    m_dbmanager->IncreaseRemainingSpot();
 }
 
 void ApplicationWindow::decreaseRemainingSpotCount()
 {
     updateRemainingSpots(m_remainingSpots-1);
+    m_dbmanager->DecreaseRemainingSpot();
+}
+
+void ApplicationWindow::on_socketStateChanged(QAbstractSocket::SocketState socketState)
+{
+    ui->pushButton_reconnect->setVisible(false);
+    switch (socketState) {
+    case QAbstractSocket::ConnectedState:
+        ui->label_status->setStyleSheet("color:green;");
+        ui->label_status->setText("BAĞLANDI");
+        break;
+    case QAbstractSocket::UnconnectedState:
+        ui->label_status->setStyleSheet("color:red;");
+        ui->label_status->setText("BAĞLANTI KESİLDİ");
+        ui->pushButton_reconnect->setVisible(true);
+        break;
+    default:
+        ui->label_status->setStyleSheet("color:orange;");
+        ui->label_status->setText(QVariant::fromValue(socketState).toString());
+        break;
+    }
 }
 
 void ApplicationWindow::drawCamInput_vehicle_in(QPixmap pixmap)
@@ -242,6 +265,18 @@ void ApplicationWindow::setupIcons()
     ui->pushButton_toggleCameras->setIcon(QIcon(m_assetPaths["icon_camera"]));
 }
 
+void ApplicationWindow::SetupTCPConnection()
+{
+    ui->pushButton_reconnect->setVisible(false);
+    m_serverAddress = m_dbmanager->QueryHostAddress();
+    m_serverPort = m_dbmanager->QueryHostPort();
+    m_RemoteID = m_dbmanager->QueryRemoteID();
+    m_client = TCPClient::getInstance(m_serverAddress,m_serverPort,m_RemoteID);
+    m_client->startConnection();
+    connect(m_client,&TCPClient::stateChanged,this,&ApplicationWindow::on_socketStateChanged);
+    on_socketStateChanged(m_client->getCurrentSocketState());
+}
+
 void ApplicationWindow::setupCustomComponents()
 {
     // setting up digital clock
@@ -272,7 +307,10 @@ void ApplicationWindow::setupCustomComponents()
     }
 
     // setting up remaining spot count
-    updateRemainingSpots(5);
+    QString err;
+    int spots = m_dbmanager->QueryRemainingSpots(err);
+    if(spots == -1) qDebug() << err;
+    else updateRemainingSpots(spots);
 }
 
 
@@ -333,14 +371,11 @@ void ApplicationWindow::on_pushButton_plakatani_out_clicked()
     emit recognizePlate_out();
 }
 
-void ApplicationWindow::on_pushButton_connectserver_clicked()
+
+
+void ApplicationWindow::on_pushButton_reconnect_clicked()
 {
-    d_ConnectionDialog dialog("127.0.0.1",26789);
-    dialog.exec();
+    m_client->terminateConnection();
+    m_client->startConnection();
 }
 
-void ApplicationWindow::on_pushButton_connectserver_2_clicked()
-{
-    d_ConnectionDialog dialog("127.0.0.1",16789);
-    dialog.exec();
-}

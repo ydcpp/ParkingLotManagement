@@ -544,6 +544,20 @@ bool DatabaseManager::SetQueryModel_TotalPaymentInfo(qint32 vehicleID, QSqlQuery
     return true;
 }
 
+bool DatabaseManager::SetQueryModel_ListAllVehiclesInside(QSqlQueryModel* out_model, QString& errmsg)
+{
+    QSqlQuery query;
+    query.prepare("select Vehicles.Plate as 'Plaka', Vehicles.Model as 'Marka', Payments.ID as 'Fatura ID', VehicleEntryDate as 'Giriş Saati', PricingPlans.PlanName as 'Tarife' from Payments"
+                  " left join PricingPlans on Payments.fk_PricingPlanID = PricingPlans.ID"
+                  " left join Vehicles on Payments.fk_VehicleID = Vehicles.ID where Payments.isPaymentComplete = 0");
+    if(!query.exec()){
+        errmsg = query.lastError().text();
+        return false;
+    }
+    out_model->setQuery(query);
+    return true;
+}
+
 bool DatabaseManager::GetVehicleInformationByPlate(QString plate, qint32 &out_vehicleID, QString &out_color, QString &out_type, QString &out_model, QString& errmsg)
 {
     QSqlQuery query;
@@ -598,6 +612,64 @@ bool DatabaseManager::ChangePassword(qint32 accountID, QString oldPassword, QStr
         return false;
     }
     return true;
+}
+
+qint32 DatabaseManager::QueryRemainingSpots(QString& errmsg)
+{
+    QSqlQuery query;
+    query.prepare("select RemainingSpots from OtoparkInfo where ID = 0");
+    if(!query.exec()){
+        errmsg = query.lastError().text();
+        return -1;
+    }if(!query.next()){
+        errmsg = "Hatalı otopark id";
+        return -1;
+    }
+    return query.value(0).toInt();
+}
+
+qint32 DatabaseManager::QueryRemoteID()
+{
+    QSqlQuery query;
+    if(!query.exec("select ServerOtoparkID from OtoparkInfo where ID = 0")) return -1;
+    else{
+        query.next();
+        return query.value(0).toInt();
+    }
+}
+
+QString DatabaseManager::QueryHostAddress()
+{
+    QSqlQuery query;
+    if(!query.exec("select ServerIP from OtoparkInfo where ID = 0")) return "";
+    else{
+        query.next();
+        return query.value(0).toString();
+    }
+}
+
+qint32 DatabaseManager::QueryHostPort()
+{
+    QSqlQuery query;
+    if(!query.exec("select ServerPort from OtoparkInfo where ID = 0")) return -1;
+    else{
+        query.next();
+        return query.value(0).toInt();
+    }
+}
+
+bool DatabaseManager::IncreaseRemainingSpot()
+{
+    QSqlQuery query;
+    if(!query.exec("update OtoparkInfo set RemainingSpots = RemainingSpots+1 where ID = 0")) return false;
+    else return true;
+}
+
+bool DatabaseManager::DecreaseRemainingSpot()
+{
+    QSqlQuery query;
+    if(!query.exec("update OtoparkInfo set RemainingSpots = RemainingSpots-1 where ID = 0")) return false;
+    else return true;
 }
 
 

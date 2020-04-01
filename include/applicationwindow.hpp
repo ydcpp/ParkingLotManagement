@@ -8,8 +8,9 @@
 #include "currentplanwindow.hpp"
 #include "vehiclesearch.hpp"
 #include "ThreadManager.hpp"
+#include "TCPClient.hpp"
 
-#include <QWidget>
+#include <QMainWindow>
 #include <QMap>
 #include <QString>
 
@@ -24,7 +25,7 @@ namespace Ui {
 class ApplicationWindow;
 }
 
-class ApplicationWindow : public QWidget
+class ApplicationWindow : public QMainWindow
 {
     Q_OBJECT
 
@@ -59,7 +60,7 @@ private slots:
     void updateRemainingSpots(qint32);
     void increaseRemainingSpotCount();
     void decreaseRemainingSpotCount();
-
+    void on_socketStateChanged(QAbstractSocket::SocketState socketState);
 
     void on_toolButton_vehicle_in_clicked();
 
@@ -81,9 +82,7 @@ private slots:
 
     void on_pushButton_plakatani_out_clicked();
 
-    void on_pushButton_connectserver_clicked();
-
-    void on_pushButton_connectserver_2_clicked();
+    void on_pushButton_reconnect_clicked();
 
 signals:
     float getPricePlanCalculation(qint64 minutes);
@@ -105,11 +104,16 @@ private:
     CurrentPlanWindow* m_window_currentplan = nullptr;
     VehicleSearch* m_window_vehiclesearch = nullptr;
     ThreadManager* m_threadManager = nullptr;
+    TCPClient* m_client = nullptr;
+    PricingPlan* currentPricingPlan = nullptr;
 
     qint32 m_remainingSpots = 0;
     QList<PricingPlan*> m_pricingPlans;
     qint32 m_currentPlanID = 0;
-    PricingPlan* currentPricingPlan = nullptr;
+    QString m_serverAddress;
+    qint32 m_serverPort;
+    qint32 m_RemoteID;
+
 
     // camera settings
     bool m_isCameraInputOn = false;
@@ -137,6 +141,7 @@ private:
         "icon_parkingspot,  :/Images/assets/images/parking-icon.png",
         "icon_camera,       :/Images/assets/images/security-camera.png"
     };
+    void SetupTCPConnection();
 };
 
 #endif // APPLICATIONWINDOW_HPP

@@ -31,7 +31,10 @@ void ManualVehicleEntry::on_pushButton_clicked()
     if(validateForm()){
         QString errormsg;
         qint32 vehicleid;
-        if(!m_dbmanager->NewVehicleEntry(ui->lineEdit_plate->text(),ui->lineEdit_model->text(),ui->comboBox_types->currentText(),ui->comboBox_colors->currentText(),errormsg,vehicleid)){
+        QString plate = ui->lineEdit_plate->text();
+        plate = plate.simplified();
+        plate = plate.replace(" ","");
+        if(!m_dbmanager->NewVehicleEntry(plate,ui->lineEdit_model->text(),ui->comboBox_types->currentText(),ui->comboBox_colors->currentText(),errormsg,vehicleid)){
             ui->label_error->setText(errormsg);
             return;
         }

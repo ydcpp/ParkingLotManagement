@@ -36,7 +36,7 @@
     <property name="geometry">
      <rect>
       <x>160</x>
-      <y>30</y>
+      <y>20</y>
       <width>51</width>
       <height>21</height>
      </rect>
@@ -54,7 +54,7 @@
     <property name="geometry">
      <rect>
       <x>160</x>
-      <y>60</y>
+      <y>50</y>
       <width>51</width>
       <height>21</height>
      </rect>
@@ -68,35 +68,11 @@
      <string>Şifre</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_status">
-    <property name="geometry">
-     <rect>
-      <x>150</x>
-      <y>120</y>
-      <width>221</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>8</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-    </property>
-    <property name="wordWrap">
-     <bool>true</bool>
-    </property>
-   </widget>
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
       <x>280</x>
-      <y>90</y>
+      <y>80</y>
       <width>91</width>
       <height>31</height>
      </rect>
@@ -115,7 +91,7 @@
     <property name="geometry">
      <rect>
       <x>220</x>
-      <y>30</y>
+      <y>20</y>
       <width>151</width>
       <height>21</height>
      </rect>
@@ -130,7 +106,7 @@
     <property name="geometry">
      <rect>
       <x>220</x>
-      <y>60</y>
+      <y>50</y>
       <width>151</width>
       <height>21</height>
      </rect>
@@ -147,12 +123,31 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>128</width>
+      <width>140</width>
       <height>128</height>
      </rect>
     </property>
     <property name="text">
      <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_login_err">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>110</y>
+      <width>211</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color:red;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
     </property>
    </widget>
   </widget>

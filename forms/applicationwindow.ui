@@ -649,32 +649,6 @@ border-color : red;
        <string/>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_connectserver">
-      <property name="geometry">
-       <rect>
-        <x>230</x>
-        <y>450</y>
-        <width>91</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>DesktopServer</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton_connectserver_2">
-      <property name="geometry">
-       <rect>
-        <x>230</x>
-        <y>490</y>
-        <width>91</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>MobileServer</string>
-      </property>
-     </widget>
     </widget>
     <widget class="QFrame" name="frame_exit">
      <property name="geometry">
@@ -1285,36 +1259,36 @@ border-color : red;
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>681</y>
-      <width>43</width>
+      <y>680</y>
+      <width>161</width>
       <height>16</height>
      </rect>
     </property>
     <property name="maximumSize">
      <size>
-      <width>50</width>
+      <width>201</width>
       <height>20</height>
      </size>
     </property>
     <property name="text">
-     <string> DURUM:</string>
+     <string>SUNUCU BAĞLANTISI DURUMU :</string>
     </property>
     <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
    <widget class="QLabel" name="label_status">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>681</y>
-      <width>1111</width>
+      <x>170</x>
+      <y>680</y>
+      <width>161</width>
       <height>16</height>
      </rect>
     </property>
     <property name="minimumSize">
      <size>
-      <width>200</width>
+      <width>140</width>
       <height>16</height>
      </size>
     </property>
@@ -1324,11 +1298,16 @@ border-color : red;
       <height>16</height>
      </size>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
     <property name="text">
      <string/>
     </property>
     <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
    <widget class="QToolButton" name="toolButton_settings">
@@ -1677,6 +1656,19 @@ border-color : red;
     </property>
     <property name="text">
      <string>Plakayı Tanı</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_reconnect">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>680</y>
+      <width>91</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Yeniden Bağlan</string>
     </property>
    </widget>
   </widget>

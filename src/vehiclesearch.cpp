@@ -9,14 +9,12 @@ VehicleSearch::VehicleSearch(DatabaseManager* db, QWidget *parent) :
     ui(new Ui::VehicleSearch)
 {
     ui->setupUi(this);
+    this->setAttribute( Qt::WA_DeleteOnClose, true );
     dbmanager = db;
     m_model = new QSqlQueryModel();
     m_proxymodel = new QSortFilterProxyModel();
-
     // setting up icons
     ui->pushButton_search->setIcon(QIcon(static_cast<ApplicationWindow*>(parent)->GetAssetPaths()["icon_search"]));
-
-
 }
 
 VehicleSearch::~VehicleSearch()
@@ -26,15 +24,13 @@ VehicleSearch::~VehicleSearch()
     delete m_proxymodel;
 }
 
-void VehicleSearch::on_pushButton_close_clicked()
-{
-    this->close();
-}
 
 void VehicleSearch::on_pushButton_search_clicked()
 {
     clearVehicleInfo();
     QString plate = ui->lineEdit_search->text();
+    plate = plate.simplified();
+    plate = plate.replace(" ", "");
     QString model;
     QString type;
     QString color;
@@ -76,4 +72,20 @@ void VehicleSearch::setVehicleInfo(QString plate, QString model, QString color, 
     ui->lineEdit_model->setText(model);
     ui->lineEdit_color->setText(color);
     ui->lineEdit_type->setText(type);
+}
+
+void VehicleSearch::on_pushButton_listAll_clicked()
+{
+    QString err;
+    if(!dbmanager->SetQueryModel_ListAllVehiclesInside(m_model,err)){
+        ui->label_error->setText(err);
+        return;
+    }
+    m_proxymodel->setSourceModel(m_model);
+    ui->tableView->setModel(m_proxymodel);
+    ui->tableView->setColumnWidth(0,120);
+    ui->tableView->setColumnWidth(1,100);
+    ui->tableView->setColumnWidth(2,60);
+    ui->tableView->setColumnWidth(3,120);
+    ui->tableView->setColumnWidth(4,80);
 }

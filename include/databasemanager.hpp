@@ -1,7 +1,7 @@
 #ifndef DATABASEMANAGER_HPP
 #define DATABASEMANAGER_HPP
 
-
+#include <QObject>
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QFile>
@@ -21,8 +21,10 @@
 #include "pricingplan.hpp"
 
 
-class DatabaseManager
+class DatabaseManager : public QObject
 {
+    Q_OBJECT
+
 public:
     DatabaseManager();
     ~DatabaseManager();
@@ -46,9 +48,16 @@ public:
     bool QueryWeeklyIncome(float& out_income, QString& errmsg);
     bool QueryDailyIncome(float& out_income, QString& errmsg);
     bool SetQueryModel_TotalPaymentInfo(qint32 vehicleID, QSqlQueryModel* out_model, QString& errmsg);
+    bool SetQueryModel_ListAllVehiclesInside(QSqlQueryModel* out_model, QString& errmsg);
     bool GetVehicleInformationByPlate(QString plate, qint32& out_vehicleID, QString& out_color, QString& out_type, QString& out_model, QString& errmsg);
+    bool GetAllVehiclesInside();
     bool ChangePassword(qint32 accountID, QString oldPassword, QString newPassword, QString& errmsg);
-
+    qint32 QueryRemainingSpots(QString& errmsg);
+    qint32 QueryRemoteID();
+    QString QueryHostAddress();
+    qint32 QueryHostPort();
+    bool IncreaseRemainingSpot();
+    bool DecreaseRemainingSpot();
     bool isConnected();
 
     QMap<QString,qint32> getColors();
@@ -64,7 +73,7 @@ private:
     const QString m_dbbackuppath = "./assets/db/backups/";
     const QString m_dbfilename = "parkyerimdb.sqlite";
     const QString m_dbfile = m_dbfilepath + m_dbfilename;
-    const QString m_dbResourcePath = ":/Database/Current/assets/database/parkyerimdb.sqlite";
+    const QString m_dbResourcePath = ":/Database/assets/database/parkyerimdb.sqlite";
     QString m_backupDBresourcepath;
 
     void getColorsFromDB();

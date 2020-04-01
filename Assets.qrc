@@ -1,7 +1,5 @@
 <RCC>
-    <qresource prefix="/Database/Current">
-        <file>assets/database/parkyerimdb.sqlite</file>
-    </qresource>
+    <qresource prefix="/Database/Current"/>
     <qresource prefix="/Images">
         <file>assets/images/add_vehicle.png</file>
         <file>assets/images/adminpanel.png</file>
@@ -17,4 +15,7 @@
         <file>assets/images/open-lock-green.png</file>
     </qresource>
     <qresource prefix="/Database/Backups"/>
+    <qresource prefix="/Database">
+        <file>assets/database/parkyerimdb.sqlite</file>
+    </qresource>
 </RCC>

@@ -26,6 +26,7 @@ ParkYerim::~ParkYerim()
 
 void ParkYerim::on_pushButton_clicked()
 {
+    ui->label_login_err->setText("");
     if(validateLoginInfo()) launchProgram();
 }
 
@@ -35,7 +36,7 @@ bool ParkYerim::validateLoginInfo()
     QString password = ui->lineEdit_password->text();
     QString errormessage;
     if(!m_database->ValidateUserLogin(username,password,errormessage, &m_user)){
-        ui->label_status->setText(errormessage);
+        ui->label_login_err->setText(errormessage);
         return false;
     }else return true;
 }
@@ -60,8 +61,8 @@ void ParkYerim::initializeDatabase()
     // initialize database instance
     m_database = new DatabaseManager();
     if(!m_database->isConnected()){
-        ui->label_status->setStyleSheet("color:red;");
-        ui->label_status->setText("Veritabanına bağlanılamadı.");
+        ui->label_login_err->setStyleSheet("color:red;");
+        ui->label_login_err->setText("Veritabanına bağlanılamadı.");
         ui->pushButton->setEnabled(false);
     }
 }

@@ -20,9 +20,9 @@ public:
     ~VehicleSearch();
 
 private slots:
-    void on_pushButton_close_clicked();
-
     void on_pushButton_search_clicked();
+
+    void on_pushButton_listAll_clicked();
 
 private:
     Ui::VehicleSearch *ui;
