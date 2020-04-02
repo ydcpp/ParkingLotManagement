@@ -50,18 +50,15 @@ LIBS += -L$$PWD/libexternal/openalpr_x64/lib     \
 
 
 HEADERS += \
-    $$PWD/include/*.hpp \
-    d_TCPServer.hpp
+    $$PWD/include/*.hpp
 
 
 SOURCES += \
-    $$PWD/src/*.cpp \
-    d_TCPServer.cpp
+    $$PWD/src/*.cpp
 
 
 FORMS += \
-    $$PWD/forms/*.ui \
-    d_TCPServer.ui
+    $$PWD/forms/*.ui
 
 
 

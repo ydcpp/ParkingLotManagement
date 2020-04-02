@@ -42,6 +42,15 @@ public:
     void updateCurrentPlan(qint32 planID);
     qint32 getCurrentPlanID() const;
 
+signals:
+    float getPricePlanCalculation(qint64 minutes);
+    void terminateAllThreads();
+    void stopAllThreads();
+    void recognizePlate_in();
+    void recognizePlate_out();
+    void sig_VehicleEntered();
+    void sig_VehicleLeft();
+
 public slots:
     void openCameraStream_in();
     void closeCameraStream_in();
@@ -61,6 +70,7 @@ private slots:
     void increaseRemainingSpotCount();
     void decreaseRemainingSpotCount();
     void on_socketStateChanged(QAbstractSocket::SocketState socketState);
+    void onTCPErrorReceived(const QString& err);
 
     void on_toolButton_vehicle_in_clicked();
 
@@ -84,12 +94,6 @@ private slots:
 
     void on_pushButton_reconnect_clicked();
 
-signals:
-    float getPricePlanCalculation(qint64 minutes);
-    void terminateAllThreads();
-    void stopAllThreads();
-    void recognizePlate_in();
-    void recognizePlate_out();
 
 private:
     Ui::ApplicationWindow *ui;

@@ -373,7 +373,7 @@ border-color : red;
        <x>0</x>
        <y>0</y>
        <width>411</width>
-       <height>611</height>
+       <height>581</height>
       </rect>
      </property>
      <property name="frameShape">
@@ -386,7 +386,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>250</y>
+        <y>260</y>
         <width>71</width>
         <height>21</height>
        </rect>
@@ -409,7 +409,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>290</y>
+        <y>300</y>
         <width>71</width>
         <height>21</height>
        </rect>
@@ -432,7 +432,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>330</y>
+        <y>340</y>
         <width>71</width>
         <height>21</height>
        </rect>
@@ -458,7 +458,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>110</x>
-        <y>250</y>
+        <y>260</y>
         <width>281</width>
         <height>21</height>
        </rect>
@@ -487,7 +487,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>110</x>
-        <y>290</y>
+        <y>300</y>
         <width>281</width>
         <height>21</height>
        </rect>
@@ -514,7 +514,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>110</x>
-        <y>330</y>
+        <y>340</y>
         <width>281</width>
         <height>21</height>
        </rect>
@@ -538,7 +538,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>270</y>
+        <y>280</y>
         <width>381</width>
         <height>20</height>
        </rect>
@@ -551,7 +551,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>310</y>
+        <y>320</y>
         <width>381</width>
         <height>20</height>
        </rect>
@@ -564,7 +564,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>350</y>
+        <y>360</y>
         <width>381</width>
         <height>20</height>
        </rect>
@@ -580,7 +580,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>110</x>
-        <y>370</y>
+        <y>380</y>
         <width>281</width>
         <height>21</height>
        </rect>
@@ -604,7 +604,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>390</y>
+        <y>400</y>
         <width>381</width>
         <height>20</height>
        </rect>
@@ -617,7 +617,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>370</y>
+        <y>380</y>
         <width>71</width>
         <height>21</height>
        </rect>
@@ -642,7 +642,7 @@ border-color : red;
         <x>2</x>
         <y>2</y>
         <width>408</width>
-        <height>240</height>
+        <height>251</height>
        </rect>
       </property>
       <property name="text">
@@ -656,7 +656,7 @@ border-color : red;
        <x>420</x>
        <y>0</y>
        <width>411</width>
-       <height>611</height>
+       <height>581</height>
       </rect>
      </property>
      <property name="frameShape">
@@ -682,7 +682,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>290</y>
+        <y>300</y>
         <width>91</width>
         <height>21</height>
        </rect>
@@ -708,7 +708,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>130</x>
-        <y>250</y>
+        <y>260</y>
         <width>261</width>
         <height>21</height>
        </rect>
@@ -737,7 +737,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>130</x>
-        <y>330</y>
+        <y>340</y>
         <width>261</width>
         <height>21</height>
        </rect>
@@ -761,7 +761,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>270</y>
+        <y>280</y>
         <width>381</width>
         <height>20</height>
        </rect>
@@ -774,7 +774,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>250</y>
+        <y>260</y>
         <width>91</width>
         <height>21</height>
        </rect>
@@ -800,7 +800,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>130</x>
-        <y>290</y>
+        <y>300</y>
         <width>261</width>
         <height>21</height>
        </rect>
@@ -824,7 +824,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>350</y>
+        <y>360</y>
         <width>381</width>
         <height>20</height>
        </rect>
@@ -840,7 +840,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>130</x>
-        <y>370</y>
+        <y>380</y>
         <width>261</width>
         <height>21</height>
        </rect>
@@ -864,7 +864,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>390</y>
+        <y>400</y>
         <width>381</width>
         <height>20</height>
        </rect>
@@ -877,7 +877,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>330</y>
+        <y>340</y>
         <width>91</width>
         <height>21</height>
        </rect>
@@ -900,7 +900,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>370</y>
+        <y>380</y>
         <width>91</width>
         <height>21</height>
        </rect>
@@ -923,7 +923,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>450</y>
+        <y>460</y>
         <width>91</width>
         <height>21</height>
        </rect>
@@ -946,7 +946,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>470</y>
+        <y>480</y>
         <width>381</width>
         <height>20</height>
        </rect>
@@ -959,7 +959,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>490</y>
+        <y>500</y>
         <width>91</width>
         <height>21</height>
        </rect>
@@ -982,7 +982,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>510</y>
+        <y>520</y>
         <width>381</width>
         <height>20</height>
        </rect>
@@ -998,7 +998,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>130</x>
-        <y>450</y>
+        <y>460</y>
         <width>261</width>
         <height>22</height>
        </rect>
@@ -1057,7 +1057,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>130</x>
-        <y>490</y>
+        <y>500</y>
         <width>261</width>
         <height>22</height>
        </rect>
@@ -1116,7 +1116,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>130</x>
-        <y>410</y>
+        <y>420</y>
         <width>261</width>
         <height>21</height>
        </rect>
@@ -1140,7 +1140,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>410</y>
+        <y>420</y>
         <width>91</width>
         <height>21</height>
        </rect>
@@ -1163,7 +1163,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>430</y>
+        <y>440</y>
         <width>381</width>
         <height>20</height>
        </rect>
@@ -1176,7 +1176,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>550</y>
+        <y>560</y>
         <width>381</width>
         <height>20</height>
        </rect>
@@ -1189,7 +1189,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>530</y>
+        <y>540</y>
         <width>91</width>
         <height>21</height>
        </rect>
@@ -1218,7 +1218,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>130</x>
-        <y>530</y>
+        <y>540</y>
         <width>261</width>
         <height>21</height>
        </rect>
@@ -1246,7 +1246,7 @@ border-color : red;
         <x>2</x>
         <y>2</y>
         <width>408</width>
-        <height>240</height>
+        <height>251</height>
        </rect>
       </property>
       <property name="text">
@@ -1254,61 +1254,64 @@ border-color : red;
       </property>
      </widget>
     </widget>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>680</y>
-      <width>161</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>201</width>
-      <height>20</height>
-     </size>
-    </property>
-    <property name="text">
-     <string>SUNUCU BAĞLANTISI DURUMU :</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_status">
-    <property name="geometry">
-     <rect>
-      <x>170</x>
-      <y>680</y>
-      <width>161</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>140</width>
-      <height>16</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>100009</width>
-      <height>16</height>
-     </size>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>10</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-    </property>
+    <widget class="QLabel" name="label_status">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>590</y>
+       <width>671</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>140</width>
+       <height>16</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>100009</width>
+       <height>48</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>590</y>
+       <width>161</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>201</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>SUNUCU BAĞLANTISI DURUMU :</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+    </widget>
    </widget>
    <widget class="QToolButton" name="toolButton_settings">
     <property name="geometry">
@@ -1661,9 +1664,9 @@ border-color : red;
    <widget class="QPushButton" name="pushButton_reconnect">
     <property name="geometry">
      <rect>
-      <x>330</x>
-      <y>680</y>
-      <width>91</width>
+      <x>10</x>
+      <y>674</y>
+      <width>151</width>
       <height>21</height>
      </rect>
     </property>

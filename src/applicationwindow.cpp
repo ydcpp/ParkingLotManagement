@@ -14,7 +14,6 @@
 #include "parkyerim.hpp"
 
 #include <QDebug>
-#include "d_TCPServer.hpp"
 
 
 ApplicationWindow::ApplicationWindow(DatabaseManager* dbmanager, User* user, Logger* logger, QWidget *parent) :
@@ -94,19 +93,24 @@ void ApplicationWindow::updateRemainingSpots(qint32 value)
 
 void ApplicationWindow::increaseRemainingSpotCount()
 {
-    updateRemainingSpots(m_remainingSpots+1);
-    m_dbmanager->IncreaseRemainingSpot();
+    if(m_dbmanager->IncreaseRemainingSpot()){
+        updateRemainingSpots(m_remainingSpots+1);
+        emit sig_VehicleLeft();
+    }
 }
 
 void ApplicationWindow::decreaseRemainingSpotCount()
 {
-    updateRemainingSpots(m_remainingSpots-1);
-    m_dbmanager->DecreaseRemainingSpot();
+    if(m_dbmanager->DecreaseRemainingSpot()){
+        updateRemainingSpots(m_remainingSpots-1);
+        emit sig_VehicleEntered();
+    }
 }
 
 void ApplicationWindow::on_socketStateChanged(QAbstractSocket::SocketState socketState)
 {
     ui->pushButton_reconnect->setVisible(false);
+    QString status = "";
     switch (socketState) {
     case QAbstractSocket::ConnectedState:
         ui->label_status->setStyleSheet("color:green;");
@@ -114,7 +118,10 @@ void ApplicationWindow::on_socketStateChanged(QAbstractSocket::SocketState socke
         break;
     case QAbstractSocket::UnconnectedState:
         ui->label_status->setStyleSheet("color:red;");
-        ui->label_status->setText("BAĞLANTI KESİLDİ");
+        status += "BAĞLANTI KESİLDİ  (";
+        status.append(m_client->getLastError());
+        status.append(")");
+        ui->label_status->setText(status);
         ui->pushButton_reconnect->setVisible(true);
         break;
     default:
@@ -122,6 +129,12 @@ void ApplicationWindow::on_socketStateChanged(QAbstractSocket::SocketState socke
         ui->label_status->setText(QVariant::fromValue(socketState).toString());
         break;
     }
+}
+
+void ApplicationWindow::onTCPErrorReceived(const QString& err)
+{
+    ui->label_status->setStyleSheet("color:red;");
+    ui->label_status->setText(err);
 }
 
 void ApplicationWindow::drawCamInput_vehicle_in(QPixmap pixmap)
@@ -271,10 +284,10 @@ void ApplicationWindow::SetupTCPConnection()
     m_serverAddress = m_dbmanager->QueryHostAddress();
     m_serverPort = m_dbmanager->QueryHostPort();
     m_RemoteID = m_dbmanager->QueryRemoteID();
-    m_client = TCPClient::getInstance(m_serverAddress,m_serverPort,m_RemoteID);
+    m_client = TCPClient::getInstance(m_serverAddress,m_serverPort,m_RemoteID,this,m_dbmanager);
     m_client->startConnection();
     connect(m_client,&TCPClient::stateChanged,this,&ApplicationWindow::on_socketStateChanged);
-    on_socketStateChanged(m_client->getCurrentSocketState());
+    connect(m_client,&TCPClient::sendError,this,&ApplicationWindow::onTCPErrorReceived);
 }
 
 void ApplicationWindow::setupCustomComponents()

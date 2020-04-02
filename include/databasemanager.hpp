@@ -64,6 +64,8 @@ public:
     QMap<QString,qint32> getVehicleTypes();
     void CreateDatabaseBackup();
 
+signals:
+
 private:
     QSqlDatabase database;
     QMap<QString,qint32> m_colors;
