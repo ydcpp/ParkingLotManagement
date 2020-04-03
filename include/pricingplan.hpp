@@ -8,17 +8,17 @@ class PricingPlan : public QObject
     Q_OBJECT
 public:
     explicit PricingPlan(QObject *parent = nullptr);
-    PricingPlan(qint32 id, QString name, float pricePerHour,
-                float lessthantwo,
-                float twothree,
-                float threefour,
-                float fourfive,
-                float fivesix,
-                float sixseven,
-                float seveneight,
-                float eightten,
-                float tentwelve,
-                float morethantwelve);
+    PricingPlan(const qint32& id, const QString& name, const float& pricePerHour,
+                const float& lessthantwo,
+                const float& twothree,
+                const float& threefour,
+                const float& fourfive,
+                const float& fivesix,
+                const float& sixseven,
+                const float& seveneight,
+                const float& eightten,
+                const float& tentwelve,
+                const float& morethantwelve);
 
     qint32 GetPlanID() const;
     QString GetPlanName() const;
@@ -34,12 +34,12 @@ public:
     float Gettentwelve() const;
     float Getmorethantwelve() const;
     void GetPricesPerHour(float& lessThanTwo, float& twoThree, float& threeFour, float& fourFive, float& fiveSix, float& sixSeven, float& sevenEight, float& eightTen, float& tenTwelve, float& moreThanTwelve);
-    void SetPricesPerHour(float lessThanTwo, float twoThree, float threeFour, float fourFive, float fiveSix, float sixSeven, float sevenEight, float eightTen, float tenTwelve, float moreThanTwelve);
+    void SetPricesPerHour(const float& lessThanTwo, const float& twoThree, const float& threeFour, const float& fourFive, const float& fiveSix, const float& sixSeven, const float& sevenEight, const float& eightTen, const float& tenTwelve, const float& moreThanTwelve);
 signals:
 
 public slots:
 
-    float CalculatePrice(qint64 minutes);
+    float CalculatePrice(const qint64& minutes);
 
 private:
     qint32 m_planID;

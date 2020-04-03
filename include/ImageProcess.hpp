@@ -23,7 +23,7 @@ public:
     void startThread(cv::Mat& frameToProcess);
 
 signals:
-    void sendPlateString(QString);
+    void sendPlateString(const QString&);
 
 public slots:
     void stopThread();

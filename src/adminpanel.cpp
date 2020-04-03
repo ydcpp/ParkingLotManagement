@@ -71,21 +71,21 @@ void AdminPanel::on_pushButton_newUser_clicked()
     window_yenikullanici->exec();
 }
 
-void AdminPanel::updateStatusText(QString text, qint32 milliseconds)
+void AdminPanel::updateStatusText(const QString& text, const qint32& milliseconds)
 {
     ui->label_status->setText(text);
     ui->label_status->setStyleSheet("color:black;");
     QTimer::singleShot(milliseconds,ui->label_status,&QLabel::clear);
 }
 
-void AdminPanel::statusMessageSuccess(QString text, qint32 milliseconds)
+void AdminPanel::statusMessageSuccess(const QString& text, const qint32& milliseconds)
 {
     ui->label_status->setText(text);
     ui->label_status->setStyleSheet("color:green;");
     QTimer::singleShot(milliseconds,ui->label_status,&QLabel::clear);
 }
 
-void AdminPanel::statusMessageError(QString text, qint32 milliseconds)
+void AdminPanel::statusMessageError(const QString& text, const qint32& milliseconds)
 {
     ui->label_status->setText(text);
     ui->label_status->setStyleSheet("color:red;");
@@ -115,11 +115,11 @@ void AdminPanel::on_pushButton_payments_clicked()
     m_proxymodel->setSourceModel(m_model);
     ui->tableView->setModel(m_proxymodel);
     ui->tableView->setColumnWidth(0,70);
-    ui->tableView->setColumnWidth(1,80);
-    ui->tableView->setColumnWidth(2,100);
+    ui->tableView->setColumnWidth(1,110);
+    ui->tableView->setColumnWidth(2,90);
     ui->tableView->setColumnWidth(3,120);
     ui->tableView->setColumnWidth(4,120);
-    ui->tableView->setColumnWidth(5,60);
-    ui->tableView->setColumnWidth(6,70);
+    ui->tableView->setColumnWidth(5,45);
+    ui->tableView->setColumnWidth(6,65);
     ui->label_tableheader->setText("Yapılan Tüm Ödemelerin Listesi");
 }

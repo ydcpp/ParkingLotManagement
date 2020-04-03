@@ -31,7 +31,7 @@ private:
     QSortFilterProxyModel* m_proxymodel = nullptr;
 
     void clearVehicleInfo();
-    void setVehicleInfo(QString plate, QString model, QString color, QString type);
+    void setVehicleInfo(const QString& plate, const QString& model, const QString& color, const QString& type);
 };
 
 #endif // VEHICLESEARCH_HPP

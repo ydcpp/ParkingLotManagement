@@ -5,7 +5,7 @@
 #include "applicationwindow.hpp"
 #include <QTimer>
 
-ManualVehicleEntry::ManualVehicleEntry(DatabaseManager* dbmanager, qint32 currentPlanID, QWidget *parent) :
+ManualVehicleEntry::ManualVehicleEntry(DatabaseManager* dbmanager, const qint32& currentPlanID, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ManualVehicleEntry)
 {

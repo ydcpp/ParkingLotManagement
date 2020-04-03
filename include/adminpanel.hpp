@@ -44,9 +44,9 @@ private slots:
 
 protected slots:
 
-    void updateStatusText(QString text, qint32 milliseconds);
-    void statusMessageSuccess(QString text, qint32 milliseconds);
-    void statusMessageError(QString text, qint32 milliseconds);
+    void updateStatusText(const QString& text, const qint32& milliseconds);
+    void statusMessageSuccess(const QString& text, const qint32& milliseconds);
+    void statusMessageError(const QString& text, const qint32& milliseconds);
 
 private:
     Ui::AdminPanel *ui;

@@ -66,7 +66,7 @@ void VehicleSearch::clearVehicleInfo()
     ui->lineEdit_model->clear();
 }
 
-void VehicleSearch::setVehicleInfo(QString plate, QString model, QString color, QString type)
+void VehicleSearch::setVehicleInfo(const QString& plate, const QString& model, const QString& color, const QString& type)
 {
     ui->lineEdit_plate->setText(plate);
     ui->lineEdit_model->setText(model);

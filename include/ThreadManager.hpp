@@ -15,7 +15,7 @@ class ThreadManager : public QObject
 public:
 
     ~ThreadManager();
-    static ThreadManager* getInstance(ApplicationWindow* appwindow, unsigned int vehicle_in_CamIndex, unsigned int vehicle_out_CamIndex);
+    static ThreadManager* getInstance(ApplicationWindow* appwindow, const unsigned int& vehicle_in_CamIndex, const unsigned int& vehicle_out_CamIndex);
 
 signals:
     void startThreads();
@@ -30,7 +30,7 @@ private slots:
 
 
 private:
-    ThreadManager(ApplicationWindow* appwindow, unsigned int vehicle_in_CamIndex, unsigned int vehicle_out_CamIndex);
+    ThreadManager(ApplicationWindow* appwindow, const unsigned int& vehicle_in_CamIndex, const unsigned int& vehicle_out_CamIndex);
 
     ApplicationWindow* m_appwindow = nullptr;
     CameraStream* m_camVehicleIn = nullptr;

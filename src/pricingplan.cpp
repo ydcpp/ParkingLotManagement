@@ -6,7 +6,7 @@ PricingPlan::PricingPlan(QObject *parent) : QObject(parent)
 
 }
 
-PricingPlan::PricingPlan(qint32 id, QString name, float pricePerHour, float lessthantwo, float twothree, float threefour, float fourfive, float fivesix, float sixseven, float seveneight, float eightten, float tentwelve, float morethantwelve)
+PricingPlan::PricingPlan(const qint32& id, const QString& name, const float& pricePerHour, const float& lessthantwo, const float& twothree, const float& threefour, const float& fourfive, const float& fivesix, const float& sixseven, const float& seveneight, const float& eightten, const float& tentwelve, const float& morethantwelve)
 {
     m_planID = id;
     m_planName = name;
@@ -102,7 +102,7 @@ void PricingPlan::GetPricesPerHour(float &lessThanTwo, float &twoThree, float &t
     moreThanTwelve  = m_pricePerHour*m_moreThanTwelve;
 }
 
-void PricingPlan::SetPricesPerHour(float lessThanTwo, float twoThree, float threeFour, float fourFive, float fiveSix, float sixSeven, float sevenEight, float eightTen, float tenTwelve, float moreThanTwelve)
+void PricingPlan::SetPricesPerHour(const float& lessThanTwo, const float& twoThree, const float& threeFour, const float& fourFive, const float& fiveSix, const float& sixSeven, const float& sevenEight, const float& eightTen, const float& tenTwelve, const float& moreThanTwelve)
 {
     m_lessThanTwo=lessThanTwo;
     m_TwoThree=twoThree;
@@ -116,7 +116,7 @@ void PricingPlan::SetPricesPerHour(float lessThanTwo, float twoThree, float thre
     m_moreThanTwelve=moreThanTwelve;
 }
 
-float PricingPlan::CalculatePrice(qint64 minutes)
+float PricingPlan::CalculatePrice(const qint64& minutes)
 {
     int hour = int(minutes)/60;
     if(hour < 2){

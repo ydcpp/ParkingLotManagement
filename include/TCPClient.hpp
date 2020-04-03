@@ -10,7 +10,7 @@ class TCPClient : public QObject
 {
     Q_OBJECT
 public:
-    static TCPClient* getInstance(QString hostip, qint16 port, qint32 remoteDBid, DatabaseManager* dbmanager);
+    static TCPClient* getInstance(const QString& hostip, const qint16& port, const qint32& remoteDBid, DatabaseManager* dbmanager);
     static void releaseInstance();
 
     void startConnection();
@@ -20,7 +20,7 @@ public:
 
 
 signals:
-    void stateChanged(QAbstractSocket::SocketState socketState);
+    void stateChanged(const QAbstractSocket::SocketState& socketState);
     void sendError(const QString& error);
 
 private slots:
@@ -31,7 +31,7 @@ private slots:
     void onConnected();
 
 private:
-    TCPClient(QString hostip, qint16 port, qint32 remoteDBid, DatabaseManager* dbmanager);
+    TCPClient(const QString& hostip, const qint16& port, const qint32& remoteDBid, DatabaseManager* dbmanager);
     ~TCPClient();
     DatabaseManager* m_dbmanager;
     QString m_hostip;
@@ -43,7 +43,7 @@ private:
 
     void sendData(const QString& data);
     void analyzeReceivedMessage(QString receivedMessage);
-    void sendSynchRemainingSpot(qint32 value);
+    void sendSynchRemainingSpot(const qint32& value);
 
     static TCPClient* m_instance;
     static int _refCounter;

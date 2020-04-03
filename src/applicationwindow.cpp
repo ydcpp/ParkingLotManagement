@@ -75,7 +75,7 @@ User *ApplicationWindow::GetCurrentUser()
     return m_currentuser;
 }
 
-void ApplicationWindow::updateRemainingSpots(qint32 value)
+void ApplicationWindow::updateRemainingSpots(const qint32& value)
 {
     m_remainingSpots = value;
     ui->lcdNumber_freespacecount->display(m_remainingSpots);
@@ -96,7 +96,7 @@ void ApplicationWindow::decreaseRemainingSpotCount()
     m_dbmanager->DecreaseRemainingSpot();
 }
 
-void ApplicationWindow::on_socketStateChanged(QAbstractSocket::SocketState socketState)
+void ApplicationWindow::on_socketStateChanged(const QAbstractSocket::SocketState& socketState)
 {
     ui->pushButton_reconnect->setVisible(false);
     QString status = "";
@@ -182,12 +182,12 @@ void ApplicationWindow::drawCamInput_vehicle_out(QPixmap pixmap)
     ui->label_vehicle_out->setPixmap(pixmap);
 }
 
-void ApplicationWindow::displayLicensePlateString_vehicle_in(QString plate)
+void ApplicationWindow::displayLicensePlateString_vehicle_in(const QString& plate)
 {
     ui->lineEdit_in_plate->setText(plate);
 }
 
-void ApplicationWindow::displayLicensePlateString_vehicle_out(QString plate)
+void ApplicationWindow::displayLicensePlateString_vehicle_out(const QString& plate)
 {
     ui->lineEdit_out_plate->setText(plate);
 }
@@ -230,7 +230,7 @@ QList<PricingPlan *>& ApplicationWindow::GetPricingPlanList()
     return m_pricingPlans;
 }
 
-void ApplicationWindow::updateCurrentPlan(qint32 planID)
+void ApplicationWindow::updateCurrentPlan(const qint32& planID)
 {
     m_currentPlanID = planID;
     for(PricingPlan* plan : m_pricingPlans){

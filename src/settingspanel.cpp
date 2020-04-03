@@ -136,21 +136,21 @@ void SettingsPanel::clearPriceList()
     ui->doubleSpinBox_newplanprice->clear();
 }
 
-void SettingsPanel::setErrorMessage(QString message)
+void SettingsPanel::setErrorMessage(const QString& message)
 {
     ui->label_status->setStyleSheet("color:red;");
     ui->label_status->setText(message);
     QTimer::singleShot(3000,ui->label_status,&QLabel::clear);
 }
 
-void SettingsPanel::setSuccessMessage(QString message)
+void SettingsPanel::setSuccessMessage(const QString& message)
 {
     ui->label_status->setStyleSheet("color:green;");
     ui->label_status->setText(message);
     QTimer::singleShot(3000,ui->label_status,&QLabel::clear);
 }
 
-void SettingsPanel::setEditingEnabled(bool enabled)
+void SettingsPanel::setEditingEnabled(const bool& enabled)
 {
     m_editingEnabled = enabled;
     ui->doubleSpinBox_lessthantwo->setReadOnly(!enabled);

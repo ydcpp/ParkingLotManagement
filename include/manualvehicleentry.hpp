@@ -14,7 +14,7 @@ class ManualVehicleEntry : public QDialog
     Q_OBJECT
 
 public:
-    explicit ManualVehicleEntry(DatabaseManager* dbmanager,qint32 currentplanID, QWidget *parent);
+    explicit ManualVehicleEntry(DatabaseManager* dbmanager,const qint32& currentplanID, QWidget *parent);
     ~ManualVehicleEntry();
 
 signals:

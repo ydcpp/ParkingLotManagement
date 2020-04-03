@@ -60,9 +60,9 @@ private:
     void loadUserData();
     void loadPlanList();
     void clearPriceList();
-    void setErrorMessage(QString message);
-    void setSuccessMessage(QString message);
-    void setEditingEnabled(bool enabled);
+    void setErrorMessage(const QString& message);
+    void setSuccessMessage(const QString& message);
+    void setEditingEnabled(const bool& enabled);
 };
 
 #endif // SETTINGSPANEL_HPP

@@ -1,6 +1,6 @@
 #include "User.hpp"
 
-User::User(QString username, QString firstname, QString lastname, qint32 accID, qint32 usertype, QDateTime date, QString password)
+User::User(const QString& username, const QString& firstname, const QString& lastname, const qint32& accID, const qint32& usertype, const QDateTime& date, const QString& password)
 {
     m_username = username;
     m_firstName = firstname;

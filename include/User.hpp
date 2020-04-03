@@ -25,7 +25,7 @@ public:
 
     void updatePassword(QString pw);
 
-    User(QString username, QString firstname, QString lastname, qint32 accID, qint32 usertype, QDateTime createDate, QString password);
+    User(const QString& username, const QString& firstname, const QString& lastname, const qint32& accID, const qint32& usertype, const QDateTime& createDate, const QString& password);
     ~User();
 private:
     QString m_username;

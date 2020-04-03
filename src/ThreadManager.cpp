@@ -7,7 +7,7 @@
 
 ThreadManager* ThreadManager::m_instance(0);
 
-ThreadManager::ThreadManager(ApplicationWindow* appwindow, unsigned int vehicle_in_CamIndex, unsigned int vehicle_out_CamIndex) : m_appwindow(appwindow)
+ThreadManager::ThreadManager(ApplicationWindow* appwindow, const unsigned int& vehicle_in_CamIndex, const unsigned int& vehicle_out_CamIndex) : m_appwindow(appwindow)
 {
     m_camVehicleIn = new CameraStream(this, vehicle_in_CamIndex);
     m_camVehicleOut = new CameraStream(this, vehicle_out_CamIndex);
@@ -43,7 +43,7 @@ ThreadManager::~ThreadManager()
     delete m_plateReaderVehicleOut;
 }
 
-ThreadManager* ThreadManager::getInstance(ApplicationWindow* appwindow, unsigned int vehicle_in_CamIndex, unsigned int vehicle_out_CamIndex)
+ThreadManager* ThreadManager::getInstance(ApplicationWindow* appwindow, const unsigned int& vehicle_in_CamIndex, const unsigned int& vehicle_out_CamIndex)
 {
     if(!m_instance) m_instance = new ThreadManager(appwindow,vehicle_in_CamIndex,vehicle_out_CamIndex);
     return m_instance;

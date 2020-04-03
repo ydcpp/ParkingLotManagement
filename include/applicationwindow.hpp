@@ -39,11 +39,10 @@ public:
     DatabaseManager* GetDBManager();
     User* GetCurrentUser();
     QList<PricingPlan*>& GetPricingPlanList();
-    void updateCurrentPlan(qint32 planID);
+    void updateCurrentPlan(const qint32& planID);
     qint32 getCurrentPlanID() const;
 
 signals:
-    float getPricePlanCalculation(qint64 minutes);
     void terminateAllThreads();
     void stopAllThreads();
     void recognizePlate_in();
@@ -56,18 +55,18 @@ public slots:
     void closeCameraStream_out();
     void drawCamInput_vehicle_in(QPixmap);
     void drawCamInput_vehicle_out(QPixmap);
-    void displayLicensePlateString_vehicle_in(QString);
-    void displayLicensePlateString_vehicle_out(QString);
+    void displayLicensePlateString_vehicle_in(const QString&);
+    void displayLicensePlateString_vehicle_out(const QString&);
 
 
 private slots:
     void on_toolButton_quit_clicked();
     void showTime();
     void enableToggleCameraButton();
-    void updateRemainingSpots(qint32);
+    void updateRemainingSpots(const qint32&);
     void increaseRemainingSpotCount();
     void decreaseRemainingSpotCount();
-    void on_socketStateChanged(QAbstractSocket::SocketState socketState);
+    void on_socketStateChanged(const QAbstractSocket::SocketState& socketState);
     void onTCPErrorReceived(const QString& err);
     void onPricingPlansUpdated();
     void getCalculatedPrice(const qint64& minutes, const qint32& planid, float& out_price, QString& out_planName);
@@ -127,7 +126,7 @@ private:
     void initializeAssetPaths();
     void setupIcons();
     void setupCustomComponents();
-
+    void SetupTCPConnection();
 
     QMap<QString, QString> m_assetPaths;
 
@@ -145,7 +144,6 @@ private:
         "icon_parkingspot,  :/Images/assets/images/parking-icon.png",
         "icon_camera,       :/Images/assets/images/security-camera.png"
     };
-    void SetupTCPConnection();
 };
 
 #endif // APPLICATIONWINDOW_HPP

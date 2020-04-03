@@ -20,7 +20,7 @@ DatabaseManager::~DatabaseManager()
     CreateDatabaseBackup();
 }
 
-bool DatabaseManager::ValidateUserLogin(QString username, QString password, QString& errormsg, User** currentUser)
+bool DatabaseManager::ValidateUserLogin(const QString& username, const QString& password, QString& errormsg, User** currentUser)
 {
     if(!isConnected()) return false;
     else{
@@ -79,7 +79,7 @@ bool DatabaseManager::ValidateUserLogin(QString username, QString password, QStr
     }
 }
 
-bool DatabaseManager::DeleteUser(QString username, QString& errmsg)
+bool DatabaseManager::DeleteUser(const QString& username, QString& errmsg)
 {
     if(!database.open()) return false;
     QSqlQuery query;
@@ -104,7 +104,7 @@ bool DatabaseManager::DeleteUser(QString username, QString& errmsg)
     }
 }
 
-bool DatabaseManager::CreateUser(QString firstname, QString lastname, QString phone, QString username, QString password, qint32 usertype, QString &errmsg)
+bool DatabaseManager::CreateUser(const QString& firstname, const QString& lastname, const QString& phone, const QString& username, const QString& password, const qint32& usertype, QString &errmsg)
 {
     QSqlQuery query;
     query.prepare("insert into Person (FirstName,LastName) values(:fn,:ln)");
@@ -144,7 +144,7 @@ bool DatabaseManager::CreateUser(QString firstname, QString lastname, QString ph
     return true;
 }
 
-bool DatabaseManager::NewVehicleEntry(QString plate, QString model, QString type, QString color, QString &errmsg, qint32 &vehicleID)
+bool DatabaseManager::NewVehicleEntry(const QString& plate, const QString& model, const QString& type, const QString& color, QString& errmsg, qint32& vehicleID)
 {
     QSqlQuery query;
     // check if vehicle already exists
@@ -177,7 +177,7 @@ bool DatabaseManager::NewVehicleEntry(QString plate, QString model, QString type
     }
 }
 
-bool DatabaseManager::NewPaymentEntry(qint32 vehicleID, qint32 planID, QString& errmsg)
+bool DatabaseManager::NewPaymentEntry(const qint32& vehicleID, const qint32& planID, QString& errmsg)
 {
     QSqlQuery query;
     query.prepare("insert into Payments(fk_VehicleID,fk_PricingPlanID) values(:id,:planid)");
@@ -190,7 +190,7 @@ bool DatabaseManager::NewPaymentEntry(qint32 vehicleID, qint32 planID, QString& 
     return true;
 }
 
-bool DatabaseManager::GetBillingResult(QString plate, QString& errmsg, qint32& out_paymentID, qint64& out_minutes, qint32& out_vehicleID, QDateTime& out_entryDate, qint32& out_planID)
+bool DatabaseManager::GetBillingResult(const QString& plate, QString& errmsg, qint32& out_paymentID, qint64& out_minutes, qint32& out_vehicleID, QDateTime& out_entryDate, qint32& out_planID)
 {
     QSqlQuery query;
     qint32 vehicleID;
@@ -227,7 +227,7 @@ bool DatabaseManager::GetBillingResult(QString plate, QString& errmsg, qint32& o
     }
 }
 
-bool DatabaseManager::CompletePayment(qint32 vehicleID, QDateTime exitDate, qint64 minutes, float price, QString &errmsg, QString payerName)
+bool DatabaseManager::CompletePayment(const qint32& vehicleID, const QDateTime& exitDate, const qint64& minutes, const float& price, QString &errmsg, QString payerName)
 {
     qint32 paymentID;
     QSqlQuery query;
@@ -257,7 +257,7 @@ bool DatabaseManager::CompletePayment(qint32 vehicleID, QDateTime exitDate, qint
     return true;
 }
 
-bool DatabaseManager::GetVehicleInformation(qint32 vehicleID, QString& errmsg, QString& out_plate, QString& out_color, QString& out_type, QString& out_model)
+bool DatabaseManager::GetVehicleInformation(const qint32& vehicleID, QString& errmsg, QString& out_plate, QString& out_color, QString& out_type, QString& out_model)
 {
     QSqlQuery query;
     query.prepare("select Plate, fk_colorID, fk_vehicleTypeID, Model from Vehicles where ID = :id");
@@ -329,7 +329,7 @@ bool DatabaseManager::GetPricingPlans(QList<PricingPlan *> &out_plans, QString &
     return true;
 }
 
-bool DatabaseManager::CreateNewPricingPlan(QString name,float priceperhour,float lessthantwo, float twothree, float threefour, float fourfive, float fivesix, float sixseven, float seveneight, float eightten, float tentwelve, float morethantwelve, QList<PricingPlan*>& plans, QString& errmsg)
+bool DatabaseManager::CreateNewPricingPlan(const QString& name, const float& priceperhour, const float& lessthantwo, const float& twothree, const float& threefour, const float& fourfive, const float& fivesix, const float& sixseven, const float& seveneight, const float& eightten, const float& tentwelve, const float& morethantwelve, QList<PricingPlan*>& plans, QString& errmsg)
 {
     QSqlQuery query;
     query.prepare("insert into PricingPlans (PlanName, PricePerHour, m_LessThanTwo, m_TwoThree, m_ThreeFour, m_FourFive, m_FiveSix, m_SixSeven, m_SevenEight, m_EightTen, m_TenTwelve, m_MoreThanTwelve)"
@@ -354,7 +354,7 @@ bool DatabaseManager::CreateNewPricingPlan(QString name,float priceperhour,float
     return true;
 }
 
-bool DatabaseManager::DeletePricingPlan(qint32 planID, QList<PricingPlan*>& out_plans,QString &errmsg)
+bool DatabaseManager::DeletePricingPlan(const qint32& planID, QList<PricingPlan*>& out_plans,QString &errmsg)
 {
     if(planID == 0){
         errmsg = "Default plan cannot be removed.";
@@ -371,7 +371,7 @@ bool DatabaseManager::DeletePricingPlan(qint32 planID, QList<PricingPlan*>& out_
     return true;
 }
 
-bool DatabaseManager::UpdatePricingPlan(qint32 planID, float lessthantwo, float twothree, float threefour, float fourfive, float fivesix, float sixseven, float seveneight, float eightten, float tentwelve, float morethantwelve, QList<PricingPlan *> &out_plans, QString &errmsg)
+bool DatabaseManager::UpdatePricingPlan(const qint32& planID, const float& lessthantwo, const float& twothree, const float& threefour, const float& fourfive, const float& fivesix, const float& sixseven, const float& seveneight, const float& eightten, const float& tentwelve, const float& morethantwelve, QList<PricingPlan *> &out_plans, QString &errmsg)
 {
     QSqlQuery query;
     query.prepare("update PricingPlans set"
@@ -532,7 +532,7 @@ bool DatabaseManager::QueryDailyIncome(float &out_income, QString &errmsg)
     return true;
 }
 
-bool DatabaseManager::SetQueryModel_TotalPaymentInfo(qint32 vehicleID, QSqlQueryModel *out_model, QString &errmsg)
+bool DatabaseManager::SetQueryModel_TotalPaymentInfo(const qint32& vehicleID, QSqlQueryModel *out_model, QString &errmsg)
 {
     QSqlQuery query;
     query.prepare("select Payments.ID as 'Fatura ID', VehicleEntryDate as 'Giriş Tarihi', PaymentDate as 'Çıkış Tarihi', HoursParked as 'Süre', Price as 'Ücret (TL)', PricingPlans.PlanName as 'Tarife' from Payments"
@@ -560,7 +560,7 @@ bool DatabaseManager::SetQueryModel_ListAllVehiclesInside(QSqlQueryModel* out_mo
     return true;
 }
 
-bool DatabaseManager::GetVehicleInformationByPlate(QString plate, qint32 &out_vehicleID, QString &out_color, QString &out_type, QString &out_model, QString& errmsg)
+bool DatabaseManager::GetVehicleInformationByPlate(const QString& plate, qint32 &out_vehicleID, QString &out_color, QString &out_type, QString &out_model, QString& errmsg)
 {
     QSqlQuery query;
     query.prepare("select Vehicles.ID, Colors.Color, VehicleTypes.TypeName, Vehicles.Model from Vehicles"
@@ -583,7 +583,7 @@ bool DatabaseManager::GetVehicleInformationByPlate(QString plate, qint32 &out_ve
     return true;
 }
 
-bool DatabaseManager::ChangePassword(qint32 accountID, QString oldPassword, QString newPassword, QString &errmsg)
+bool DatabaseManager::ChangePassword(const qint32& accountID, const QString& oldPassword, const QString& newPassword, QString &errmsg)
 {
     if(oldPassword == newPassword){
         errmsg = "Eski şifre ile Yeni şifre aynı.";
@@ -660,7 +660,7 @@ qint32 DatabaseManager::QueryHostPort()
     }
 }
 
-bool DatabaseManager::SetRemainingSpotCount(qint32 value, QString& out_errmsg)
+bool DatabaseManager::SetRemainingSpotCount(const qint32& value, QString& out_errmsg)
 {
     QSqlQuery query;
     query.prepare("update OtoparkInfo set RemainingSpots = :val where ID = 0");

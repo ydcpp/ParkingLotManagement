@@ -12,7 +12,7 @@
 TCPClient* TCPClient::m_instance(0);
 int TCPClient::_refCounter = 0;
 
-TCPClient::TCPClient(QString hostip, qint16 port, qint32 remoteDBid, DatabaseManager* dbmanager)
+TCPClient::TCPClient(const QString& hostip, const qint16& port, const qint32& remoteDBid, DatabaseManager* dbmanager)
     : m_dbmanager(dbmanager), m_hostip(hostip), m_port(port), m_remoteID(remoteDBid)
     //: m_dbmanager(dbmanager), m_hostip("localhost"), m_port(port), m_remoteID(remoteDBid)
 {
@@ -28,7 +28,7 @@ TCPClient::~TCPClient()
 }
 
 
-TCPClient* TCPClient::getInstance(QString hostip, qint16 port, qint32 remoteDBid, DatabaseManager* dbmanager)
+TCPClient* TCPClient::getInstance(const QString& hostip, const qint16& port, const qint32& remoteDBid, DatabaseManager* dbmanager)
 {
     if(!m_instance) m_instance = new TCPClient(hostip,port,remoteDBid,dbmanager);
     _refCounter++;
@@ -160,7 +160,7 @@ QString TCPClient::getLastError()
     return m_socket.errorString();
 }
 
-void TCPClient::sendSynchRemainingSpot(qint32 value)
+void TCPClient::sendSynchRemainingSpot(const qint32& value)
 {
     QString msg = QString::number(m_remoteID) + ";3;" + QString::number(value);
     sendData(msg);
