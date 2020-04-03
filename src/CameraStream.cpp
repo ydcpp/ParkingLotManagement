@@ -6,7 +6,7 @@
 
 using namespace cv;
 
-CameraStream::CameraStream(ThreadManager* tmanager, unsigned int cameraIndex)
+CameraStream::CameraStream(ThreadManager* tmanager,const unsigned int& cameraIndex)
     : m_tmanager(tmanager), m_camIndex(cameraIndex)
 {
     connect(m_tmanager,&ThreadManager::startThreads,this,&CameraStream::startThread);

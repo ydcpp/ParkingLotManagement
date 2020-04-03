@@ -16,7 +16,7 @@ class CameraStream : public QThread
     Q_OBJECT
 
 public:
-    CameraStream(ThreadManager* app, unsigned int cameraIndex);
+    CameraStream(ThreadManager* app,const unsigned int& cameraIndex);
 
     int getFPS() const;
     void setFPS(int value);

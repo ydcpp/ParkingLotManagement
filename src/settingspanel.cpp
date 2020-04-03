@@ -351,3 +351,8 @@ void SettingsPanel::on_pushButton_deleteplan_clicked()
         setSuccessMessage("Seçilen plan silindi.");
     }
 }
+
+void SettingsPanel::on_pushButton_savecamera_in_clicked()
+{
+
+}

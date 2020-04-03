@@ -45,6 +45,8 @@ private slots:
 
     void on_pushButton_deleteplan_clicked();
 
+    void on_pushButton_savecamera_in_clicked();
+
 private:
     Ui::SettingsPanel *ui;
     QList<PricingPlan*> m_plans;
