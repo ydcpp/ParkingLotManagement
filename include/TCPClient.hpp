@@ -22,6 +22,8 @@ public:
 signals:
     void stateChanged(const QAbstractSocket::SocketState& socketState);
     void sendError(const QString& error);
+    void sig_successMessage(const QString& text, const qint32& milliseconds);
+    void sig_errorMessage(const QString& text, const qint32& milliseconds);
 
 private slots:
     void onReadyRead();

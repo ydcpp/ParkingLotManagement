@@ -11,8 +11,6 @@
 #include <QPushButton>
 #include <QCameraViewfinder>
 
-#include "parkyerim.hpp"
-
 #include <QDebug>
 
 
@@ -23,12 +21,12 @@ ApplicationWindow::ApplicationWindow(DatabaseManager* dbmanager, User* user, Log
     ui->setupUi(this);
     this->setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint | Qt::WindowMaximizeButtonHint | Qt::CustomizeWindowHint);
     this->setAttribute( Qt::WA_DeleteOnClose, true );
-    m_parent = static_cast<ParkYerim*>(parent);
     m_threadManager = ThreadManager::getInstance(this,m_vehicleInCameraDeviceIndex,m_vehicleOutCameraDeviceIndex);
+    m_dbmanager->GetOtoparkInfo(m_otoparkInfo);
+    SetupTCPConnection();
     initializeAssetPaths();
     setupIcons();
     setupCustomComponents();
-    SetupTCPConnection();
 }
 
 ApplicationWindow::~ApplicationWindow()
@@ -136,16 +134,16 @@ void ApplicationWindow::onPricingPlansUpdated()
     }
     m_pricingPlans.clear();
     QString errmsg;
-    if(!m_dbmanager->GetPricingPlans(m_pricingPlans,errmsg)) ui->label_status->setText(errmsg);
+    if(!m_dbmanager->GetPricingPlans(m_pricingPlans,errmsg)) statusMessageError(errmsg,5000);
     else{
         for(PricingPlan* plan : m_pricingPlans){
-            if(m_currentPlanID == plan->GetPlanID()){
+            if(m_otoparkInfo.CurrentPlanID == plan->GetPlanID()){
                 currentPricingPlan = plan;
                 ui->label_currentPlan->setText(currentPricingPlan->GetPlanName());
                 break;
             }
         }
-        if(!currentPricingPlan) ui->label_status->setText("Geçerli ücretlendirme planı veritabanında bulunamadı.");
+        if(!currentPricingPlan) statusMessageError("Geçerli ücretlendirme planı veritabanında bulunamadı.",5000);
     }
 }
 
@@ -168,6 +166,26 @@ void ApplicationWindow::getCalculatedPrice(const qint64& minutes, const qint32& 
             }
         }
     }
+}
+
+void ApplicationWindow::statusMessageSuccess(const QString& text, const qint32& milliseconds)
+{
+    ui->label_status->setText(text);
+    ui->label_status->setStyleSheet("color:green;");
+    QTimer::singleShot(milliseconds,ui->label_status,[&](){
+        ui->label_status->clear();
+        ui->label_status->setStyleSheet("color:black;");
+    });
+}
+
+void ApplicationWindow::statusMessageError(const QString& text, const qint32& milliseconds)
+{
+    ui->label_status->setText(text);
+    ui->label_status->setStyleSheet("color:red;");
+    QTimer::singleShot(milliseconds,ui->label_status,[&](){
+        ui->label_status->clear();
+        ui->label_status->setStyleSheet("color:black;");
+    });
 }
 
 void ApplicationWindow::drawCamInput_vehicle_in(QPixmap pixmap)
@@ -232,9 +250,14 @@ QList<PricingPlan *>& ApplicationWindow::GetPricingPlanList()
 
 void ApplicationWindow::updateCurrentPlan(const qint32& planID)
 {
-    m_currentPlanID = planID;
+    QString errormsg;
+    if(!m_dbmanager->UpdateCurrentPricingPlan(planID,errormsg)){
+        statusMessageError(errormsg,5000);
+        return;
+    }
+    m_otoparkInfo.CurrentPlanID = planID;
     for(PricingPlan* plan : m_pricingPlans){
-        if(m_currentPlanID == plan->GetPlanID()){
+        if(m_otoparkInfo.CurrentPlanID == plan->GetPlanID()){
             currentPricingPlan = plan;
             break;
         }
@@ -244,7 +267,7 @@ void ApplicationWindow::updateCurrentPlan(const qint32& planID)
 
 qint32 ApplicationWindow::getCurrentPlanID() const
 {
-    return m_currentPlanID;
+    return m_otoparkInfo.CurrentPlanID;
 }
 
 void ApplicationWindow::on_toolButton_quit_clicked()
@@ -272,7 +295,7 @@ void ApplicationWindow::enableToggleCameraButton()
 
 void ApplicationWindow::on_toolButton_vehicle_in_clicked()
 {
-    m_window_vehicle_in = new ManualVehicleEntry(m_dbmanager,m_currentPlanID,this);
+    m_window_vehicle_in = new ManualVehicleEntry(m_dbmanager,m_otoparkInfo.CurrentPlanID,this);
     connect(m_window_vehicle_in,&ManualVehicleEntry::decreaseCount,this,&ApplicationWindow::decreaseRemainingSpotCount);
     m_window_vehicle_in->exec();
 }
@@ -314,13 +337,12 @@ void ApplicationWindow::setupIcons()
 void ApplicationWindow::SetupTCPConnection()
 {
     ui->pushButton_reconnect->setVisible(false);
-    m_serverAddress = m_dbmanager->QueryHostAddress();
-    m_serverPort = m_dbmanager->QueryHostPort();
-    m_RemoteID = m_dbmanager->QueryRemoteID();
-    m_client = TCPClient::getInstance(m_serverAddress,m_serverPort,m_RemoteID,m_dbmanager);
+    m_client = TCPClient::getInstance(m_otoparkInfo.ServerIP,m_otoparkInfo.ServerPort,m_otoparkInfo.ServerOtoparkID,m_dbmanager);
     m_client->startConnection();
     connect(m_client,&TCPClient::stateChanged,this,&ApplicationWindow::on_socketStateChanged);
     connect(m_client,&TCPClient::sendError,this,&ApplicationWindow::onTCPErrorReceived);
+    connect(m_client,&TCPClient::sig_successMessage,this,&ApplicationWindow::statusMessageSuccess);
+    connect(m_client,&TCPClient::sig_errorMessage,this,&ApplicationWindow::statusMessageError);
 }
 
 void ApplicationWindow::setupCustomComponents()
@@ -340,13 +362,13 @@ void ApplicationWindow::setupCustomComponents()
     if(!m_dbmanager->GetPricingPlans(m_pricingPlans,errmsg)) ui->label_status->setText(errmsg);
     else{
         for(PricingPlan* plan : m_pricingPlans){
-            if(m_currentPlanID == plan->GetPlanID()){
+            if(m_otoparkInfo.CurrentPlanID == plan->GetPlanID()){
                 currentPricingPlan = plan;
                 ui->label_currentPlan->setText(currentPricingPlan->GetPlanName());
                 break;
             }
         }
-        if(!currentPricingPlan) ui->label_status->setText("Geçerli ücretlendirme planı veritabanında bulunamadı.");
+        if(!currentPricingPlan) statusMessageError("Geçerli ücretlendirme planı veritabanında bulunamadı.",5000);
     }
 
     // setting up remaining spot count
@@ -415,8 +437,6 @@ void ApplicationWindow::on_pushButton_plakatani_out_clicked()
 {
     emit recognizePlate_out();
 }
-
-
 
 void ApplicationWindow::on_pushButton_reconnect_clicked()
 {

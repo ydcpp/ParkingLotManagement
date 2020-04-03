@@ -1,5 +1,7 @@
 #include "databasemanager.hpp"
 
+#include <QDebug>
+
 DatabaseManager::DatabaseManager()
 {
     QDir().mkpath(m_dbfilepath);
@@ -630,35 +632,6 @@ qint32 DatabaseManager::QueryRemainingSpots(QString& errmsg)
     return query.value(0).toInt();
 }
 
-qint32 DatabaseManager::QueryRemoteID()
-{
-    QSqlQuery query;
-    if(!query.exec("select ServerOtoparkID from OtoparkInfo where ID = 0")) return -1;
-    else{
-        query.next();
-        return query.value(0).toInt();
-    }
-}
-
-QString DatabaseManager::QueryHostAddress()
-{
-    QSqlQuery query;
-    if(!query.exec("select ServerIP from OtoparkInfo where ID = 0")) return "";
-    else{
-        query.next();
-        return query.value(0).toString();
-    }
-}
-
-qint32 DatabaseManager::QueryHostPort()
-{
-    QSqlQuery query;
-    if(!query.exec("select ServerPort from OtoparkInfo where ID = 0")) return -1;
-    else{
-        query.next();
-        return query.value(0).toInt();
-    }
-}
 
 bool DatabaseManager::SetRemainingSpotCount(const qint32& value, QString& out_errmsg)
 {
@@ -696,6 +669,30 @@ bool DatabaseManager::DecreaseRemainingSpot()
 bool DatabaseManager::isConnected()
 {
     return database.isOpen();
+}
+
+bool DatabaseManager::GetOtoparkInfo(OtoparkInfo& out_otoparkInfo)
+{
+    QSqlQuery query;
+    if(!query.exec("select ServerIP, ServerPort, ServerOtoparkID, fk_CurrentPlanID from OtoparkInfo where ID = 0")) return false;
+    if(!query.next()) return false;
+    out_otoparkInfo.ServerIP = query.value(0).toString();
+    out_otoparkInfo.ServerPort = query.value(1).toUInt();
+    out_otoparkInfo.ServerOtoparkID = query.value(2).toInt();
+    out_otoparkInfo.CurrentPlanID = query.value(3).toInt();
+    return true;
+}
+
+bool DatabaseManager::UpdateCurrentPricingPlan(const qint32& planid, QString& errmsg)
+{
+    QSqlQuery query;
+    query.prepare("update OtoparkInfo set fk_CurrentPlanID = :id");
+    query.bindValue(":id",planid);
+    if(!query.exec()){
+        errmsg = query.lastError().text();
+        return false;
+    }
+    return true;
 }
 
 QMap<QString,qint32> DatabaseManager::getColors()

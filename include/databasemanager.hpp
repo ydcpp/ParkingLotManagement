@@ -20,6 +20,12 @@
 #include "User.hpp"
 #include "pricingplan.hpp"
 
+struct OtoparkInfo{
+    QString ServerIP;
+    quint16 ServerPort;
+    qint32 ServerOtoparkID;
+    qint32 CurrentPlanID;
+};
 
 class DatabaseManager : public QObject
 {
@@ -53,13 +59,12 @@ public:
     bool GetAllVehiclesInside();
     bool ChangePassword(const qint32& accountID, const QString& oldPassword, const QString& newPassword, QString& errmsg);
     qint32 QueryRemainingSpots(QString& errmsg);
-    qint32 QueryRemoteID();
-    QString QueryHostAddress();
-    qint32 QueryHostPort();
     bool SetRemainingSpotCount(const qint32& value, QString& out_errmsg);
     bool IncreaseRemainingSpot();
     bool DecreaseRemainingSpot();
     bool isConnected();
+    bool GetOtoparkInfo(OtoparkInfo& out_otoparkInfo);
+    bool UpdateCurrentPricingPlan(const qint32& planid, QString& errmsg);
 
     QMap<QString,qint32> getColors();
     QMap<QString,qint32> getVehicleTypes();

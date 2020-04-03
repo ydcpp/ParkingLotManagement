@@ -105,7 +105,7 @@ void TCPClient::analyzeReceivedMessage(QString receivedMessage)
         QString errmsg;
         int remainingspots = m_dbmanager->QueryRemainingSpots(errmsg);
         if(remainingspots == -1){
-            qDebug() << "Local database error:" << errmsg;
+            emit sig_errorMessage("TCP Client: Local database error." + errmsg,5000);
             return;
         }
         sendSynchRemainingSpot(remainingspots);
@@ -135,14 +135,13 @@ void TCPClient::analyzeReceivedMessage(QString receivedMessage)
                 break;
             case 3:
                 if(msgParts[2].toInt() != m_dbmanager->QueryRemainingSpots(errormsg)){
-                    qDebug() << "Synchronize failed.";
                     emit sendError("Uzak sunucu ile veritabanı eşleşmesi başarısız, lütfen programı yeniden başlatın.");
                 }else{
-                    qDebug() << "Successfuly synched with remote host database.";
+                    emit sig_successMessage("Successfuly synched with remote host database.",4000);
                 }
                 break;
             default:
-                qDebug() << "Received invalid action code.";
+                emit sig_errorMessage("TCP Conenction Error: Received invalid action code.",5000);
                 break;
             }
         }

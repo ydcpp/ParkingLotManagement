@@ -9,16 +9,13 @@
 #include "vehiclesearch.hpp"
 #include "ThreadManager.hpp"
 #include "TCPClient.hpp"
+#include "databasemanager.hpp"
+#include "logger.hpp"
+
 
 #include <QMainWindow>
 #include <QMap>
 #include <QString>
-
-class ParkYerim;
-class DatabaseManager;
-class User;
-class PricingPlan;
-class Logger;
 
 
 namespace Ui {
@@ -70,6 +67,8 @@ private slots:
     void onTCPErrorReceived(const QString& err);
     void onPricingPlansUpdated();
     void getCalculatedPrice(const qint64& minutes, const qint32& planid, float& out_price, QString& out_planName);
+    void statusMessageSuccess(const QString& text, const qint32& milliseconds);
+    void statusMessageError(const QString& text, const qint32& milliseconds);
 
     void on_toolButton_vehicle_in_clicked();
 
@@ -96,7 +95,6 @@ private slots:
 
 private:
     Ui::ApplicationWindow *ui;
-    ParkYerim* m_parent = nullptr;
     DatabaseManager* m_dbmanager = nullptr;
     User* m_currentuser = nullptr;
     Logger* m_logger = nullptr;
@@ -112,10 +110,7 @@ private:
 
     qint32 m_remainingSpots = 0;
     QList<PricingPlan*> m_pricingPlans;
-    qint32 m_currentPlanID = 0;
-    QString m_serverAddress;
-    qint32 m_serverPort;
-    qint32 m_RemoteID;
+    OtoparkInfo m_otoparkInfo;
 
 
     // camera settings

@@ -49,7 +49,7 @@
     <enum>QTabWidget::Rounded</enum>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>0</number>
    </property>
    <property name="elideMode">
     <enum>Qt::ElideNone</enum>
@@ -100,7 +100,7 @@
         <rect>
          <x>70</x>
          <y>10</y>
-         <width>181</width>
+         <width>371</width>
          <height>21</height>
         </rect>
        </property>

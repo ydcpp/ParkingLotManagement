@@ -1654,7 +1654,7 @@ border-color : red;
       <x>70</x>
       <y>680</y>
       <width>1101</width>
-      <height>21</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="minimumSize">
@@ -1678,7 +1678,7 @@ border-color : red;
      <string/>
     </property>
     <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
     <property name="wordWrap">
      <bool>true</bool>
