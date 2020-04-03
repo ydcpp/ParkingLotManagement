@@ -4,7 +4,6 @@
 #include <QString>
 #include <QThread>
 
-#include "applicationwindow.hpp"
 #include "databasemanager.hpp"
 
 #include <QDebug>
@@ -13,15 +12,15 @@
 TCPClient* TCPClient::m_instance(0);
 int TCPClient::_refCounter = 0;
 
-TCPClient::TCPClient(QString hostip, qint16 port, qint32 remoteDBid, ApplicationWindow* app, DatabaseManager* dbmanager)
-    : m_app(app), m_dbmanager(dbmanager), m_hostip(hostip), m_port(port), m_remoteID(remoteDBid)
-    //: m_app(app), m_dbmanager(dbmanager), m_hostip("localhost"), m_port(port), m_remoteID(remoteDBid)
+TCPClient::TCPClient(QString hostip, qint16 port, qint32 remoteDBid, DatabaseManager* dbmanager)
+    : m_dbmanager(dbmanager), m_hostip(hostip), m_port(port), m_remoteID(remoteDBid)
+    //: m_dbmanager(dbmanager), m_hostip("localhost"), m_port(port), m_remoteID(remoteDBid)
 {
     connect(&m_socket, &QTcpSocket::readyRead, this, &TCPClient::onReadyRead);
     connect(&m_socket,&QTcpSocket::stateChanged,this,&TCPClient::socketStateChanged);
     connect(&m_socket,&QTcpSocket::connected,this,&TCPClient::onConnected);
-    connect(m_app,&ApplicationWindow::sig_VehicleEntered,this,&TCPClient::onVehicleEntered);
-    connect(m_app,&ApplicationWindow::sig_VehicleLeft,this,&TCPClient::onVehicleLeft);
+    connect(m_dbmanager,&DatabaseManager::sig_RemainingSpotIncreased,this,&TCPClient::onSpotCounterIncreased);
+    connect(m_dbmanager,&DatabaseManager::sig_RemainingSpotDecreased,this,&TCPClient::onSpotCounterDecreased);
 }
 
 TCPClient::~TCPClient()
@@ -29,9 +28,9 @@ TCPClient::~TCPClient()
 }
 
 
-TCPClient* TCPClient::getInstance(QString hostip, qint16 port, qint32 remoteDBid, ApplicationWindow* app, DatabaseManager* dbmanager)
+TCPClient* TCPClient::getInstance(QString hostip, qint16 port, qint32 remoteDBid, DatabaseManager* dbmanager)
 {
-    if(!m_instance) m_instance = new TCPClient(hostip,port,remoteDBid,app,dbmanager);
+    if(!m_instance) m_instance = new TCPClient(hostip,port,remoteDBid,dbmanager);
     _refCounter++;
     return m_instance;
 }
@@ -67,13 +66,13 @@ void TCPClient::socketStateChanged(QAbstractSocket::SocketState socketState)
     emit stateChanged(socketState);
 }
 
-void TCPClient::onVehicleEntered()
+void TCPClient::onSpotCounterDecreased()
 {
     QString msg = QString::number(m_remoteID) + ";2";
     sendData(msg);
 }
 
-void TCPClient::onVehicleLeft()
+void TCPClient::onSpotCounterIncreased()
 {
     QString msg = QString::number(m_remoteID) + ";1";
     sendData(msg);

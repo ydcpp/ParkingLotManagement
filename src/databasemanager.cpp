@@ -177,11 +177,12 @@ bool DatabaseManager::NewVehicleEntry(QString plate, QString model, QString type
     }
 }
 
-bool DatabaseManager::NewPaymentEntry(qint32 vehicleID, QString& errmsg)
+bool DatabaseManager::NewPaymentEntry(qint32 vehicleID, qint32 planID, QString& errmsg)
 {
     QSqlQuery query;
-    query.prepare("insert into Payments(fk_VehicleID) values(:id)");
+    query.prepare("insert into Payments(fk_VehicleID,fk_PricingPlanID) values(:id,:planid)");
     query.bindValue(":id",vehicleID);
+    query.bindValue(":planid",planID);
     if(!query.exec()){
         errmsg = query.lastError().text();
         return false;
@@ -189,7 +190,7 @@ bool DatabaseManager::NewPaymentEntry(qint32 vehicleID, QString& errmsg)
     return true;
 }
 
-bool DatabaseManager::GetBillingResult(QString plate, QString& errmsg, qint32& out_paymentID, qint64& out_minutes, qint32& out_vehicleID, QDateTime& out_entryDate)
+bool DatabaseManager::GetBillingResult(QString plate, QString& errmsg, qint32& out_paymentID, qint64& out_minutes, qint32& out_vehicleID, QDateTime& out_entryDate, qint32& out_planID)
 {
     QSqlQuery query;
     qint32 vehicleID;
@@ -207,7 +208,7 @@ bool DatabaseManager::GetBillingResult(QString plate, QString& errmsg, qint32& o
     out_vehicleID = vehicleID;
     QDateTime entryDate;
     query.clear();
-    query.prepare("select ID, VehicleEntryDate from Payments where fk_VehicleID = :vid and isPaymentComplete = false");
+    query.prepare("select ID, VehicleEntryDate, fk_PricingPlanID from Payments where fk_VehicleID = :vid and isPaymentComplete = false");
     query.bindValue(":vid",vehicleID);
     if(!query.exec()){
         errmsg = query.lastError().text();
@@ -219,6 +220,7 @@ bool DatabaseManager::GetBillingResult(QString plate, QString& errmsg, qint32& o
     }else{
         out_paymentID = query.value(0).toInt();
         entryDate = query.value(1).toDateTime();
+        out_planID = query.value(2).toInt();
         out_entryDate = entryDate;
         out_minutes = entryDate.secsTo(QDateTime::currentDateTime())/60;
         return true;
@@ -658,18 +660,36 @@ qint32 DatabaseManager::QueryHostPort()
     }
 }
 
+bool DatabaseManager::SetRemainingSpotCount(qint32 value, QString& out_errmsg)
+{
+    QSqlQuery query;
+    query.prepare("update OtoparkInfo set RemainingSpots = :val where ID = 0");
+    query.bindValue(":val",value);
+    if(!query.exec()){
+        out_errmsg = query.lastError().text();
+        return false;
+    }
+    return true;
+}
+
 bool DatabaseManager::IncreaseRemainingSpot()
 {
     QSqlQuery query;
     if(!query.exec("update OtoparkInfo set RemainingSpots = RemainingSpots+1 where ID = 0")) return false;
-    else return true;
+    else{
+        emit sig_RemainingSpotIncreased();
+        return true;
+    }
 }
 
 bool DatabaseManager::DecreaseRemainingSpot()
 {
     QSqlQuery query;
     if(!query.exec("update OtoparkInfo set RemainingSpots = RemainingSpots-1 where ID = 0")) return false;
-    else return true;
+    else{
+        emit sig_RemainingSpotDecreased();
+        return true;
+    }
 }
 
 

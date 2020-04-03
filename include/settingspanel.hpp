@@ -20,6 +20,9 @@ public:
     explicit SettingsPanel(DatabaseManager* dbmanager,QList<PricingPlan*>& plans,ApplicationWindow *parent);
     ~SettingsPanel();
 
+signals:
+    void sig_PricingPlansUpdated();
+
 private slots:
 
     void on_comboBox_existingplans_currentTextChanged(const QString &arg1);

@@ -33,8 +33,8 @@ public:
     bool DeleteUser(QString username, QString& errmsg);
     bool CreateUser(QString firstname, QString lastname, QString phone, QString username, QString password, qint32 usertype, QString& errmsg);
     bool NewVehicleEntry(QString plate, QString model, QString type, QString color, QString& errmsg, qint32& vehicleID);
-    bool NewPaymentEntry(qint32 vehicleID, QString& errmsg);
-    bool GetBillingResult(QString plate, QString& errmsg, qint32& out_paymentID, qint64& out_minutes, qint32& out_vehicleID, QDateTime& out_entryDate);
+    bool NewPaymentEntry(qint32 vehicleID, qint32 planID, QString& errmsg);
+    bool GetBillingResult(QString plate, QString& errmsg, qint32& out_paymentID, qint64& out_minutes, qint32& out_vehicleID, QDateTime& out_entryDate, qint32& out_planID);
     bool CompletePayment(qint32 vehicleID, QDateTime exitDate, qint64 minutes, float price, QString& errmsg, QString payerName = "");
     bool GetVehicleInformation(qint32 vehicleID, QString& errmsg, QString& out_plate, QString& out_color, QString& out_type, QString& out_model);
     bool GetPricingPlans(QList<PricingPlan*>& out_plans, QString& errmsg);
@@ -56,6 +56,7 @@ public:
     qint32 QueryRemoteID();
     QString QueryHostAddress();
     qint32 QueryHostPort();
+    bool SetRemainingSpotCount(qint32 value, QString& out_errmsg);
     bool IncreaseRemainingSpot();
     bool DecreaseRemainingSpot();
     bool isConnected();
@@ -65,6 +66,8 @@ public:
     void CreateDatabaseBackup();
 
 signals:
+    void sig_RemainingSpotIncreased();
+    void sig_RemainingSpotDecreased();
 
 private:
     QSqlDatabase database;

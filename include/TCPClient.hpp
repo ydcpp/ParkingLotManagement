@@ -4,14 +4,13 @@
 #include <QObject>
 #include <QTcpSocket>
 
-class ApplicationWindow;
 class DatabaseManager;
 
 class TCPClient : public QObject
 {
     Q_OBJECT
 public:
-    static TCPClient* getInstance(QString hostip, qint16 port, qint32 remoteDBid, ApplicationWindow* app, DatabaseManager* dbmanager);
+    static TCPClient* getInstance(QString hostip, qint16 port, qint32 remoteDBid, DatabaseManager* dbmanager);
     static void releaseInstance();
 
     void startConnection();
@@ -27,14 +26,13 @@ signals:
 private slots:
     void onReadyRead();
     void socketStateChanged(QAbstractSocket::SocketState socketState);
-    void onVehicleEntered();
-    void onVehicleLeft();
+    void onSpotCounterDecreased();
+    void onSpotCounterIncreased();
     void onConnected();
 
 private:
-    TCPClient(QString hostip, qint16 port, qint32 remoteDBid, ApplicationWindow* app, DatabaseManager* dbmanager);
+    TCPClient(QString hostip, qint16 port, qint32 remoteDBid, DatabaseManager* dbmanager);
     ~TCPClient();
-    ApplicationWindow* m_app;
     DatabaseManager* m_dbmanager;
     QString m_hostip;
     qint16 m_port;

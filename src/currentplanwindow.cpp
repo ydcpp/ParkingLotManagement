@@ -3,6 +3,7 @@
 
 #include "pricingplan.hpp"
 #include <QString>
+#include <QDebug>
 
 CurrentPlanWindow::CurrentPlanWindow(PricingPlan* currentplan, QWidget *parent) :
     QDialog(parent),
@@ -14,6 +15,8 @@ CurrentPlanWindow::CurrentPlanWindow(PricingPlan* currentplan, QWidget *parent) 
         ui->label_planName->setText(currentplan->GetPlanName());
         currentplan->GetPricesPerHour(n_lessthantwo,n_twothree,n_threefour,n_fourfive,n_fivesix,n_sixseven,n_seveneight,n_eightten,n_tentwelve,n_morethantwelve);
         ShowPrices();
+    }else{
+        qDebug() << "current plan pointer is null";
     }
 }
 

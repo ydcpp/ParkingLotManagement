@@ -27,8 +27,8 @@ void ManualVehicleExit::on_pushButton_query_clicked()
         QString platequery = ui->lineEdit_plateQuery->text();
         platequery = platequery.simplified();
         platequery = platequery.replace(" ","");
-        // query plate number,get vehicle id to m_vehicleID, get the info and calculate price
-        if(!m_dbmanager->GetBillingResult(platequery,errormsg,m_paymentID,m_minutes,m_vehicleID,m_entryDate)){
+        qint32 planID;
+        if(!m_dbmanager->GetBillingResult(platequery,errormsg,m_paymentID,m_minutes,m_vehicleID,m_entryDate,planID)){
             ui->label_result->setStyleSheet("color:red;");
             ui->label_result->setText(errormsg);
             return;
@@ -38,7 +38,7 @@ void ManualVehicleExit::on_pushButton_query_clicked()
             ui->label_result->setText(errormsg);
             return;
         }
-        m_price = getCalculatedPrice(m_minutes,m_currentPlan);
+        emit getCalculatedPrice(m_minutes,planID,m_price,m_planName);
         QTime parkingTime = QTime(0,0).addSecs(60*int(m_minutes));
         // displaying the bill
         ui->lineEdit_plate->setText(m_plate);
@@ -48,8 +48,8 @@ void ManualVehicleExit::on_pushButton_query_clicked()
         ui->dateTimeEdit_entryDate->setDateTime(m_entryDate);
         ui->dateTimeEdit_exitDate->setDateTime(QDateTime::currentDateTime());
         ui->lineEdit_totalminutes->setText(parkingTime.toString("HH:mm"));
-        ui->lineEdit_plan->setText(m_currentPlan);
-        ui->lineEdit_price->setText(QString().setNum(m_price,'f',2));
+        ui->lineEdit_plan->setText(m_planName);
+        ui->lineEdit_price->setText(QString::number(m_price));
         ui->pushButton_completePayment->setEnabled(true);
     }
 }

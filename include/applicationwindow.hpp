@@ -48,8 +48,6 @@ signals:
     void stopAllThreads();
     void recognizePlate_in();
     void recognizePlate_out();
-    void sig_VehicleEntered();
-    void sig_VehicleLeft();
 
 public slots:
     void openCameraStream_in();
@@ -61,16 +59,18 @@ public slots:
     void displayLicensePlateString_vehicle_in(QString);
     void displayLicensePlateString_vehicle_out(QString);
 
+
 private slots:
     void on_toolButton_quit_clicked();
     void showTime();
     void enableToggleCameraButton();
-    float calculatePrice(qint64 minutes, QString& currentplan);
     void updateRemainingSpots(qint32);
     void increaseRemainingSpotCount();
     void decreaseRemainingSpotCount();
     void on_socketStateChanged(QAbstractSocket::SocketState socketState);
     void onTCPErrorReceived(const QString& err);
+    void onPricingPlansUpdated();
+    void getCalculatedPrice(const qint64& minutes, const qint32& planid, float& out_price, QString& out_planName);
 
     void on_toolButton_vehicle_in_clicked();
 

@@ -34,7 +34,7 @@ public:
     float Gettentwelve() const;
     float Getmorethantwelve() const;
     void GetPricesPerHour(float& lessThanTwo, float& twoThree, float& threeFour, float& fourFive, float& fiveSix, float& sixSeven, float& sevenEight, float& eightTen, float& tenTwelve, float& moreThanTwelve);
-
+    void SetPricesPerHour(float lessThanTwo, float twoThree, float threeFour, float fourFive, float fiveSix, float sixSeven, float sevenEight, float eightTen, float tenTwelve, float moreThanTwelve);
 signals:
 
 public slots:
@@ -55,6 +55,8 @@ private:
     float m_EightTen;
     float m_TenTwelve;
     float m_moreThanTwelve;
+
+    float roundPrice(const float& price);
 };
 
 #endif // PRICINGPLAN_HPP

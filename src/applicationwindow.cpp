@@ -75,13 +75,6 @@ User *ApplicationWindow::GetCurrentUser()
     return m_currentuser;
 }
 
-float ApplicationWindow::calculatePrice(qint64 minutes, QString& currentplan)
-{
-    currentplan = currentPricingPlan->GetPlanName();
-
-    return this->getPricePlanCalculation(minutes);
-}
-
 void ApplicationWindow::updateRemainingSpots(qint32 value)
 {
     m_remainingSpots = value;
@@ -93,18 +86,14 @@ void ApplicationWindow::updateRemainingSpots(qint32 value)
 
 void ApplicationWindow::increaseRemainingSpotCount()
 {
-    if(m_dbmanager->IncreaseRemainingSpot()){
-        updateRemainingSpots(m_remainingSpots+1);
-        emit sig_VehicleLeft();
-    }
+    updateRemainingSpots(m_remainingSpots+1);
+    m_dbmanager->IncreaseRemainingSpot();
 }
 
 void ApplicationWindow::decreaseRemainingSpotCount()
 {
-    if(m_dbmanager->DecreaseRemainingSpot()){
-        updateRemainingSpots(m_remainingSpots-1);
-        emit sig_VehicleEntered();
-    }
+    updateRemainingSpots(m_remainingSpots-1);
+    m_dbmanager->DecreaseRemainingSpot();
 }
 
 void ApplicationWindow::on_socketStateChanged(QAbstractSocket::SocketState socketState)
@@ -113,28 +102,72 @@ void ApplicationWindow::on_socketStateChanged(QAbstractSocket::SocketState socke
     QString status = "";
     switch (socketState) {
     case QAbstractSocket::ConnectedState:
-        ui->label_status->setStyleSheet("color:green;");
-        ui->label_status->setText("BAĞLANDI");
+        ui->label_connectionstatus->setStyleSheet("color:green;");
+        ui->label_connectionstatus->setText("BAĞLANDI");
         break;
     case QAbstractSocket::UnconnectedState:
-        ui->label_status->setStyleSheet("color:red;");
+        ui->label_connectionstatus->setStyleSheet("color:red;");
         status += "BAĞLANTI KESİLDİ  (";
         status.append(m_client->getLastError());
         status.append(")");
-        ui->label_status->setText(status);
+        ui->label_connectionstatus->setText(status);
         ui->pushButton_reconnect->setVisible(true);
         break;
     default:
-        ui->label_status->setStyleSheet("color:orange;");
-        ui->label_status->setText(QVariant::fromValue(socketState).toString());
+        ui->label_connectionstatus->setStyleSheet("color:orange;");
+        ui->label_connectionstatus->setText(QVariant::fromValue(socketState).toString());
         break;
     }
 }
 
 void ApplicationWindow::onTCPErrorReceived(const QString& err)
 {
-    ui->label_status->setStyleSheet("color:red;");
-    ui->label_status->setText(err);
+    ui->label_connectionstatus->setStyleSheet("color:red;");
+    ui->label_connectionstatus->setText(err);
+}
+
+void ApplicationWindow::onPricingPlansUpdated()
+{
+    for(PricingPlan* plan : m_pricingPlans){
+        if(plan){
+            delete plan;
+            plan = nullptr;
+        }
+    }
+    m_pricingPlans.clear();
+    QString errmsg;
+    if(!m_dbmanager->GetPricingPlans(m_pricingPlans,errmsg)) ui->label_status->setText(errmsg);
+    else{
+        for(PricingPlan* plan : m_pricingPlans){
+            if(m_currentPlanID == plan->GetPlanID()){
+                currentPricingPlan = plan;
+                ui->label_currentPlan->setText(currentPricingPlan->GetPlanName());
+                break;
+            }
+        }
+        if(!currentPricingPlan) ui->label_status->setText("Geçerli ücretlendirme planı veritabanında bulunamadı.");
+    }
+}
+
+void ApplicationWindow::getCalculatedPrice(const qint64& minutes, const qint32& planid, float& out_price, QString& out_PlanName)
+{
+    bool planFound = false;
+    for(PricingPlan* plan : m_pricingPlans){
+        if(planid == plan->GetPlanID()){
+            planFound = true;
+            out_PlanName = plan->GetPlanName();
+            out_price = plan->CalculatePrice(minutes);
+            break;
+        }
+    }
+    if(!planFound){
+        for(PricingPlan* plan : m_pricingPlans){
+            if(plan->GetPlanID() == 0){
+                out_PlanName = plan->GetPlanName();
+                out_price = plan->CalculatePrice(minutes);
+            }
+        }
+    }
 }
 
 void ApplicationWindow::drawCamInput_vehicle_in(QPixmap pixmap)
@@ -239,7 +272,7 @@ void ApplicationWindow::enableToggleCameraButton()
 
 void ApplicationWindow::on_toolButton_vehicle_in_clicked()
 {
-    m_window_vehicle_in = new ManualVehicleEntry(m_dbmanager,this);
+    m_window_vehicle_in = new ManualVehicleEntry(m_dbmanager,m_currentPlanID,this);
     connect(m_window_vehicle_in,&ManualVehicleEntry::decreaseCount,this,&ApplicationWindow::decreaseRemainingSpotCount);
     m_window_vehicle_in->exec();
 }
@@ -247,7 +280,7 @@ void ApplicationWindow::on_toolButton_vehicle_in_clicked()
 void ApplicationWindow::on_toolButton_vehicle_out_clicked()
 {
     m_window_vehicle_out = new ManualVehicleExit(m_dbmanager,this);
-    connect(m_window_vehicle_out,&ManualVehicleExit::getCalculatedPrice,this,&ApplicationWindow::calculatePrice);
+    connect(m_window_vehicle_out,&ManualVehicleExit::getCalculatedPrice,this,&ApplicationWindow::getCalculatedPrice);
     connect(m_window_vehicle_out,&ManualVehicleExit::increaseCount,this,&ApplicationWindow::increaseRemainingSpotCount);
     m_window_vehicle_out->exec();
 }
@@ -284,7 +317,7 @@ void ApplicationWindow::SetupTCPConnection()
     m_serverAddress = m_dbmanager->QueryHostAddress();
     m_serverPort = m_dbmanager->QueryHostPort();
     m_RemoteID = m_dbmanager->QueryRemoteID();
-    m_client = TCPClient::getInstance(m_serverAddress,m_serverPort,m_RemoteID,this,m_dbmanager);
+    m_client = TCPClient::getInstance(m_serverAddress,m_serverPort,m_RemoteID,m_dbmanager);
     m_client->startConnection();
     connect(m_client,&TCPClient::stateChanged,this,&ApplicationWindow::on_socketStateChanged);
     connect(m_client,&TCPClient::sendError,this,&ApplicationWindow::onTCPErrorReceived);
@@ -314,9 +347,6 @@ void ApplicationWindow::setupCustomComponents()
             }
         }
         if(!currentPricingPlan) ui->label_status->setText("Geçerli ücretlendirme planı veritabanında bulunamadı.");
-        else{
-            connect(this,&ApplicationWindow::getPricePlanCalculation,currentPricingPlan,&PricingPlan::CalculatePrice);
-        }
     }
 
     // setting up remaining spot count
@@ -336,6 +366,7 @@ void ApplicationWindow::on_toolButton_adminpanel_clicked()
 void ApplicationWindow::on_toolButton_settings_clicked()
 {
     m_window_settings = new SettingsPanel(m_dbmanager,m_pricingPlans,this);
+    connect(m_window_settings,&SettingsPanel::sig_PricingPlansUpdated,this,&ApplicationWindow::onPricingPlansUpdated);
     m_window_settings->exec();
 }
 
@@ -347,6 +378,7 @@ void ApplicationWindow::on_pushButton_search_clicked()
 
 void ApplicationWindow::on_pushButton_currentPlanDetails_clicked()
 {
+    if(!currentPricingPlan) return;
     m_window_currentplan = new CurrentPlanWindow(currentPricingPlan,this);
     m_window_currentplan->exec();
 }

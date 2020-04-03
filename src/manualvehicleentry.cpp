@@ -5,13 +5,14 @@
 #include "applicationwindow.hpp"
 #include <QTimer>
 
-ManualVehicleEntry::ManualVehicleEntry(DatabaseManager* dbmanager, QWidget *parent) :
+ManualVehicleEntry::ManualVehicleEntry(DatabaseManager* dbmanager, qint32 currentPlanID, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ManualVehicleEntry)
 {
     ui->setupUi(this);
     this->setAttribute( Qt::WA_DeleteOnClose, true );
     m_dbmanager = dbmanager;
+    m_currentPlanID = currentPlanID;
     QStringList colors;
     for(qint32 id : m_dbmanager->getColors()) colors.append(m_dbmanager->getColors().key(id));
     ui->comboBox_colors->addItems(colors);
@@ -38,7 +39,7 @@ void ManualVehicleEntry::on_pushButton_clicked()
             ui->label_error->setText(errormsg);
             return;
         }
-        if(!m_dbmanager->NewPaymentEntry(vehicleid,errormsg)){
+        if(!m_dbmanager->NewPaymentEntry(vehicleid,m_currentPlanID,errormsg)){
             ui->label_error->setText(errormsg);
             return;
         }

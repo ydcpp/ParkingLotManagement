@@ -1,4 +1,5 @@
 #include "pricingplan.hpp"
+#include "applicationwindow.hpp"
 
 PricingPlan::PricingPlan(QObject *parent) : QObject(parent)
 {
@@ -101,37 +102,56 @@ void PricingPlan::GetPricesPerHour(float &lessThanTwo, float &twoThree, float &t
     moreThanTwelve  = m_pricePerHour*m_moreThanTwelve;
 }
 
+void PricingPlan::SetPricesPerHour(float lessThanTwo, float twoThree, float threeFour, float fourFive, float fiveSix, float sixSeven, float sevenEight, float eightTen, float tenTwelve, float moreThanTwelve)
+{
+    m_lessThanTwo=lessThanTwo;
+    m_TwoThree=twoThree;
+    m_ThreeFour=threeFour;
+    m_FourFive=fourFive;
+    m_FiveSix=fiveSix;
+    m_SixSeven=sixSeven;
+    m_SevenEight=sevenEight;
+    m_EightTen=eightTen;
+    m_TenTwelve=tenTwelve;
+    m_moreThanTwelve=moreThanTwelve;
+}
+
 float PricingPlan::CalculatePrice(qint64 minutes)
 {
     int hour = int(minutes)/60;
     if(hour < 2){
-        return (float(minutes)/60.0f*m_pricePerHour*m_lessThanTwo);
+        return roundPrice(float(minutes)/60.0f*m_pricePerHour*m_lessThanTwo);
     }else if(hour >= 12){
-        return (float(minutes)/60.0f*m_pricePerHour*m_moreThanTwelve);
+        return roundPrice(float(minutes)/60.0f*m_pricePerHour*m_moreThanTwelve);
     }else{
         switch(hour){
         case 2:
-            return (float(minutes)/60.0f*m_pricePerHour*m_TwoThree);
+            return roundPrice(float(minutes)/60.0f*m_pricePerHour*m_TwoThree);
         case 3:
-            return (float(minutes)/60.0f*m_pricePerHour*m_ThreeFour);
+            return roundPrice(float(minutes)/60.0f*m_pricePerHour*m_ThreeFour);
         case 4:
-            return (float(minutes)/60.0f*m_pricePerHour*m_FourFive);
+            return roundPrice(float(minutes)/60.0f*m_pricePerHour*m_FourFive);
         case 5:
-            return (float(minutes)/60.0f*m_pricePerHour*m_FiveSix);
+            return roundPrice(float(minutes)/60.0f*m_pricePerHour*m_FiveSix);
         case 6:
-            return (float(minutes)/60.0f*m_pricePerHour*m_SixSeven);
+            return roundPrice(float(minutes)/60.0f*m_pricePerHour*m_SixSeven);
         case 7:
-            return (float(minutes)/60.0f*m_pricePerHour*m_SevenEight);
+            return roundPrice(float(minutes)/60.0f*m_pricePerHour*m_SevenEight);
         case 8:
-            return (float(minutes)/60.0f*m_pricePerHour*m_EightTen);
+            return roundPrice(float(minutes)/60.0f*m_pricePerHour*m_EightTen);
         case 9:
-            return (float(minutes)/60.0f*m_pricePerHour*m_EightTen);
+            return roundPrice(float(minutes)/60.0f*m_pricePerHour*m_EightTen);
         case 10:
-            return (float(minutes)/60.0f*m_pricePerHour*m_TenTwelve);
+            return roundPrice(float(minutes)/60.0f*m_pricePerHour*m_TenTwelve);
         case 11:
-            return (float(minutes)/60.0f*m_pricePerHour*m_TenTwelve);
+            return roundPrice(float(minutes)/60.0f*m_pricePerHour*m_TenTwelve);
         default:
-            return (float(minutes)/60.0f*m_pricePerHour);
+            return roundPrice(float(minutes)/60.0f*m_pricePerHour);
         }
     }
+}
+
+float PricingPlan::roundPrice(const float& price)
+{
+    return QString().setNum(price,'f',2).toFloat();
 }

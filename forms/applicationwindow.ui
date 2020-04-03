@@ -373,7 +373,7 @@ border-color : red;
        <x>0</x>
        <y>0</y>
        <width>411</width>
-       <height>581</height>
+       <height>611</height>
       </rect>
      </property>
      <property name="frameShape">
@@ -649,6 +649,45 @@ border-color : red;
        <string/>
       </property>
      </widget>
+     <widget class="QPushButton" name="pushButton_reconnect">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>570</y>
+        <width>131</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Yeniden Bağlan</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_22">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>590</y>
+        <width>131</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Sunucu Bağlantısı Durumu :</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_connectionstatus">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>590</y>
+        <width>251</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
     </widget>
     <widget class="QFrame" name="frame_exit">
      <property name="geometry">
@@ -656,7 +695,7 @@ border-color : red;
        <x>420</x>
        <y>0</y>
        <width>411</width>
-       <height>581</height>
+       <height>611</height>
       </rect>
      </property>
      <property name="frameShape">
@@ -1254,64 +1293,6 @@ border-color : red;
       </property>
      </widget>
     </widget>
-    <widget class="QLabel" name="label_status">
-     <property name="geometry">
-      <rect>
-       <x>160</x>
-       <y>590</y>
-       <width>671</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>140</width>
-       <height>16</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>100009</width>
-       <height>48</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>590</y>
-       <width>161</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>201</width>
-       <height>20</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>SUNUCU BAĞLANTISI DURUMU :</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-     </property>
-    </widget>
    </widget>
    <widget class="QToolButton" name="toolButton_settings">
     <property name="geometry">
@@ -1327,6 +1308,9 @@ border-color : red;
       <width>9999</width>
       <height>9999</height>
      </size>
+    </property>
+    <property name="toolTip">
+     <string>Ayarlar Paneli</string>
     </property>
     <property name="text">
      <string>Ayarlar</string>
@@ -1529,6 +1513,9 @@ border-color : red;
       <height>9999</height>
      </size>
     </property>
+    <property name="toolTip">
+     <string>Yönetici Paneli</string>
+    </property>
     <property name="text">
      <string>Ayarlar</string>
     </property>
@@ -1661,17 +1648,62 @@ border-color : red;
      <string>Plakayı Tanı</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_reconnect">
+   <widget class="QLabel" name="label_status">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>674</y>
-      <width>151</width>
+      <x>70</x>
+      <y>680</y>
+      <width>1101</width>
       <height>21</height>
      </rect>
     </property>
+    <property name="minimumSize">
+     <size>
+      <width>140</width>
+      <height>16</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>100009</width>
+      <height>48</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
     <property name="text">
-     <string>Yeniden Bağlan</string>
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+    </property>
+    <property name="wordWrap">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>680</y>
+      <width>41</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>201</width>
+      <height>20</height>
+     </size>
+    </property>
+    <property name="text">
+     <string>Durum :</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
   </widget>

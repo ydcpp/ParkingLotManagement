@@ -19,7 +19,7 @@ public:
     ~ManualVehicleExit();
 
 signals:
-    float getCalculatedPrice(qint64 minutes, QString& currentPlan);
+    void getCalculatedPrice(const qint64& minutes, const qint32& planid, float& out_price, QString& out_planName);
     void increaseCount();
 
 private slots:
@@ -39,7 +39,7 @@ private:
     qint32 m_paymentID;
     qint64 m_minutes;
     QDateTime m_entryDate;
-    QString m_currentPlan;
+    QString m_planName;
     float m_price;
 
     bool validateForm();

@@ -3,7 +3,6 @@
 
 #include <QDialog>
 
-
 class DatabaseManager;
 
 namespace Ui {
@@ -15,7 +14,7 @@ class ManualVehicleEntry : public QDialog
     Q_OBJECT
 
 public:
-    explicit ManualVehicleEntry(DatabaseManager* dbmanager, QWidget *parent);
+    explicit ManualVehicleEntry(DatabaseManager* dbmanager,qint32 currentplanID, QWidget *parent);
     ~ManualVehicleEntry();
 
 signals:
@@ -27,6 +26,7 @@ private slots:
 private:
     Ui::ManualVehicleEntry *ui;
     DatabaseManager* m_dbmanager;
+    qint32 m_currentPlanID;
 
     bool validateForm();
 };
