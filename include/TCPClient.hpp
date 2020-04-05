@@ -48,7 +48,7 @@ private:
     void sendSynchRemainingSpot(const qint32& value);
 
     static TCPClient* m_instance;
-    static int _refCounter;
+    static quint32 _refCounter;
 };
 
 #endif // TCPCLIENT_HPP

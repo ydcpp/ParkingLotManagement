@@ -1,27 +1,28 @@
-#ifndef CAMERAVEHICLEIN_HPP
-#define CAMERAVEHICLEIN_HPP
+#ifndef CAMERASTREAM_HPP
+#define CAMERASTREAM_HPP
 
-#include <QThread>
+#include <QObject>
 #include <QImage>
 #include <QPixmap>
-
-#include <opencv2/highgui.hpp>
-#include <opencv2/imgproc.hpp>
+#include <QCamera>
+#include <QCameraInfo>
+#include <QCameraImageCapture>
+#include <QCameraViewfinder>
+#include <QScopedPointer>
 
 
 class ThreadManager;
 
-class CameraStream : public QThread
+class CameraStream : public QObject
 {
     Q_OBJECT
 
 public:
-    CameraStream(ThreadManager* app,const unsigned int& cameraIndex);
+    CameraStream(ThreadManager* app, QCameraViewfinder* camviewfinder);
+    ~CameraStream();
 
-    int getFPS() const;
-    void setFPS(int value);
-    void run() override;
-    void getCurrentFrame(cv::Mat* frame);
+    void updateCameraDevice(QVariant camdata);
+    QImage captureImage();
 
 signals:
     void updateCameraDisplay(QPixmap);
@@ -29,21 +30,21 @@ signals:
     void cameraIsOpen();
 
 private slots:
-    void stopThread();
-    void startThread();
-    void terminateThread();
+    void stopCamera();
+    void startCamera();
+    void setCamera(const QCameraInfo& cameraInfo);
+    void displayCameraError();
+    void displayCaptureError(int, QCameraImageCapture::Error, const QString &errorString);
+    void onRequestMediaObject(QCamera* obj);
 
 private:
     ThreadManager* m_tmanager;
-    cv::VideoCapture m_vidcap;
 
-    unsigned int m_camIndex;
-    unsigned int m_MaxFPS = 50;
-    bool m_keepStreaming = true;
-
-    cv::Mat m_frame;
     QImage qt_image;
-
+    QCameraViewfinder* m_camviewfinder = nullptr;
+    QScopedPointer<QCamera> m_camera;
+    QScopedPointer<QCameraImageCapture> m_capture;
+    QCameraInfo m_currentCamInfo;
 };
 
-#endif // CAMERAVEHICLEIN_HPP
+#endif // CAMERASTREAM_HPP

@@ -3,13 +3,8 @@
 
 #include <QMessageBox>
 #include <QTimer>
-#include <QMediaService>
-#include <QCamera>
-#include <QCameraViewfinder>
-#include <QCameraInfo>
 #include <QGraphicsScene>
 #include <QPushButton>
-#include <QCameraViewfinder>
 
 #include <QDebug>
 
@@ -21,20 +16,24 @@ ApplicationWindow::ApplicationWindow(DatabaseManager* dbmanager, User* user, Log
     ui->setupUi(this);
     this->setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint | Qt::WindowMaximizeButtonHint | Qt::CustomizeWindowHint);
     this->setAttribute( Qt::WA_DeleteOnClose, true );
-    m_threadManager = ThreadManager::getInstance(this,m_vehicleInCameraDeviceIndex,m_vehicleOutCameraDeviceIndex);
-    m_dbmanager->GetOtoparkInfo(m_otoparkInfo);
-    SetupTCPConnection();
     initializeAssetPaths();
     setupIcons();
-    setupCustomComponents();
+    if(m_dbmanager->SetOtoparkInfo(&m_otoparkInfo)){
+        m_threadManager = ThreadManager::getInstance(this,ui->camera_vehicle_in,ui->camera_vehicle_out);
+        SetupTCPConnection();
+        setupCustomComponents();
+    }else{
+        statusMessageError("PROGRAM VERİLERİ DÜZGÜN YÜKLENEMEDİ, LÜTFEN PROGRAMI YENİDEN BAŞLATIN.",-1);
+    }
 }
 
 ApplicationWindow::~ApplicationWindow()
 {
     m_client->terminateConnection();
     m_client->releaseInstance();
+    m_threadManager->ReleaseInstance();
     for(PricingPlan* plan : m_pricingPlans) if(plan) delete plan;
-    delete m_threadManager;
+    if(m_otoparkInfo) delete m_otoparkInfo;
     delete ui;
 }
 
@@ -137,7 +136,7 @@ void ApplicationWindow::onPricingPlansUpdated()
     if(!m_dbmanager->GetPricingPlans(m_pricingPlans,errmsg)) statusMessageError(errmsg,5000);
     else{
         for(PricingPlan* plan : m_pricingPlans){
-            if(m_otoparkInfo.CurrentPlanID == plan->GetPlanID()){
+            if(m_otoparkInfo->getCurrentPlanID() == plan->GetPlanID()){
                 currentPricingPlan = plan;
                 ui->label_currentPlan->setText(currentPricingPlan->GetPlanName());
                 break;
@@ -188,16 +187,26 @@ void ApplicationWindow::statusMessageError(const QString& text, const qint32& mi
     });
 }
 
+void ApplicationWindow::onCamDeviceUpdated_in(QVariant device)
+{
+    m_threadManager->updateCameraDevice_in(device);
+}
+
+void ApplicationWindow::onCamDeviceUpdated_out(QVariant device)
+{
+    m_threadManager->updateCameraDevice_out(device);
+}
+
 void ApplicationWindow::drawCamInput_vehicle_in(QPixmap pixmap)
 {
-    pixmap = pixmap.scaled(ui->label_vehicle_in->width(),ui->label_vehicle_in->height());
-    ui->label_vehicle_in->setPixmap(pixmap);
+    //pixmap = pixmap.scaled(ui->label_vehicle_in->width(),ui->label_vehicle_in->height());
+    //ui->label_vehicle_in->setPixmap(pixmap);
 }
 
 void ApplicationWindow::drawCamInput_vehicle_out(QPixmap pixmap)
 {
-    pixmap = pixmap.scaled(ui->label_vehicle_out->width(),ui->label_vehicle_out->height());
-    ui->label_vehicle_out->setPixmap(pixmap);
+    //pixmap = pixmap.scaled(ui->label_vehicle_out->width(),ui->label_vehicle_out->height());
+    //ui->label_vehicle_out->setPixmap(pixmap);
 }
 
 void ApplicationWindow::displayLicensePlateString_vehicle_in(const QString& plate)
@@ -214,7 +223,7 @@ void ApplicationWindow::openCameraStream_in()
 {
     ui->label_cam_in_status->setStyleSheet("color:green;");
     ui->label_cam_in_status->setText("Kamera açık");
-    ui->label_vehicle_in->setVisible(true);
+    ui->camera_vehicle_in->setVisible(true);
     ui->pushButton_plakatani_in->setEnabled(true);
 }
 
@@ -222,7 +231,7 @@ void ApplicationWindow::closeCameraStream_in()
 {
     ui->label_cam_in_status->setStyleSheet("color:red;");
     ui->label_cam_in_status->setText("Kamera kapalı");
-    ui->label_vehicle_in->setVisible(false);
+    ui->camera_vehicle_in->setVisible(false);
     ui->pushButton_plakatani_in->setEnabled(false);
 }
 
@@ -230,7 +239,7 @@ void ApplicationWindow::openCameraStream_out()
 {
     ui->label_cam_out_status->setStyleSheet("color:green;");
     ui->label_cam_out_status->setText("Kamera açık");
-    ui->label_vehicle_out->setVisible(true);
+    ui->camera_vehicle_out->setVisible(true);
     ui->pushButton_plakatani_out->setEnabled(true);
 }
 
@@ -238,7 +247,7 @@ void ApplicationWindow::closeCameraStream_out()
 {
     ui->label_cam_out_status->setStyleSheet("color:red;");
     ui->label_cam_out_status->setText("Kamera kapalı");
-    ui->label_vehicle_out->setVisible(false);
+    ui->camera_vehicle_out->setVisible(false);
     ui->pushButton_plakatani_out->setEnabled(false);
 }
 
@@ -255,9 +264,9 @@ void ApplicationWindow::updateCurrentPlan(const qint32& planID)
         statusMessageError(errormsg,5000);
         return;
     }
-    m_otoparkInfo.CurrentPlanID = planID;
+    m_otoparkInfo->setCurrentPlanID(planID);
     for(PricingPlan* plan : m_pricingPlans){
-        if(m_otoparkInfo.CurrentPlanID == plan->GetPlanID()){
+        if(m_otoparkInfo->getCurrentPlanID() == plan->GetPlanID()){
             currentPricingPlan = plan;
             break;
         }
@@ -265,9 +274,9 @@ void ApplicationWindow::updateCurrentPlan(const qint32& planID)
     ui->label_currentPlan->setText(currentPricingPlan->GetPlanName());
 }
 
-qint32 ApplicationWindow::getCurrentPlanID() const
+OtoparkInfo* ApplicationWindow::getOtoparkInfo()
 {
-    return m_otoparkInfo.CurrentPlanID;
+    return m_otoparkInfo;
 }
 
 void ApplicationWindow::on_toolButton_quit_clicked()
@@ -295,7 +304,7 @@ void ApplicationWindow::enableToggleCameraButton()
 
 void ApplicationWindow::on_toolButton_vehicle_in_clicked()
 {
-    m_window_vehicle_in = new ManualVehicleEntry(m_dbmanager,m_otoparkInfo.CurrentPlanID,this);
+    m_window_vehicle_in = new ManualVehicleEntry(m_dbmanager,m_otoparkInfo->getCurrentPlanID(),this);
     connect(m_window_vehicle_in,&ManualVehicleEntry::decreaseCount,this,&ApplicationWindow::decreaseRemainingSpotCount);
     m_window_vehicle_in->exec();
 }
@@ -337,7 +346,7 @@ void ApplicationWindow::setupIcons()
 void ApplicationWindow::SetupTCPConnection()
 {
     ui->pushButton_reconnect->setVisible(false);
-    m_client = TCPClient::getInstance(m_otoparkInfo.ServerIP,m_otoparkInfo.ServerPort,m_otoparkInfo.ServerOtoparkID,m_dbmanager);
+    m_client = TCPClient::getInstance(m_otoparkInfo->getServerIP(),m_otoparkInfo->getServerPort(),m_otoparkInfo->getServerOtoparkID(),m_dbmanager);
     m_client->startConnection();
     connect(m_client,&TCPClient::stateChanged,this,&ApplicationWindow::on_socketStateChanged);
     connect(m_client,&TCPClient::sendError,this,&ApplicationWindow::onTCPErrorReceived);
@@ -362,7 +371,7 @@ void ApplicationWindow::setupCustomComponents()
     if(!m_dbmanager->GetPricingPlans(m_pricingPlans,errmsg)) ui->label_status->setText(errmsg);
     else{
         for(PricingPlan* plan : m_pricingPlans){
-            if(m_otoparkInfo.CurrentPlanID == plan->GetPlanID()){
+            if(m_otoparkInfo->getCurrentPlanID() == plan->GetPlanID()){
                 currentPricingPlan = plan;
                 ui->label_currentPlan->setText(currentPricingPlan->GetPlanName());
                 break;
@@ -389,6 +398,8 @@ void ApplicationWindow::on_toolButton_settings_clicked()
 {
     m_window_settings = new SettingsPanel(m_dbmanager,m_pricingPlans,this);
     connect(m_window_settings,&SettingsPanel::sig_PricingPlansUpdated,this,&ApplicationWindow::onPricingPlansUpdated);
+    connect(m_window_settings,&SettingsPanel::sig_CamDeviceUpdated_in,this,&ApplicationWindow::onCamDeviceUpdated_in);
+    connect(m_window_settings,&SettingsPanel::sig_CamDeviceUpdated_out,this,&ApplicationWindow::onCamDeviceUpdated_out);
     m_window_settings->exec();
 }
 
@@ -440,6 +451,7 @@ void ApplicationWindow::on_pushButton_plakatani_out_clicked()
 
 void ApplicationWindow::on_pushButton_reconnect_clicked()
 {
+    if(!m_client) return;
     m_client->terminateConnection();
     m_client->startConnection();
 }

@@ -3,6 +3,11 @@
 
 #include <QDialog>
 
+#include <QMediaService>
+#include <QCamera>
+#include <QCameraViewfinder>
+#include <QCameraInfo>
+
 class PricingPlan;
 class DatabaseManager;
 class ApplicationWindow;
@@ -22,6 +27,8 @@ public:
 
 signals:
     void sig_PricingPlansUpdated();
+    void sig_CamDeviceUpdated_in(QVariant camdata);
+    void sig_CamDeviceUpdated_out(QVariant camdata);
 
 private slots:
 
@@ -47,6 +54,19 @@ private slots:
 
     void on_pushButton_savecamera_in_clicked();
 
+
+private slots:
+    void loadUserData();
+    void loadPlanList();
+    void clearPriceList();
+    void setErrorMessage(const QString& message);
+    void setSuccessMessage(const QString& message);
+    void setEditingEnabled(const bool& enabled);
+    void loadCameraList();
+    void on_comboBox_cam_in_activated(int index);
+
+    void on_comboBox_cam_out_activated(int index);
+
 private:
     Ui::SettingsPanel *ui;
     QList<PricingPlan*> m_plans;
@@ -56,13 +76,10 @@ private:
     bool m_editingEnabled = false;
     QPixmap m_unlocked = QPixmap(":/Images/assets/images/open-lock-green.png");
     QPixmap m_locked = QPixmap(":/Images/assets/images/closed-lock-red.png");
+    QList<QCameraInfo> m_availableCameras;
+    QCamera* m_camera_in = nullptr;
+    QCamera* m_camera_out = nullptr;
 
-    void loadUserData();
-    void loadPlanList();
-    void clearPriceList();
-    void setErrorMessage(const QString& message);
-    void setSuccessMessage(const QString& message);
-    void setEditingEnabled(const bool& enabled);
 };
 
 #endif // SETTINGSPANEL_HPP

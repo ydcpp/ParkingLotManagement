@@ -7,7 +7,10 @@
 
 #include <QTimer>
 #include <QDoubleValidator>
+#include <QDebug>
 
+
+Q_DECLARE_METATYPE(QCameraInfo)
 
 SettingsPanel::SettingsPanel(DatabaseManager* dbmanager, QList<PricingPlan*>& plans, ApplicationWindow *parent) :
     QDialog(parent),
@@ -20,6 +23,7 @@ SettingsPanel::SettingsPanel(DatabaseManager* dbmanager, QList<PricingPlan*>& pl
     m_parent = parent;
     loadUserData();
     loadPlanList();
+    loadCameraList();
     ui->label_changeicon->setPixmap(m_locked.scaled(ui->label_changeicon->width(),ui->label_changeicon->height()));
 }
 
@@ -85,7 +89,7 @@ void SettingsPanel::on_comboBox_chooseplan_currentTextChanged(const QString &arg
             ui->doubleSpinBox_eightten->setValue(eightten);
             ui->doubleSpinBox_tentwelve->setValue(tentwelve);
             ui->doubleSpinBox_morethantwelve->setValue(morethantwelve);
-            if(plan->GetPlanID() != m_parent->getCurrentPlanID()) ui->pushButton_setdefaultplan->setEnabled(true);
+            if(plan->GetPlanID() != m_parent->getOtoparkInfo()->getCurrentPlanID()) ui->pushButton_setdefaultplan->setEnabled(true);
             return;
         }
     }
@@ -172,6 +176,18 @@ void SettingsPanel::setEditingEnabled(const bool& enabled)
         ui->pushButton_saveplan->setEnabled(false);
     }
 }
+
+void SettingsPanel::loadCameraList()
+{
+    const QList<QCameraInfo> availableCameras = QCameraInfo::availableCameras();
+    m_availableCameras = QCameraInfo::availableCameras();
+    if(availableCameras.isEmpty()) setErrorMessage("Camera list is empty.");
+    for (const QCameraInfo &cameraInfo : m_availableCameras) {
+        ui->comboBox_cam_in->addItem(cameraInfo.description(),QVariant::fromValue(cameraInfo));
+        ui->comboBox_cam_out->addItem(cameraInfo.description(),QVariant::fromValue(cameraInfo));
+    }
+}
+
 
 void SettingsPanel::on_pushButton_changepassword_clicked()
 {
@@ -355,4 +371,26 @@ void SettingsPanel::on_pushButton_deleteplan_clicked()
 void SettingsPanel::on_pushButton_savecamera_in_clicked()
 {
 
+}
+
+void SettingsPanel::on_comboBox_cam_in_activated(int index)
+{
+    QVariant data;
+    if(index == 0){
+        emit sig_CamDeviceUpdated_in(data);
+    }else{
+        data = ui->comboBox_cam_in->currentData();
+        emit sig_CamDeviceUpdated_in(data);
+    }
+}
+
+void SettingsPanel::on_comboBox_cam_out_activated(int index)
+{
+    QVariant data;
+    if(index == 0){
+        emit sig_CamDeviceUpdated_out(data);
+    }else{
+        data = ui->comboBox_cam_out->currentData();
+        emit sig_CamDeviceUpdated_out(data);
+    }
 }

@@ -1,18 +1,20 @@
 #include "ThreadManager.hpp"
-
-#include "applicationwindow.hpp"
 #include "CameraStream.hpp"
 #include "ImageProcess.hpp"
+#include "applicationwindow.hpp"
+#include "settingspanel.hpp"
 
 
 ThreadManager* ThreadManager::m_instance(0);
+quint32 ThreadManager::_refCounter = 0;
 
-ThreadManager::ThreadManager(ApplicationWindow* appwindow, const unsigned int& vehicle_in_CamIndex, const unsigned int& vehicle_out_CamIndex) : m_appwindow(appwindow)
+ThreadManager::ThreadManager(ApplicationWindow* appwindow, QCameraViewfinder* camview_in, QCameraViewfinder* camview_out)
+    : m_appwindow(appwindow)
 {
-    m_camVehicleIn = new CameraStream(this, vehicle_in_CamIndex);
-    m_camVehicleOut = new CameraStream(this, vehicle_out_CamIndex);
-    m_plateReaderVehicleIn = new ImageProcess(this);
-    m_plateReaderVehicleOut = new ImageProcess(this);
+    m_camVehicleIn = new CameraStream(this, camview_in);
+    m_camVehicleOut = new CameraStream(this, camview_out);
+    m_plateReaderVehicleIn = new ImageProcess(this,m_camVehicleIn);
+    m_plateReaderVehicleOut = new ImageProcess(this,m_camVehicleOut);
     // main window connections
     connect(m_appwindow,&ApplicationWindow::stopAllThreads,this,&ThreadManager::stopAllThreads);
     connect(m_appwindow,&ApplicationWindow::terminateAllThreads,this,&ThreadManager::terminateAllThreads);
@@ -43,10 +45,31 @@ ThreadManager::~ThreadManager()
     delete m_plateReaderVehicleOut;
 }
 
-ThreadManager* ThreadManager::getInstance(ApplicationWindow* appwindow, const unsigned int& vehicle_in_CamIndex, const unsigned int& vehicle_out_CamIndex)
+ThreadManager* ThreadManager::getInstance(ApplicationWindow* appwindow, QCameraViewfinder* camview_in, QCameraViewfinder* camview_out)
 {
-    if(!m_instance) m_instance = new ThreadManager(appwindow,vehicle_in_CamIndex,vehicle_out_CamIndex);
+    if(!m_instance) m_instance = new ThreadManager(appwindow,camview_in,camview_out);
+    _refCounter++;
     return m_instance;
+}
+
+void ThreadManager::ReleaseInstance()
+{
+    if(_refCounter == 0) return;
+    _refCounter--;
+    if(_refCounter == 0 && m_instance != nullptr){
+        delete m_instance;
+        m_instance = nullptr;
+    }
+}
+
+void ThreadManager::updateCameraDevice_in(QVariant device)
+{
+    m_camVehicleIn->updateCameraDevice(device);
+}
+
+void ThreadManager::updateCameraDevice_out(QVariant device)
+{
+    m_camVehicleOut->updateCameraDevice(device);
 }
 
 
@@ -64,15 +87,21 @@ void ThreadManager::terminateAllThreads()
 
 void ThreadManager::recognizePlate_in()
 {
+    m_plateReaderVehicleIn->startThread(m_camVehicleIn->captureImage());
+    /*
     cv::Mat capturedFrame;
     m_camVehicleIn->getCurrentFrame(&capturedFrame);
     m_plateReaderVehicleIn->startThread(capturedFrame);
+    */
 }
 
 void ThreadManager::recognizePlate_out()
 {
+    m_plateReaderVehicleOut->startThread(m_camVehicleOut->captureImage());
+    /*
     cv::Mat capturedFrame;
     m_camVehicleOut->getCurrentFrame(&capturedFrame);
     m_plateReaderVehicleOut->startThread(capturedFrame);
+    */
 }
 

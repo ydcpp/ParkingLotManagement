@@ -37,7 +37,7 @@ public:
     User* GetCurrentUser();
     QList<PricingPlan*>& GetPricingPlanList();
     void updateCurrentPlan(const qint32& planID);
-    qint32 getCurrentPlanID() const;
+    OtoparkInfo* getOtoparkInfo();
 
 signals:
     void terminateAllThreads();
@@ -57,7 +57,10 @@ public slots:
 
 
 private slots:
-    void on_toolButton_quit_clicked();
+    void initializeAssetPaths();
+    void setupIcons();
+    void setupCustomComponents();
+    void SetupTCPConnection();
     void showTime();
     void enableToggleCameraButton();
     void updateRemainingSpots(const qint32&);
@@ -69,6 +72,10 @@ private slots:
     void getCalculatedPrice(const qint64& minutes, const qint32& planid, float& out_price, QString& out_planName);
     void statusMessageSuccess(const QString& text, const qint32& milliseconds);
     void statusMessageError(const QString& text, const qint32& milliseconds);
+    void onCamDeviceUpdated_in(QVariant device);
+    void onCamDeviceUpdated_out(QVariant device);
+
+    void on_toolButton_quit_clicked();
 
     void on_toolButton_vehicle_in_clicked();
 
@@ -97,6 +104,7 @@ private:
     Ui::ApplicationWindow *ui;
     DatabaseManager* m_dbmanager = nullptr;
     User* m_currentuser = nullptr;
+    OtoparkInfo* m_otoparkInfo = nullptr;
     Logger* m_logger = nullptr;
     AdminPanel* m_window_admin = nullptr;
     ManualVehicleEntry* m_window_vehicle_in = nullptr;
@@ -110,18 +118,9 @@ private:
 
     qint32 m_remainingSpots = 0;
     QList<PricingPlan*> m_pricingPlans;
-    OtoparkInfo m_otoparkInfo;
-
-
-    // camera settings
     bool m_isCameraInputOn = false;
-    unsigned int m_vehicleInCameraDeviceIndex = 0;
-    unsigned int m_vehicleOutCameraDeviceIndex = 1;
 
-    void initializeAssetPaths();
-    void setupIcons();
-    void setupCustomComponents();
-    void SetupTCPConnection();
+
 
     QMap<QString, QString> m_assetPaths;
 

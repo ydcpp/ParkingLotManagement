@@ -1,77 +1,93 @@
 #include "CameraStream.hpp"
 #include "ThreadManager.hpp"
+#include "settingspanel.hpp"
 
+#include <QMediaService>
+#include <QMediaMetaData>
+#include <QBuffer>
 
 #include <QDebug>
 
-using namespace cv;
+Q_DECLARE_METATYPE(QCameraInfo)
 
-CameraStream::CameraStream(ThreadManager* tmanager,const unsigned int& cameraIndex)
-    : m_tmanager(tmanager), m_camIndex(cameraIndex)
+CameraStream::CameraStream(ThreadManager* tmanager,QCameraViewfinder* camviewfinder)
+    : m_tmanager(tmanager), m_camviewfinder(camviewfinder), m_currentCamInfo(QCameraInfo::defaultCamera())
 {
-    connect(m_tmanager,&ThreadManager::startThreads,this,&CameraStream::startThread);
-    connect(m_tmanager,&ThreadManager::stopThreads,this,&CameraStream::stopThread);
-    connect(m_tmanager,&ThreadManager::terminateThreads,this,&CameraStream::terminateThread);
+    connect(m_tmanager,&ThreadManager::startThreads,this,&CameraStream::startCamera);
+    connect(m_tmanager,&ThreadManager::stopThreads,this,&CameraStream::stopCamera);
 }
 
-int CameraStream::getFPS() const
+CameraStream::~CameraStream()
 {
-    return m_MaxFPS;
-}
-
-void CameraStream::setFPS(int value)
-{
-    m_MaxFPS = value;
 }
 
 
-void CameraStream::run()
+void CameraStream::stopCamera()
 {
-//    m_vidcap.open("assets/other/testvid.mp4");
-    m_vidcap.open(m_camIndex);
-    if(!m_vidcap.isOpened()){
-        qDebug() << "camera on device index (" <<  m_camIndex << ") could not open.";
-        emit cameraIsClosed();
-    }else{
-        emit cameraIsOpen();
-        m_keepStreaming = true;
-        qDebug() << "Video stream from camera device (" << m_camIndex << ") is started.";
-        while(m_vidcap.read(m_frame) && m_keepStreaming){
-            cvtColor(m_frame,m_frame,COLOR_BGR2RGB);
-            qt_image = QImage((const unsigned char*) (m_frame.data), m_frame.cols, m_frame.rows, QImage::Format_RGB888);
-            emit updateCameraDisplay(QPixmap::fromImage(qt_image));
-            waitKey(1000/m_MaxFPS);
-        }
-        m_frame.release();
-        m_vidcap.release();
-        qDebug() << "Video stream is stopped.(" << m_camIndex << ")";
-        emit cameraIsClosed();
+    m_camera->stop();
+    emit cameraIsClosed();
+}
+
+void CameraStream::startCamera()
+{
+    setCamera(m_currentCamInfo);
+}
+
+void CameraStream::updateCameraDevice(QVariant camdata)
+{
+    setCamera(qvariant_cast<QCameraInfo>(camdata));
+}
+
+void CameraStream::setCamera(const QCameraInfo &cameraInfo)
+{
+    if(!m_camera.isNull()){
+        if(m_camera->LoadedState == QCamera::LoadedState) m_camera->unload();
+        stopCamera();
     }
+    if(cameraInfo.isNull()) return;
+    m_currentCamInfo = cameraInfo;
+    m_camera.reset(new QCamera(m_currentCamInfo));
+    connect(m_camera.data(), QOverload<QCamera::Error>::of(&QCamera::error), this, &CameraStream::displayCameraError);
+    m_camera->setViewfinder(m_camviewfinder);
+    m_camera->setCaptureMode(QCamera::CaptureStillImage);
+    m_capture.reset(new QCameraImageCapture(m_camera.data()));
+    connect(m_capture.data(), &QCameraImageCapture::imageCaptured, [=] (int id, QImage img) {
+        QByteArray buf;
+        QBuffer buffer(&buf);
+        buffer.open(QIODevice::ReadWrite);
+        img.save(&buffer, "TIFF");
+        qt_image = img;
+    });
+    m_camera->load();
+    m_camera->start();
+    if(m_camera->state() == QCamera::ActiveState) emit cameraIsOpen();
 }
 
-void CameraStream::getCurrentFrame(cv::Mat* frame)
+void CameraStream::displayCameraError()
 {
-    *frame = m_frame;
+    qDebug() << "Camera:" << m_camera->errorString();
 }
 
-void CameraStream::stopThread()
+void CameraStream::displayCaptureError(int id, const QCameraImageCapture::Error error, const QString &errorString)
 {
-    m_keepStreaming = false;
+    Q_UNUSED(id);
+    Q_UNUSED(error);
+    qDebug() << "Image Capture Error:" << errorString;
 }
 
-void CameraStream::startThread()
+void CameraStream::onRequestMediaObject(QCamera* obj)
 {
-    this->start();
+    obj = m_camera.data();
 }
 
-void CameraStream::terminateThread()
+QImage CameraStream::captureImage()
 {
-    m_keepStreaming = false;
-    wait(100);
-    if(this->isRunning()){
-        this->terminate();
-        wait();
-    }
+    if(m_capture.isNull()) return QImage();
+    m_capture->setCaptureDestination(QCameraImageCapture::CaptureToBuffer);
+    m_camera->searchAndLock();
+    m_capture->capture();
+    m_camera->unlock();
+    return qt_image;
 }
 
 

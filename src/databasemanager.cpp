@@ -671,15 +671,19 @@ bool DatabaseManager::isConnected()
     return database.isOpen();
 }
 
-bool DatabaseManager::GetOtoparkInfo(OtoparkInfo& out_otoparkInfo)
+bool DatabaseManager::SetOtoparkInfo(OtoparkInfo** out_otoparkInfo)
 {
+    if(*out_otoparkInfo){
+         delete *out_otoparkInfo;
+        *out_otoparkInfo = nullptr;
+    }
     QSqlQuery query;
     if(!query.exec("select ServerIP, ServerPort, ServerOtoparkID, fk_CurrentPlanID from OtoparkInfo where ID = 0")) return false;
     if(!query.next()) return false;
-    out_otoparkInfo.ServerIP = query.value(0).toString();
-    out_otoparkInfo.ServerPort = query.value(1).toUInt();
-    out_otoparkInfo.ServerOtoparkID = query.value(2).toInt();
-    out_otoparkInfo.CurrentPlanID = query.value(3).toInt();
+    *out_otoparkInfo = new OtoparkInfo(query.value(0).toString(),
+                                       query.value(1).toUInt(),
+                                       query.value(2).toInt(),
+                                       query.value(3).toInt());
     return true;
 }
 

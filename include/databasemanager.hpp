@@ -19,13 +19,7 @@
 
 #include "User.hpp"
 #include "pricingplan.hpp"
-
-struct OtoparkInfo{
-    QString ServerIP;
-    quint16 ServerPort;
-    qint32 ServerOtoparkID;
-    qint32 CurrentPlanID;
-};
+#include "OtoparkInfo.hpp"
 
 class DatabaseManager : public QObject
 {
@@ -63,7 +57,7 @@ public:
     bool IncreaseRemainingSpot();
     bool DecreaseRemainingSpot();
     bool isConnected();
-    bool GetOtoparkInfo(OtoparkInfo& out_otoparkInfo);
+    bool SetOtoparkInfo(OtoparkInfo** out_otoparkInfo);
     bool UpdateCurrentPricingPlan(const qint32& planid, QString& errmsg);
 
     QMap<QString,qint32> getColors();
