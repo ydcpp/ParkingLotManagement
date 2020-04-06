@@ -44,27 +44,6 @@ qint32 OtoparkInfo::getCurrentPlanID() const
 }
 
 
-QString OtoparkInfo::getCameraDeviceInfo_in() const
-{
-    return CameraDeviceInfo_in;
-}
-
-void OtoparkInfo::setCameraDeviceInfo_in(const QString& value)
-{
-    CameraDeviceInfo_in = value;
-}
-
-QString OtoparkInfo::getCameraDeviceInfo_out() const
-{
-    return CameraDeviceInfo_out;
-}
-
-void OtoparkInfo::setCameraDeviceInfo_out(const QString& value)
-{
-    CameraDeviceInfo_out = value;
-}
-
-
 qint32 OtoparkInfo::getServerOtoparkID() const
 {
     return ServerOtoparkID;

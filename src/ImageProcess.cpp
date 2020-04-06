@@ -38,39 +38,25 @@ void ImageProcess::run()
 
     if(m_frame.empty()){
         qDebug() << "Could not retrieve a frame to process.";
+        emit plateCouldNotFound();
         return;
     }
 
-    cv::imshow("captured frame",m_frame);
-    cv::waitKey(0);
 
-    // Recognize an image file.  You could alternatively provide the image bytes in-memory.
     //alpr::AlprResults results = openalpr.recognize("./test.tif");
     std::vector<alpr::AlprRegionOfInterest> emptyRoi;
     alpr::AlprResults results = openalpr.recognize(m_frame.data,(quint32)m_frame.elemSize(),m_frame.cols,m_frame.rows,emptyRoi);
     if(results.plates.empty()){
         qDebug() << "Could not find a plate.";
+        emit plateCouldNotFound();
         emit sendPlateString(" - ");
         return;
     }
+
     alpr::AlprPlateResult plate = results.plates[0];
     QString resultplate = QString::fromStdString(plate.topNPlates[0].characters);
     emit sendPlateString(resultplate);
-
-    // Iterate through the results.  There may be multiple plates in an image,
-    // and each plate return sthe top N candidates.
-//    for (unsigned int i = 0; i < results.plates.size(); i++)
-//    {
-//      alpr::AlprPlateResult plate = results.plates[i];
-//      qDebug() << "plate" << i << ": " << plate.topNPlates.size() << " results";
-
-//        for (unsigned int k = 0; k < plate.topNPlates.size(); k++)
-//        {
-//          alpr::AlprPlate candidate = plate.topNPlates[k];
-//          qDebug() << "    - " << QString::fromStdString(candidate.characters) << "\t confidence: " << candidate.overall_confidence;
-//          qDebug() << "\t pattern_match: " << candidate.matches_template;
-//        }
-//    }
+    emit plateFound();
 }
 
 

@@ -25,7 +25,6 @@ public:
     QImage captureImage();
 
 signals:
-    void updateCameraDisplay(QPixmap);
     void cameraIsClosed();
     void cameraIsOpen();
 

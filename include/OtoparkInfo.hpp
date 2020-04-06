@@ -9,12 +9,6 @@ public:
     OtoparkInfo(const QString& ip,const quint16& port,const qint32& id,const qint32& planid);
     ~OtoparkInfo();
 
-    QString getCameraDeviceInfo_in() const;
-    void setCameraDeviceInfo_in(const QString& value);
-
-    QString getCameraDeviceInfo_out() const;
-    void setCameraDeviceInfo_out(const QString& value);
-
     QString getServerIP() const;
     void setServerIP(const QString& value);
 
@@ -32,8 +26,6 @@ private:
     quint16 ServerPort;
     qint32 ServerOtoparkID;
     qint32 CurrentPlanID;
-    QString CameraDeviceInfo_in;
-    QString CameraDeviceInfo_out;
 };
 
 #endif // OTOPARKINFO_HPP

@@ -16,6 +16,7 @@
 #include <QMainWindow>
 #include <QMap>
 #include <QString>
+#include <QLabel>
 
 
 namespace Ui {
@@ -50,8 +51,6 @@ public slots:
     void closeCameraStream_in();
     void openCameraStream_out();
     void closeCameraStream_out();
-    void drawCamInput_vehicle_in(QPixmap);
-    void drawCamInput_vehicle_out(QPixmap);
     void displayLicensePlateString_vehicle_in(const QString&);
     void displayLicensePlateString_vehicle_out(const QString&);
 
@@ -70,10 +69,14 @@ private slots:
     void onTCPErrorReceived(const QString& err);
     void onPricingPlansUpdated();
     void getCalculatedPrice(const qint64& minutes, const qint32& planid, float& out_price, QString& out_planName);
-    void statusMessageSuccess(const QString& text, const qint32& milliseconds);
-    void statusMessageError(const QString& text, const qint32& milliseconds);
+    void statusMessageSuccess(const QString& text, const qint32& milliseconds, QLabel* targetlabel);
+    void statusMessageError(const QString& text, const qint32& milliseconds, QLabel* targetlabel);
     void onCamDeviceUpdated_in(QVariant device);
     void onCamDeviceUpdated_out(QVariant device);
+    void onPlateDetected_in();
+    void onPlateNotDetected_in();
+    void onPlateDetected_out();
+    void onPlateNotDetected_out();
 
     void on_toolButton_quit_clicked();
 

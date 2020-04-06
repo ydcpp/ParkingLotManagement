@@ -20,10 +20,14 @@ ApplicationWindow::ApplicationWindow(DatabaseManager* dbmanager, User* user, Log
     setupIcons();
     if(m_dbmanager->SetOtoparkInfo(&m_otoparkInfo)){
         m_threadManager = ThreadManager::getInstance(this,ui->camera_vehicle_in,ui->camera_vehicle_out);
+        connect(m_threadManager,&ThreadManager::plateDetected_in,this,&ApplicationWindow::onPlateDetected_in);
+        connect(m_threadManager,&ThreadManager::plateNotDetected_in,this,&ApplicationWindow::onPlateNotDetected_in);
+        connect(m_threadManager,&ThreadManager::plateDetected_out,this,&ApplicationWindow::onPlateDetected_out);
+        connect(m_threadManager,&ThreadManager::plateNotDetected_out,this,&ApplicationWindow::onPlateNotDetected_out);
         SetupTCPConnection();
         setupCustomComponents();
     }else{
-        statusMessageError("PROGRAM VERİLERİ DÜZGÜN YÜKLENEMEDİ, LÜTFEN PROGRAMI YENİDEN BAŞLATIN.",-1);
+        statusMessageError("PROGRAM VERİLERİ DÜZGÜN YÜKLENEMEDİ, LÜTFEN PROGRAMI YENİDEN BAŞLATIN.",-1,ui->label_status);
     }
 }
 
@@ -51,7 +55,6 @@ void ApplicationWindow::ClearVehicleOutStats()
     ui->lineEdit_out_color->setText("");
     ui->lineEdit_out_model->setText("");
     ui->lineEdit_out_type->setText("");
-    ui->lineEdit_out_parkLocation->setText("");
     ui->lineEdit_out_price->setText("");
     ui->dateTimeEdit_in->setDateTime(QDateTime(QDate(2000,1,1),QTime(0,0)));
     ui->dateTimeEdit_out->setDateTime(QDateTime(QDate(2000,1,1),QTime(0,0)));
@@ -133,7 +136,7 @@ void ApplicationWindow::onPricingPlansUpdated()
     }
     m_pricingPlans.clear();
     QString errmsg;
-    if(!m_dbmanager->GetPricingPlans(m_pricingPlans,errmsg)) statusMessageError(errmsg,5000);
+    if(!m_dbmanager->GetPricingPlans(m_pricingPlans,errmsg)) statusMessageError(errmsg,5000,ui->label_status);
     else{
         for(PricingPlan* plan : m_pricingPlans){
             if(m_otoparkInfo->getCurrentPlanID() == plan->GetPlanID()){
@@ -142,7 +145,7 @@ void ApplicationWindow::onPricingPlansUpdated()
                 break;
             }
         }
-        if(!currentPricingPlan) statusMessageError("Geçerli ücretlendirme planı veritabanında bulunamadı.",5000);
+        if(!currentPricingPlan) statusMessageError("Geçerli ücretlendirme planı veritabanında bulunamadı.",5000,ui->label_status);
     }
 }
 
@@ -167,23 +170,25 @@ void ApplicationWindow::getCalculatedPrice(const qint64& minutes, const qint32& 
     }
 }
 
-void ApplicationWindow::statusMessageSuccess(const QString& text, const qint32& milliseconds)
+void ApplicationWindow::statusMessageSuccess(const QString& text, const qint32& milliseconds, QLabel* targetlabel)
 {
-    ui->label_status->setText(text);
-    ui->label_status->setStyleSheet("color:green;");
-    QTimer::singleShot(milliseconds,ui->label_status,[&](){
-        ui->label_status->clear();
-        ui->label_status->setStyleSheet("color:black;");
+    if(!targetlabel) return;
+    targetlabel->setStyleSheet("color:green;");
+    targetlabel->setText(text);
+    QTimer::singleShot(milliseconds,targetlabel,[=](){
+        targetlabel->clear();
+        targetlabel->setStyleSheet("color:black;");
     });
 }
 
-void ApplicationWindow::statusMessageError(const QString& text, const qint32& milliseconds)
+void ApplicationWindow::statusMessageError(const QString& text, const qint32& milliseconds, QLabel* targetlabel)
 {
-    ui->label_status->setText(text);
-    ui->label_status->setStyleSheet("color:red;");
-    QTimer::singleShot(milliseconds,ui->label_status,[&](){
-        ui->label_status->clear();
-        ui->label_status->setStyleSheet("color:black;");
+    if(!targetlabel) return;
+    targetlabel->setStyleSheet("color:red;");
+    targetlabel->setText(text);
+    QTimer::singleShot(milliseconds,targetlabel,[=](){
+        targetlabel->clear();
+        targetlabel->setStyleSheet("color:black;");
     });
 }
 
@@ -197,16 +202,24 @@ void ApplicationWindow::onCamDeviceUpdated_out(QVariant device)
     m_threadManager->updateCameraDevice_out(device);
 }
 
-void ApplicationWindow::drawCamInput_vehicle_in(QPixmap pixmap)
+void ApplicationWindow::onPlateDetected_in()
 {
-    //pixmap = pixmap.scaled(ui->label_vehicle_in->width(),ui->label_vehicle_in->height());
-    //ui->label_vehicle_in->setPixmap(pixmap);
+    statusMessageSuccess("Plaka okundu",3000,ui->label_platestatus_in);
 }
 
-void ApplicationWindow::drawCamInput_vehicle_out(QPixmap pixmap)
+void ApplicationWindow::onPlateNotDetected_in()
 {
-    //pixmap = pixmap.scaled(ui->label_vehicle_out->width(),ui->label_vehicle_out->height());
-    //ui->label_vehicle_out->setPixmap(pixmap);
+    statusMessageError("Plaka okunamadı",3000,ui->label_platestatus_in);
+}
+
+void ApplicationWindow::onPlateDetected_out()
+{
+    statusMessageSuccess("Plaka okudu",3000,ui->label_platestatus_out);
+}
+
+void ApplicationWindow::onPlateNotDetected_out()
+{
+    statusMessageError("Plaka okunamadı",3000,ui->label_platestatus_out);
 }
 
 void ApplicationWindow::displayLicensePlateString_vehicle_in(const QString& plate)
@@ -261,7 +274,7 @@ void ApplicationWindow::updateCurrentPlan(const qint32& planID)
 {
     QString errormsg;
     if(!m_dbmanager->UpdateCurrentPricingPlan(planID,errormsg)){
-        statusMessageError(errormsg,5000);
+        statusMessageError(errormsg,5000,ui->label_status);
         return;
     }
     m_otoparkInfo->setCurrentPlanID(planID);
@@ -350,8 +363,12 @@ void ApplicationWindow::SetupTCPConnection()
     m_client->startConnection();
     connect(m_client,&TCPClient::stateChanged,this,&ApplicationWindow::on_socketStateChanged);
     connect(m_client,&TCPClient::sendError,this,&ApplicationWindow::onTCPErrorReceived);
-    connect(m_client,&TCPClient::sig_successMessage,this,&ApplicationWindow::statusMessageSuccess);
-    connect(m_client,&TCPClient::sig_errorMessage,this,&ApplicationWindow::statusMessageError);
+    connect(m_client,&TCPClient::sig_successMessage,[&](const QString& text, const qint32& milliseconds){
+        this->statusMessageSuccess(text,milliseconds,ui->label_status);
+    });
+    connect(m_client,&TCPClient::sig_errorMessage,[&](const QString& text, const qint32& milliseconds){
+        this->statusMessageError(text,milliseconds,ui->label_status);
+    });
 }
 
 void ApplicationWindow::setupCustomComponents()
@@ -377,7 +394,7 @@ void ApplicationWindow::setupCustomComponents()
                 break;
             }
         }
-        if(!currentPricingPlan) statusMessageError("Geçerli ücretlendirme planı veritabanında bulunamadı.",5000);
+        if(!currentPricingPlan) statusMessageError("Geçerli ücretlendirme planı veritabanında bulunamadı.",5000,ui->label_status);
     }
 
     // setting up remaining spot count

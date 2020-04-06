@@ -51,7 +51,7 @@ void CameraStream::setCamera(const QCameraInfo &cameraInfo)
     m_camera->setViewfinder(m_camviewfinder);
     m_camera->setCaptureMode(QCamera::CaptureStillImage);
     m_capture.reset(new QCameraImageCapture(m_camera.data()));
-    connect(m_capture.data(), &QCameraImageCapture::imageCaptured, [=] (int id, QImage img) {
+    connect(m_capture.data(), &QCameraImageCapture::imageCaptured, [=] (int id, const QImage& img) {
         QByteArray buf;
         QBuffer buffer(&buf);
         buffer.open(QIODevice::ReadWrite);

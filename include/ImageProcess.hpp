@@ -25,6 +25,8 @@ public:
 
 signals:
     void sendPlateString(const QString&);
+    void plateFound();
+    void plateCouldNotFound();
 
 public slots:
     void stopThread();

@@ -21,19 +21,20 @@ ThreadManager::ThreadManager(ApplicationWindow* appwindow, QCameraViewfinder* ca
     connect(m_appwindow,&ApplicationWindow::recognizePlate_in,this,&ThreadManager::recognizePlate_in);
     connect(m_appwindow,&ApplicationWindow::recognizePlate_out,this,&ThreadManager::recognizePlate_out);
     // incoming vehicles camera setup
-    connect(m_camVehicleIn,&CameraStream::updateCameraDisplay,m_appwindow,&ApplicationWindow::drawCamInput_vehicle_in);
     connect(m_camVehicleIn,&CameraStream::cameraIsOpen,m_appwindow,&ApplicationWindow::openCameraStream_in);
     connect(m_camVehicleIn,&CameraStream::cameraIsClosed,m_appwindow,&ApplicationWindow::closeCameraStream_in);
     connect(m_camVehicleIn,&CameraStream::cameraIsClosed,m_plateReaderVehicleIn,&ImageProcess::stopThread);
     // outgoing vehicles camera setup
-    connect(m_camVehicleOut,&CameraStream::updateCameraDisplay,m_appwindow,&ApplicationWindow::drawCamInput_vehicle_out);
     connect(m_camVehicleOut,&CameraStream::cameraIsOpen,m_appwindow,&ApplicationWindow::openCameraStream_out);
     connect(m_camVehicleOut,&CameraStream::cameraIsClosed,m_appwindow,&ApplicationWindow::closeCameraStream_out);
     connect(m_camVehicleOut,&CameraStream::cameraIsClosed,m_plateReaderVehicleOut,&ImageProcess::stopThread);
     // image process thread setup
     connect(m_plateReaderVehicleIn,&ImageProcess::sendPlateString,m_appwindow,&ApplicationWindow::displayLicensePlateString_vehicle_in);
+    connect(m_plateReaderVehicleIn,&ImageProcess::plateFound,this,&ThreadManager::plateDetected_in);
+    connect(m_plateReaderVehicleIn,&ImageProcess::plateCouldNotFound,this,&ThreadManager::plateNotDetected_in);
     connect(m_plateReaderVehicleOut,&ImageProcess::sendPlateString,m_appwindow,&ApplicationWindow::displayLicensePlateString_vehicle_out);
-
+    connect(m_plateReaderVehicleOut,&ImageProcess::plateFound,this,&ThreadManager::plateDetected_out);
+    connect(m_plateReaderVehicleOut,&ImageProcess::plateCouldNotFound,this,&ThreadManager::plateNotDetected_out);
 }
 
 ThreadManager::~ThreadManager()
@@ -103,5 +104,25 @@ void ThreadManager::recognizePlate_out()
     m_camVehicleOut->getCurrentFrame(&capturedFrame);
     m_plateReaderVehicleOut->startThread(capturedFrame);
     */
+}
+
+void ThreadManager::onPlateFound_in()
+{
+    emit plateDetected_in();
+}
+
+void ThreadManager::onPlateNotFound_in()
+{
+    emit plateNotDetected_in();
+}
+
+void ThreadManager::onPlateFound_out()
+{
+    emit plateDetected_out();
+}
+
+void ThreadManager::onPlateNotFound_out()
+{
+    emit plateNotDetected_out();
 }
 
