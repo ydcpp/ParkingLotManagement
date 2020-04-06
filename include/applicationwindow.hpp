@@ -77,6 +77,7 @@ private slots:
     void onPlateNotDetected_in();
     void onPlateDetected_out();
     void onPlateNotDetected_out();
+    void openManualVehicleExitDialog(const QString& plate);
 
     void on_toolButton_quit_clicked();
 
@@ -103,6 +104,8 @@ private slots:
     void on_pushButton_reconnect_clicked();
 
 
+    void on_pushButton_completepayment_clicked();
+
 private:
     Ui::ApplicationWindow *ui;
     DatabaseManager* m_dbmanager = nullptr;
@@ -123,7 +126,11 @@ private:
     QList<PricingPlan*> m_pricingPlans;
     bool m_isCameraInputOn = false;
 
-
+    // outgoing vehicle billing info
+    qint32 m_vehicleID;
+    qint64 m_minutes;
+    float m_price;
+    QDateTime m_vehicleExitDate;
 
     QMap<QString, QString> m_assetPaths;
 

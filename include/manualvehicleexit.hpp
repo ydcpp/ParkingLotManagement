@@ -16,6 +16,7 @@ class ManualVehicleExit : public QDialog
 
 public:
     explicit ManualVehicleExit(DatabaseManager* dbmanager, QWidget *parent);
+    ManualVehicleExit(DatabaseManager* dbmanager, QWidget *parent, const QString& plate);
     ~ManualVehicleExit();
 
 signals:

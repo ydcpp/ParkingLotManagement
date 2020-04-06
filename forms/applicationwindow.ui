@@ -387,7 +387,7 @@ border-color : red;
        <rect>
         <x>10</x>
         <y>300</y>
-        <width>71</width>
+        <width>91</width>
         <height>21</height>
        </rect>
       </property>
@@ -405,61 +405,15 @@ border-color : red;
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="label_7">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>340</y>
-        <width>71</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>11</pointsize>
-        <weight>50</weight>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>RENK :</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_8">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>380</y>
-        <width>71</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>11</pointsize>
-        <weight>50</weight>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>MARKA :</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-      </property>
-     </widget>
      <widget class="QLineEdit" name="lineEdit_in_plate">
       <property name="enabled">
        <bool>true</bool>
       </property>
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>130</x>
         <y>300</y>
-        <width>281</width>
+        <width>261</width>
         <height>21</height>
        </rect>
       </property>
@@ -471,61 +425,7 @@ border-color : red;
        </font>
       </property>
       <property name="text">
-       <string>00 FFF 000</string>
-      </property>
-      <property name="frame">
-       <bool>true</bool>
-      </property>
-      <property name="readOnly">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="lineEdit_in_color">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="geometry">
-       <rect>
-        <x>110</x>
-        <y>340</y>
-        <width>281</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>BEYAZ</string>
-      </property>
-      <property name="frame">
-       <bool>true</bool>
-      </property>
-      <property name="readOnly">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="lineEdit_in_model">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="geometry">
-       <rect>
-        <x>110</x>
-        <y>380</y>
-        <width>281</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>FORD</string>
+       <string/>
       </property>
       <property name="frame">
        <bool>true</bool>
@@ -571,69 +471,6 @@ border-color : red;
       </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="lineEdit_in_type">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="geometry">
-       <rect>
-        <x>110</x>
-        <y>420</y>
-        <width>281</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>SEDAN</string>
-      </property>
-      <property name="frame">
-       <bool>true</bool>
-      </property>
-      <property name="readOnly">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="Line" name="line_4">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>440</y>
-        <width>381</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_9">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>420</y>
-        <width>71</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>11</pointsize>
-        <weight>50</weight>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>TÜR :</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
      <widget class="QPushButton" name="pushButton_reconnect">
@@ -732,6 +569,138 @@ border-color : red;
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
+     <widget class="QDateTimeEdit" name="dateTimeEdit_in_vehiclein">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>340</y>
+        <width>261</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="wrapping">
+       <bool>false</bool>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+      <property name="keyboardTracking">
+       <bool>false</bool>
+      </property>
+      <property name="showGroupSeparator" stdset="0">
+       <bool>false</bool>
+      </property>
+      <property name="dateTime">
+       <datetime>
+        <hour>12</hour>
+        <minute>0</minute>
+        <second>0</second>
+        <year>2000</year>
+        <month>9</month>
+        <day>14</day>
+       </datetime>
+      </property>
+      <property name="minimumDateTime">
+       <datetime>
+        <hour>0</hour>
+        <minute>0</minute>
+        <second>0</second>
+        <year>1999</year>
+        <month>9</month>
+        <day>14</day>
+       </datetime>
+      </property>
+      <property name="currentSection">
+       <enum>QDateTimeEdit::DaySection</enum>
+      </property>
+      <property name="displayFormat">
+       <string>dd.MM.yyyy - HH:mm</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_planName_vehiclein">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>380</y>
+        <width>261</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_23">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>340</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>GİRİŞ SAATİ :</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_24">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>380</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>TARİFE :</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
     </widget>
     <widget class="QFrame" name="frame_exit">
      <property name="geometry">
@@ -748,42 +717,6 @@ border-color : red;
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <widget class="Line" name="line_5">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>360</y>
-        <width>381</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_10">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>340</y>
-        <width>91</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>11</pointsize>
-        <weight>50</weight>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>RENK :</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-      </property>
-     </widget>
      <widget class="QLineEdit" name="lineEdit_out_plate">
       <property name="enabled">
        <bool>true</bool>
@@ -804,34 +737,7 @@ border-color : red;
        </font>
       </property>
       <property name="text">
-       <string>00 FFF 000</string>
-      </property>
-      <property name="frame">
-       <bool>true</bool>
-      </property>
-      <property name="readOnly">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="lineEdit_out_model">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="geometry">
-       <rect>
-        <x>130</x>
-        <y>380</y>
-        <width>261</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>FORD</string>
+       <string/>
       </property>
       <property name="frame">
        <bool>true</bool>
@@ -876,33 +782,6 @@ border-color : red;
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_out_color">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="geometry">
-       <rect>
-        <x>130</x>
-        <y>340</y>
-        <width>261</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>BEYAZ</string>
-      </property>
-      <property name="frame">
-       <bool>true</bool>
-      </property>
-      <property name="readOnly">
-       <bool>true</bool>
-      </property>
-     </widget>
      <widget class="Line" name="line_7">
       <property name="geometry">
        <rect>
@@ -916,7 +795,7 @@ border-color : red;
        <enum>Qt::Horizontal</enum>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_out_type">
+     <widget class="QLineEdit" name="lineEdit_out_time">
       <property name="enabled">
        <bool>true</bool>
       </property>
@@ -934,7 +813,7 @@ border-color : red;
        </font>
       </property>
       <property name="text">
-       <string>SEDAN</string>
+       <string/>
       </property>
       <property name="frame">
        <bool>true</bool>
@@ -956,29 +835,6 @@ border-color : red;
        <enum>Qt::Horizontal</enum>
       </property>
      </widget>
-     <widget class="QLabel" name="label_12">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>380</y>
-        <width>91</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>11</pointsize>
-        <weight>50</weight>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>MARKA :</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-      </property>
-     </widget>
      <widget class="QLabel" name="label_13">
       <property name="geometry">
        <rect>
@@ -990,13 +846,13 @@ border-color : red;
       </property>
       <property name="font">
        <font>
-        <pointsize>11</pointsize>
+        <pointsize>10</pointsize>
         <weight>50</weight>
         <bold>false</bold>
        </font>
       </property>
       <property name="text">
-       <string>TÜR :</string>
+       <string>SÜRE :</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -1006,7 +862,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>460</y>
+        <y>340</y>
         <width>91</width>
         <height>21</height>
        </rect>
@@ -1029,7 +885,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>480</y>
+        <y>360</y>
         <width>381</width>
         <height>20</height>
        </rect>
@@ -1042,7 +898,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>500</y>
+        <y>380</y>
         <width>91</width>
         <height>21</height>
        </rect>
@@ -1081,7 +937,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>130</x>
-        <y>460</y>
+        <y>340</y>
         <width>261</width>
         <height>22</height>
        </rect>
@@ -1140,7 +996,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>130</x>
-        <y>500</y>
+        <y>380</y>
         <width>261</width>
         <height>22</height>
        </rect>
@@ -1196,7 +1052,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>560</y>
+        <y>480</y>
         <width>381</width>
         <height>20</height>
        </rect>
@@ -1209,7 +1065,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>540</y>
+        <y>500</y>
         <width>91</width>
         <height>21</height>
        </rect>
@@ -1238,7 +1094,7 @@ border-color : red;
       <property name="geometry">
        <rect>
         <x>130</x>
-        <y>540</y>
+        <y>500</y>
         <width>261</width>
         <height>21</height>
        </rect>
@@ -1251,7 +1107,7 @@ border-color : red;
        </font>
       </property>
       <property name="text">
-       <string>12 TL</string>
+       <string/>
       </property>
       <property name="frame">
        <bool>true</bool>
@@ -1315,6 +1171,77 @@ border-color : red;
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_16">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>460</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>TARİFE :</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_planName">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>460</y>
+        <width>261</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="frame">
+       <bool>true</bool>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_completepayment">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>540</y>
+        <width>161</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>ÖDEMEYİ GERÇEKLEŞTİR</string>
       </property>
      </widget>
     </widget>

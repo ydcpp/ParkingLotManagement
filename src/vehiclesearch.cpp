@@ -29,6 +29,7 @@ void VehicleSearch::on_pushButton_search_clicked()
 {
     clearVehicleInfo();
     QString plate = ui->lineEdit_search->text();
+    plate = plate.toUpper();
     plate = plate.simplified();
     plate = plate.replace(" ", "");
     QString model;

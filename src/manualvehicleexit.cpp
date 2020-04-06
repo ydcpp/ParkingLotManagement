@@ -14,6 +14,16 @@ ManualVehicleExit::ManualVehicleExit(DatabaseManager* dbmanager, QWidget *parent
     m_dbmanager = dbmanager;
 }
 
+ManualVehicleExit::ManualVehicleExit(DatabaseManager* dbmanager, QWidget* parent, const QString& plate) :
+    QDialog(parent),
+    ui(new Ui::ManualVehicleExit)
+{
+    ui->setupUi(this);
+    this->setAttribute( Qt::WA_DeleteOnClose, true );
+    m_dbmanager = dbmanager;
+    ui->lineEdit_plateQuery->setText(plate);
+}
+
 ManualVehicleExit::~ManualVehicleExit()
 {
     delete ui;

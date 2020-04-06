@@ -35,7 +35,7 @@ void ManualVehicleEntry::on_pushButton_clicked()
         QString plate = ui->lineEdit_plate->text();
         plate = plate.simplified();
         plate = plate.replace(" ","");
-        if(!m_dbmanager->NewVehicleEntry(plate,ui->lineEdit_model->text(),ui->comboBox_types->currentText(),ui->comboBox_colors->currentText(),errormsg,vehicleid)){
+        if(!m_dbmanager->NewVehicleEntry(plate,errormsg,vehicleid,ui->lineEdit_model->text(),ui->comboBox_types->currentText(),ui->comboBox_colors->currentText())){
             ui->label_error->setText(errormsg);
             return;
         }

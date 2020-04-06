@@ -146,7 +146,7 @@ bool DatabaseManager::CreateUser(const QString& firstname, const QString& lastna
     return true;
 }
 
-bool DatabaseManager::NewVehicleEntry(const QString& plate, const QString& model, const QString& type, const QString& color, QString& errmsg, qint32& vehicleID)
+bool DatabaseManager::NewVehicleEntry(const QString& plate, QString& errmsg, qint32& vehicleID, const QString& model, const QString& type, const QString& color)
 {
     QSqlQuery query;
     // check if vehicle already exists
@@ -465,7 +465,7 @@ bool DatabaseManager::SetQUeryModel_Payments(QSqlQueryModel *out_model, QString 
         return false;
     }
     QSqlQuery query;
-    query.prepare("select Payments.ID as 'Fatura ID', PricingPlans.PlanName as 'Tarife', Vehicles.Plate as 'Plaka', Payments.VehicleEntryDate as 'Giriş Tarihi', Payments.PaymentDate as 'Ödeme Tarihi', Payments.HoursParked as 'Süre', Payments.Price as 'Fiyat (TL)'"
+    query.prepare("select Payments.ID as 'Fatura ID', Vehicles.Plate as 'Plaka', Payments.VehicleEntryDate as 'Giriş Tarihi', Payments.PaymentDate as 'Çıkış Tarihi', Payments.HoursParked as 'Süre', Payments.Price as 'Fiyat (TL)', PricingPlans.PlanName as 'Tarife'"
                   " from Payments left join Vehicles on Vehicles.ID = Payments.fk_VehicleID"
                   " left join PricingPlans on PricingPlans.ID = Payments.fk_PricingPlanID"
                   " where Payments.isPaymentComplete = true");

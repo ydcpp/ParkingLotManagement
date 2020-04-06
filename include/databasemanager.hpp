@@ -32,7 +32,7 @@ public:
     bool ValidateUserLogin(const QString& username, const QString& password, QString& errormsg, User** currentUser);
     bool DeleteUser(const QString& username, QString& errmsg);
     bool CreateUser(const QString& firstname, const QString& lastname, const QString& phone, const QString& username, const QString& password, const qint32& usertype, QString& errmsg);
-    bool NewVehicleEntry(const QString& plate, const QString& model, const QString& type, const QString& color, QString& errmsg, qint32& vehicleID);
+    bool NewVehicleEntry(const QString& plate, QString& errmsg, qint32& vehicleID, const QString& model="", const QString& type="", const QString& color="");
     bool NewPaymentEntry(const qint32& vehicleID, const qint32& planID, QString& errmsg);
     bool GetBillingResult(const QString& plate, QString& errmsg, qint32& out_paymentID, qint64& out_minutes, qint32& out_vehicleID, QDateTime& out_entryDate, qint32& out_planID);
     bool CompletePayment(const qint32& vehicleID, const QDateTime& exitDate, const qint64& minutes, const float& price, QString& errmsg, QString payerName = "");

@@ -43,21 +43,19 @@ ApplicationWindow::~ApplicationWindow()
 
 void ApplicationWindow::ClearVehicleInStats()
 {
-    ui->lineEdit_in_plate->setText("");
-    ui->lineEdit_in_color->setText("");
-    ui->lineEdit_in_model->setText("");
-    ui->lineEdit_in_type->setText("");
+    ui->lineEdit_in_plate->clear();
+    ui->dateTimeEdit_in_vehiclein->setDateTime(QDateTime(QDate(2000,1,1),QTime(0,0)));
+    ui->lineEdit_planName_vehiclein->clear();
 }
 
 void ApplicationWindow::ClearVehicleOutStats()
 {
-    ui->lineEdit_out_plate->setText("");
-    ui->lineEdit_out_color->setText("");
-    ui->lineEdit_out_model->setText("");
-    ui->lineEdit_out_type->setText("");
-    ui->lineEdit_out_price->setText("");
+    ui->lineEdit_out_plate->clear();
     ui->dateTimeEdit_in->setDateTime(QDateTime(QDate(2000,1,1),QTime(0,0)));
     ui->dateTimeEdit_out->setDateTime(QDateTime(QDate(2000,1,1),QTime(0,0)));
+    ui->lineEdit_out_time->clear();
+    ui->lineEdit_planName->clear();
+    ui->lineEdit_out_price->clear();
 }
 
 QMap<QString, QString> ApplicationWindow::GetAssetPaths()
@@ -204,22 +202,80 @@ void ApplicationWindow::onCamDeviceUpdated_out(QVariant device)
 
 void ApplicationWindow::onPlateDetected_in()
 {
-    statusMessageSuccess("Plaka okundu",3000,ui->label_platestatus_in);
+    statusMessageSuccess("Plaka okundu",1000,ui->label_platestatus_in);
+    QString errormsg;
+    qint32 vehicleid;
+    QString plate = ui->lineEdit_in_plate->text();
+    if(!m_dbmanager->NewVehicleEntry(plate,errormsg,vehicleid)){
+        statusMessageError(errormsg,5000,ui->label_platestatus_in);
+        return;
+    }
+    if(!m_dbmanager->NewPaymentEntry(vehicleid,m_otoparkInfo->getCurrentPlanID(),errormsg)){
+        statusMessageError(errormsg,5000,ui->label_platestatus_in);
+        return;
+    }
+    statusMessageSuccess("Araç girişi yapıldı.",3000,ui->label_platestatus_in);
+    emit decreaseRemainingSpotCount();
 }
 
 void ApplicationWindow::onPlateNotDetected_in()
 {
-    statusMessageError("Plaka okunamadı",3000,ui->label_platestatus_in);
+    statusMessageError("Plaka okunamadı",5000,ui->label_platestatus_in);
+    on_toolButton_vehicle_in_clicked();
 }
 
 void ApplicationWindow::onPlateDetected_out()
 {
-    statusMessageSuccess("Plaka okudu",3000,ui->label_platestatus_out);
+    statusMessageSuccess("Plaka okundu",1000,ui->label_platestatus_out);
+    // query if plate exists in database
+    QString errormsg;
+    QString plate = ui->lineEdit_out_plate->text();
+    qint32 m_paymentID;
+    QDateTime m_entryDate;
+    qint32 planID;
+    if(!m_dbmanager->GetBillingResult(plate,errormsg,m_paymentID,m_minutes,m_vehicleID,m_entryDate,planID)){
+        statusMessageError(errormsg,5000,ui->label_platestatus_out);
+        openManualVehicleExitDialog(plate);
+        return;
+    }
+    QString m_plate;
+    QString m_color;
+    QString m_type;
+    QString m_model;
+    if(!m_dbmanager->GetVehicleInformation(m_vehicleID,errormsg,m_plate,m_color,m_type,m_model)){
+        statusMessageError(errormsg,5000,ui->label_platestatus_out);
+        openManualVehicleExitDialog(plate);
+        return;
+    }
+    QString planname;
+    getCalculatedPrice(m_minutes,planID,m_price,planname);
+    QTime parkingTime = QTime(0,0).addSecs(60*int(m_minutes));
+    m_vehicleExitDate = QDateTime::currentDateTime();
+    // displaying the bill
+    ui->dateTimeEdit_in->setDateTime(m_entryDate);
+    ui->dateTimeEdit_out->setDateTime(m_vehicleExitDate);
+    ui->lineEdit_out_time->setText(parkingTime.toString("HH:mm"));
+    ui->lineEdit_planName->setText(planname);
+    ui->lineEdit_out_price->setText(QString::number(m_price));
+
+    // Uzak sunucuya plaka ile ilgili sorgu gönder, eğer bakiyesi yeterli ve otomatik ödeme talimatı açık ise ödemeyi onayla ve bakiyesinden fiyatı düş
+    // eğer sisteme kayıtlı değilse veya bakiyesi yeterli değilse manuel ödeme butonunu aktifleştir (pushbutton_completepayment)
+    ui->pushButton_completepayment->setEnabled(true);
 }
 
 void ApplicationWindow::onPlateNotDetected_out()
 {
-    statusMessageError("Plaka okunamadı",3000,ui->label_platestatus_out);
+    statusMessageError("Plaka okunamadı",5000,ui->label_platestatus_out);
+    ClearVehicleOutStats();
+    on_toolButton_vehicle_out_clicked();
+}
+
+void ApplicationWindow::openManualVehicleExitDialog(const QString& plate)
+{
+    m_window_vehicle_out = new ManualVehicleExit(m_dbmanager,this,plate);
+    connect(m_window_vehicle_out,&ManualVehicleExit::getCalculatedPrice,this,&ApplicationWindow::getCalculatedPrice);
+    connect(m_window_vehicle_out,&ManualVehicleExit::increaseCount,this,&ApplicationWindow::increaseRemainingSpotCount);
+    m_window_vehicle_out->exec();
 }
 
 void ApplicationWindow::displayLicensePlateString_vehicle_in(const QString& plate)
@@ -473,3 +529,17 @@ void ApplicationWindow::on_pushButton_reconnect_clicked()
     m_client->startConnection();
 }
 
+
+void ApplicationWindow::on_pushButton_completepayment_clicked()
+{
+    ui->pushButton_completepayment->setEnabled(false);
+    QString errormsg;
+     if(!m_dbmanager->CompletePayment(m_vehicleID,m_vehicleExitDate,m_minutes,m_price,errormsg)){
+        statusMessageError(errormsg,5000,ui->label_platestatus_out);
+        ui->pushButton_completepayment->setEnabled(true);
+    }else{
+        statusMessageSuccess("ÖDEME TAMAMLANDI",3000,ui->label_platestatus_out);
+        increaseRemainingSpotCount();
+        ClearVehicleOutStats();
+    }
+}
