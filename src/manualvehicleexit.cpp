@@ -37,6 +37,7 @@ void ManualVehicleExit::on_pushButton_query_clicked()
         QString platequery = ui->lineEdit_plateQuery->text();
         platequery = platequery.simplified();
         platequery = platequery.replace(" ","");
+        platequery = platequery.toUpper();
         qint32 planID;
         if(!m_dbmanager->GetBillingResult(platequery,errormsg,m_paymentID,m_minutes,m_vehicleID,m_entryDate,planID)){
             ui->label_result->setStyleSheet("color:red;");

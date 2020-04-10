@@ -85,7 +85,7 @@ bool DatabaseManager::DeleteUser(const QString& username, QString& errmsg)
 {
     if(!database.open()) return false;
     QSqlQuery query;
-    query.prepare("select * from Accounts where Username = :usr");
+    query.prepare("select ID from Accounts where Username = :usr");
     query.bindValue(":usr",username);
     if(!query.exec()){
         errmsg = query.lastError().text();
@@ -95,9 +95,14 @@ bool DatabaseManager::DeleteUser(const QString& username, QString& errmsg)
         errmsg = "Böyle bir kullanıcı adı bulunmamaktadır.";
         return false;
     }else{
+        quint32 userID = query.value(0).toUInt();
+        if(userID == 0){
+            errmsg = "Admin hesabı silinemez.";
+            return false;
+        }
         query.clear();
-        query.prepare("delete from Accounts where Username = :usr");
-        query.bindValue(":usr",username);
+        query.prepare("delete from Accounts where ID = :id");
+        query.bindValue(":id",userID);
         if(!query.exec()){
             errmsg = query.lastError().text();
             return false;

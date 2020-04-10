@@ -202,7 +202,8 @@ void ApplicationWindow::onCamDeviceUpdated_out(QVariant device)
 
 void ApplicationWindow::onPlateDetected_in()
 {
-    statusMessageSuccess("Plaka okundu",1000,ui->label_platestatus_in);
+    ui->dateTimeEdit_in_vehiclein->setDateTime(QDateTime::currentDateTime());
+    ui->lineEdit_planName_vehiclein->setText(currentPricingPlan->GetPlanName());
     QString errormsg;
     qint32 vehicleid;
     QString plate = ui->lineEdit_in_plate->text();
@@ -215,6 +216,9 @@ void ApplicationWindow::onPlateDetected_in()
         return;
     }
     statusMessageSuccess("Araç girişi yapıldı.",3000,ui->label_platestatus_in);
+    QTimer::singleShot(3000,this,[&](){
+        ClearVehicleInStats();
+    });
     emit decreaseRemainingSpotCount();
 }
 
@@ -226,7 +230,6 @@ void ApplicationWindow::onPlateNotDetected_in()
 
 void ApplicationWindow::onPlateDetected_out()
 {
-    statusMessageSuccess("Plaka okundu",1000,ui->label_platestatus_out);
     // query if plate exists in database
     QString errormsg;
     QString plate = ui->lineEdit_out_plate->text();
