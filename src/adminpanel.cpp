@@ -49,6 +49,11 @@ void AdminPanel::on_pushButton_employees_clicked()
     }
     m_proxymodel->setSourceModel(m_model);
     ui->tableView->setModel(m_proxymodel);
+    ui->tableView->setColumnWidth(0,120);
+    ui->tableView->setColumnWidth(1,120);
+    ui->tableView->setColumnWidth(2,100);
+    ui->tableView->setColumnWidth(3,100);
+    ui->tableView->setColumnWidth(4,120);
     ui->label_tableheader->setText("Çalışanların Listesi");
 }
 
@@ -62,6 +67,11 @@ void AdminPanel::on_pushButton_managers_clicked()
     }
     m_proxymodel->setSourceModel(m_model);
     ui->tableView->setModel(m_proxymodel);
+    ui->tableView->setColumnWidth(0,120);
+    ui->tableView->setColumnWidth(1,120);
+    ui->tableView->setColumnWidth(2,100);
+    ui->tableView->setColumnWidth(3,100);
+    ui->tableView->setColumnWidth(4,120);
     ui->label_tableheader->setText("Yöneticilerin Listesi");
 }
 
@@ -114,12 +124,12 @@ void AdminPanel::on_pushButton_payments_clicked()
     }
     m_proxymodel->setSourceModel(m_model);
     ui->tableView->setModel(m_proxymodel);
-    ui->tableView->setColumnWidth(0,70);
-    ui->tableView->setColumnWidth(1,110);
-    ui->tableView->setColumnWidth(2,90);
+    ui->tableView->setColumnWidth(0,65);
+    ui->tableView->setColumnWidth(1,80);
+    ui->tableView->setColumnWidth(2,120);
     ui->tableView->setColumnWidth(3,120);
-    ui->tableView->setColumnWidth(4,120);
-    ui->tableView->setColumnWidth(5,45);
-    ui->tableView->setColumnWidth(6,65);
+    ui->tableView->setColumnWidth(4,50);
+    ui->tableView->setColumnWidth(5,70);
+    ui->tableView->setColumnWidth(6,120);
     ui->label_tableheader->setText("Yapılan Tüm Ödemelerin Listesi");
 }

@@ -19,6 +19,7 @@ public:
     QString getLastError();
 
 
+
 signals:
     void stateChanged(const QAbstractSocket::SocketState& socketState);
     void sendError(const QString& error);
@@ -34,7 +35,6 @@ private slots:
 
 private:
     TCPClient(const QString& hostip, const qint16& port, const qint32& remoteDBid, DatabaseManager* dbmanager);
-    ~TCPClient();
     DatabaseManager* m_dbmanager;
     QString m_hostip;
     qint16 m_port;

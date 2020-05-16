@@ -31,8 +31,6 @@ private:
     User* m_user = nullptr;
     Logger* m_logger = nullptr;
 
-    bool m_skipLogin = false;
-
     bool validateLoginInfo();
     void launchProgram();
     void launchDebugMode();

@@ -54,7 +54,7 @@ void VehicleSearch::on_pushButton_search_clicked()
     ui->tableView->setColumnWidth(2,120);
     ui->tableView->setColumnWidth(3,50);
     ui->tableView->setColumnWidth(4,70);
-    ui->tableView->setColumnWidth(5,80);
+    ui->tableView->setColumnWidth(5,120);
 }
 
 void VehicleSearch::clearVehicleInfo()
@@ -84,9 +84,9 @@ void VehicleSearch::on_pushButton_listAll_clicked()
     }
     m_proxymodel->setSourceModel(m_model);
     ui->tableView->setModel(m_proxymodel);
-    ui->tableView->setColumnWidth(0,120);
+    ui->tableView->setColumnWidth(0,70);
     ui->tableView->setColumnWidth(1,100);
-    ui->tableView->setColumnWidth(2,60);
+    ui->tableView->setColumnWidth(2,70);
     ui->tableView->setColumnWidth(3,120);
-    ui->tableView->setColumnWidth(4,80);
+    ui->tableView->setColumnWidth(4,120);
 }

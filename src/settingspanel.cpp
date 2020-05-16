@@ -362,6 +362,7 @@ void SettingsPanel::on_pushButton_deleteplan_clicked()
     if(!m_dbmanager->DeletePricingPlan(planID,m_parent->GetPricingPlanList(),errormsg)) setErrorMessage(errormsg);
     else {
         loadPlanList();
+        m_parent->updateCurrentPlan(0);
         emit sig_PricingPlansUpdated();
         ui->comboBox_existingplans_2->setCurrentIndex(0);
         setSuccessMessage("Seçilen plan silindi.");

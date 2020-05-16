@@ -13,7 +13,10 @@ ParkYerim::ParkYerim(QWidget *parent)
     initializeDatabase();
     QPixmap pix(":/Images/ParkYerimDesktop.ico");
     ui->label_image->setPixmap(pix.scaled(ui->label_image->width(),ui->label_image->height(),Qt::KeepAspectRatio));
-    if(m_skipLogin) launchDebugMode();
+#define SKIP_LOGIN 0
+#if SKIP_LOGIN
+    launchDebugMode();
+#endif
 }
 
 ParkYerim::~ParkYerim()

@@ -23,10 +23,6 @@ TCPClient::TCPClient(const QString& hostip, const qint16& port, const qint32& re
     connect(m_dbmanager,&DatabaseManager::sig_RemainingSpotDecreased,this,&TCPClient::onSpotCounterDecreased);
 }
 
-TCPClient::~TCPClient()
-{
-}
-
 
 TCPClient* TCPClient::getInstance(const QString& hostip, const qint16& port, const qint32& remoteDBid, DatabaseManager* dbmanager)
 {
