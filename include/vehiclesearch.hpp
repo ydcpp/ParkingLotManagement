@@ -26,9 +26,9 @@ private slots:
 
 private:
     Ui::VehicleSearch *ui;
-    DatabaseManager* dbmanager = nullptr;
-    QSqlQueryModel* m_model = nullptr;
-    QSortFilterProxyModel* m_proxymodel = nullptr;
+    DatabaseManager* dbmanager{nullptr};
+    QSqlQueryModel* m_model{nullptr};
+    QSortFilterProxyModel* m_proxymodel{nullptr};
 
     void clearVehicleInfo();
     void setVehicleInfo(const QString& plate, const QString& model, const QString& color, const QString& type);

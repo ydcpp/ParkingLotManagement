@@ -19,24 +19,23 @@ class ParkYerim : public QMainWindow
     Q_OBJECT
 
 public:
-    ParkYerim(QWidget *parent = nullptr);
+    explicit ParkYerim(QWidget *parent = nullptr);
     ~ParkYerim();
 
 private slots:
     void on_pushButton_clicked();
-
-private:
-    Ui::ParkYerim *ui;
-    DatabaseManager* m_database = nullptr;
-    User* m_user = nullptr;
-    Logger* m_logger = nullptr;
-
     bool validateLoginInfo();
     void launchProgram();
     void launchDebugMode();
     void initializeDatabase();
 
-    const QString m_logfilepath = "./assets/other/applicationlog.txt";
+private:
+    Ui::ParkYerim *ui;
+    DatabaseManager* m_database{nullptr};
+    User* m_user{nullptr};
+    Logger* m_logger{nullptr};
+
+    const QString m_logfilepath {"./assets/other/applicationlog.txt"};
 
 };
 

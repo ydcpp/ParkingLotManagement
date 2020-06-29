@@ -32,6 +32,9 @@ private slots:
     void onSpotCounterDecreased();
     void onSpotCounterIncreased();
     void onConnected();
+    void sendData(const QString& data);
+    void analyzeReceivedMessage(QString receivedMessage);
+    void sendSynchRemainingSpot(const qint32& value);
 
 private:
     TCPClient(const QString& hostip, const qint16& port, const qint32& remoteDBid, DatabaseManager* dbmanager);
@@ -41,11 +44,7 @@ private:
     QTcpSocket m_socket;
     QByteArray m_receivedData;
     qint32 m_remoteID;
-    bool isHostReady = false;
-
-    void sendData(const QString& data);
-    void analyzeReceivedMessage(QString receivedMessage);
-    void sendSynchRemainingSpot(const qint32& value);
+    bool isHostReady {false};
 
     static TCPClient* m_instance;
     static quint32 _refCounter;

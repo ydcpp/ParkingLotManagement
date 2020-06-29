@@ -9,8 +9,8 @@
 #include <QDebug>
 
 
-TCPClient* TCPClient::m_instance(0);
-quint32 TCPClient::_refCounter = 0;
+TCPClient* TCPClient::m_instance {0};
+quint32 TCPClient::_refCounter {0};
 
 TCPClient::TCPClient(const QString& hostip, const qint16& port, const qint32& remoteDBid, DatabaseManager* dbmanager)
     : m_dbmanager(dbmanager), m_hostip(hostip), m_port(port), m_remoteID(remoteDBid)

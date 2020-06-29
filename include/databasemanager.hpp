@@ -15,7 +15,7 @@
 #include <QSortFilterProxyModel>
 #include <QString>
 #include <QDateTime>
-#include <QList>
+#include <QVector>
 
 #include "User.hpp"
 #include "pricingplan.hpp"
@@ -37,10 +37,10 @@ public:
     bool GetBillingResult(const QString& plate, QString& errmsg, qint32& out_paymentID, qint64& out_minutes, qint32& out_vehicleID, QDateTime& out_entryDate, qint32& out_planID);
     bool CompletePayment(const qint32& vehicleID, const QDateTime& exitDate, const qint64& minutes, const float& price, QString& errmsg, QString payerName = "");
     bool GetVehicleInformation(const qint32& vehicleID, QString& errmsg, QString& out_plate, QString& out_color, QString& out_type, QString& out_model);
-    bool GetPricingPlans(QList<PricingPlan*>& out_plans, QString& errmsg);
-    bool CreateNewPricingPlan(const QString& name,const float& priceperhour,const float& lessthantwo, const float& twothree, const float& threefour, const float& fourfive, const float& fivesix, const float& sixseven, const float& seveneight, const float& eightten, const float& tentwelve, const float& morethantwelve, QList<PricingPlan*>& out_plans, QString& errmsg);
-    bool DeletePricingPlan(const qint32& planID, QList<PricingPlan*>& out_plans, QString& errmsg);
-    bool UpdatePricingPlan(const qint32& planID,const float& lessthantwo, const float& twothree, const float& threefour, const float& fourfive, const float& fivesix, const float& sixseven, const float& seveneight, const float& eightten, const float& tentwelve, const float& morethantwelve, QList<PricingPlan*>& out_plans, QString& errmsg);
+    bool GetPricingPlans(QVector<PricingPlan*>& out_plans, QString& errmsg);
+    bool CreateNewPricingPlan(const QString& name,const float& priceperhour,const float& lessthantwo, const float& twothree, const float& threefour, const float& fourfive, const float& fivesix, const float& sixseven, const float& seveneight, const float& eightten, const float& tentwelve, const float& morethantwelve, QVector<PricingPlan*>& out_plans, QString& errmsg);
+    bool DeletePricingPlan(const qint32& planID, QVector<PricingPlan*>& out_plans, QString& errmsg);
+    bool UpdatePricingPlan(const qint32& planID,const float& lessthantwo, const float& twothree, const float& threefour, const float& fourfive, const float& fivesix, const float& sixseven, const float& seveneight, const float& eightten, const float& tentwelve, const float& morethantwelve, QVector<PricingPlan*>& out_plans, QString& errmsg);
     bool SetQueryModel_Employees(QSqlQueryModel* out_model, QString& errmsg);
     bool SetQueryModel_Managers(QSqlQueryModel* out_model, QString& errmsg);
     bool SetQUeryModel_Payments(QSqlQueryModel* out_model, QString& errmsg);
@@ -73,11 +73,11 @@ private:
     QMap<QString,qint32> m_colors;
     QMap<QString,qint32> m_vehicleTypes;
     QFile m_file;
-    const QString m_dbfilepath = "./assets/db/current/";
-    const QString m_dbbackuppath = "./assets/db/backups/";
-    const QString m_dbfilename = "parkyerimdb.sqlite";
+    const QString m_dbfilepath {"./assets/db/current/"};
+    const QString m_dbbackuppath {"./assets/db/backups/"};
+    const QString m_dbfilename {"parkyerimdb.sqlite"};
     const QString m_dbfile = m_dbfilepath + m_dbfilename;
-    const QString m_dbResourcePath = ":/Database/assets/database/parkyerimdb.sqlite";
+    const QString m_dbResourcePath {":/Database/assets/database/parkyerimdb.sqlite"};
     QString m_backupDBresourcepath;
 
     void getColorsFromDB();

@@ -17,6 +17,7 @@
 #include <QMap>
 #include <QString>
 #include <QLabel>
+#include <QVector>
 
 
 namespace Ui {
@@ -36,7 +37,7 @@ public:
     QMap<QString, QString> GetAssetPaths();
     DatabaseManager* GetDBManager();
     User* GetCurrentUser();
-    QList<PricingPlan*>& GetPricingPlanList();
+    QVector<PricingPlan*>& GetPricingPlanList();
     void updateCurrentPlan(const qint32& planID);
     OtoparkInfo* getOtoparkInfo();
 
@@ -108,23 +109,23 @@ private slots:
 
 private:
     Ui::ApplicationWindow *ui;
-    DatabaseManager* m_dbmanager = nullptr;
-    User* m_currentuser = nullptr;
-    OtoparkInfo* m_otoparkInfo = nullptr;
-    Logger* m_logger = nullptr;
-    AdminPanel* m_window_admin = nullptr;
-    ManualVehicleEntry* m_window_vehicle_in = nullptr;
-    ManualVehicleExit* m_window_vehicle_out = nullptr;
-    SettingsPanel* m_window_settings = nullptr;
-    CurrentPlanWindow* m_window_currentplan = nullptr;
-    VehicleSearch* m_window_vehiclesearch = nullptr;
-    ThreadManager* m_threadManager = nullptr;
-    TCPClient* m_client = nullptr;
-    PricingPlan* currentPricingPlan = nullptr;
+    DatabaseManager* m_dbmanager{nullptr};
+    User* m_currentuser{nullptr};
+    OtoparkInfo* m_otoparkInfo{nullptr};
+    Logger* m_logger{nullptr};
+    AdminPanel* m_window_admin{nullptr};
+    ManualVehicleEntry* m_window_vehicle_in{nullptr};
+    ManualVehicleExit* m_window_vehicle_out{nullptr};
+    SettingsPanel* m_window_settings{nullptr};
+    CurrentPlanWindow* m_window_currentplan{nullptr};
+    VehicleSearch* m_window_vehiclesearch{nullptr};
+    ThreadManager* m_threadManager{nullptr};
+    TCPClient* m_client{nullptr};
+    PricingPlan* currentPricingPlan{nullptr};
 
-    qint32 m_remainingSpots = 0;
-    QList<PricingPlan*> m_pricingPlans;
-    bool m_isCameraInputOn = false;
+    qint32 m_remainingSpots{0};
+    QVector<PricingPlan*> m_pricingPlans;
+    bool m_isCameraInputOn{false};
 
     // outgoing vehicle billing info
     qint32 m_vehicleID;
@@ -135,7 +136,7 @@ private:
     QMap<QString, QString> m_assetPaths;
 
     // programda kullanılacak tüm asset'lerin adları ve dosya yolları burada girilmelidir.
-    QList<QString> m_params = {
+    QVector<QString> m_params = {
         "icon_close,        :/Images/assets/images/close.png",
         "icon_print,        :",
         "image_background,  :",

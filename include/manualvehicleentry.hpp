@@ -1,4 +1,4 @@
-#ifndef MANUALVEHICLEENTRY_HPP
+    #ifndef MANUALVEHICLEENTRY_HPP
 #define MANUALVEHICLEENTRY_HPP
 
 #include <QDialog>

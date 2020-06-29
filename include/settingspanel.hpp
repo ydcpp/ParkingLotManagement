@@ -22,7 +22,7 @@ class SettingsPanel : public QDialog
     Q_OBJECT
 
 public:
-    explicit SettingsPanel(DatabaseManager* dbmanager,QList<PricingPlan*>& plans,ApplicationWindow *parent);
+    explicit SettingsPanel(DatabaseManager* dbmanager,QVector<PricingPlan*>& plans,ApplicationWindow *parent);
     ~SettingsPanel();
 
 signals:
@@ -69,16 +69,16 @@ private slots:
 
 private:
     Ui::SettingsPanel *ui;
-    QList<PricingPlan*> m_plans;
-    DatabaseManager* m_dbmanager = nullptr;
-    ApplicationWindow* m_parent = nullptr;
-    QDoubleValidator* m_doublevalidator = nullptr;
+    QVector<PricingPlan*> m_plans;
+    DatabaseManager* m_dbmanager{nullptr};
+    ApplicationWindow* m_parent{nullptr};
+    QDoubleValidator* m_doublevalidator{nullptr};
     bool m_editingEnabled = false;
-    QPixmap m_unlocked = QPixmap(":/Images/assets/images/open-lock-green.png");
-    QPixmap m_locked = QPixmap(":/Images/assets/images/closed-lock-red.png");
+    QPixmap m_unlocked {QPixmap(":/Images/assets/images/open-lock-green.png")};
+    QPixmap m_locked {QPixmap(":/Images/assets/images/closed-lock-red.png")};
     QList<QCameraInfo> m_availableCameras;
-    QCamera* m_camera_in = nullptr;
-    QCamera* m_camera_out = nullptr;
+    QCamera* m_camera_in{nullptr};
+    QCamera* m_camera_out{nullptr};
 
 };
 

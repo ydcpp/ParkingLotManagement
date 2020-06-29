@@ -304,7 +304,7 @@ bool DatabaseManager::GetVehicleInformation(const qint32& vehicleID, QString& er
     return true;
 }
 
-bool DatabaseManager::GetPricingPlans(QList<PricingPlan *> &out_plans, QString &errmsg)
+bool DatabaseManager::GetPricingPlans(QVector<PricingPlan *> &out_plans, QString &errmsg)
 {
     // clearing the list first
     for(PricingPlan* plan : out_plans){
@@ -336,7 +336,7 @@ bool DatabaseManager::GetPricingPlans(QList<PricingPlan *> &out_plans, QString &
     return true;
 }
 
-bool DatabaseManager::CreateNewPricingPlan(const QString& name, const float& priceperhour, const float& lessthantwo, const float& twothree, const float& threefour, const float& fourfive, const float& fivesix, const float& sixseven, const float& seveneight, const float& eightten, const float& tentwelve, const float& morethantwelve, QList<PricingPlan*>& plans, QString& errmsg)
+bool DatabaseManager::CreateNewPricingPlan(const QString& name, const float& priceperhour, const float& lessthantwo, const float& twothree, const float& threefour, const float& fourfive, const float& fivesix, const float& sixseven, const float& seveneight, const float& eightten, const float& tentwelve, const float& morethantwelve, QVector<PricingPlan*>& plans, QString& errmsg)
 {
     QSqlQuery query;
     query.prepare("insert into PricingPlans (PlanName, PricePerHour, m_LessThanTwo, m_TwoThree, m_ThreeFour, m_FourFive, m_FiveSix, m_SixSeven, m_SevenEight, m_EightTen, m_TenTwelve, m_MoreThanTwelve)"
@@ -361,7 +361,7 @@ bool DatabaseManager::CreateNewPricingPlan(const QString& name, const float& pri
     return true;
 }
 
-bool DatabaseManager::DeletePricingPlan(const qint32& planID, QList<PricingPlan*>& out_plans,QString &errmsg)
+bool DatabaseManager::DeletePricingPlan(const qint32& planID, QVector<PricingPlan*>& out_plans,QString &errmsg)
 {
     if(planID == 0){
         errmsg = "Default plan cannot be removed.";
@@ -378,7 +378,7 @@ bool DatabaseManager::DeletePricingPlan(const qint32& planID, QList<PricingPlan*
     return true;
 }
 
-bool DatabaseManager::UpdatePricingPlan(const qint32& planID, const float& lessthantwo, const float& twothree, const float& threefour, const float& fourfive, const float& fivesix, const float& sixseven, const float& seveneight, const float& eightten, const float& tentwelve, const float& morethantwelve, QList<PricingPlan *> &out_plans, QString &errmsg)
+bool DatabaseManager::UpdatePricingPlan(const qint32& planID, const float& lessthantwo, const float& twothree, const float& threefour, const float& fourfive, const float& fivesix, const float& sixseven, const float& seveneight, const float& eightten, const float& tentwelve, const float& morethantwelve, QVector<PricingPlan *> &out_plans, QString &errmsg)
 {
     QSqlQuery query;
     query.prepare("update PricingPlans set"
@@ -489,7 +489,7 @@ bool DatabaseManager::QueryMonthlyIncome(float &out_income, QString &errmsg)
         errmsg = query.lastError().text();
         return false;
     }
-    QList<PaymentInfo> payments;
+    QVector<PaymentInfo> payments;
     float totalPrice = 0.0f;
     while(query.next()){
         payments.append(PaymentInfo(query.value(0).toDateTime(),query.value(1).toFloat()));
@@ -508,7 +508,7 @@ bool DatabaseManager::QueryWeeklyIncome(float &out_income, QString &errmsg)
         errmsg = query.lastError().text();
         return false;
     }
-    QList<PaymentInfo> payments;
+    QVector<PaymentInfo> payments;
     float totalPrice = 0.0f;
     while(query.next()){
         payments.append(PaymentInfo(query.value(0).toDateTime(),query.value(1).toFloat()));
@@ -527,7 +527,7 @@ bool DatabaseManager::QueryDailyIncome(float &out_income, QString &errmsg)
         errmsg = query.lastError().text();
         return false;
     }
-    QList<PaymentInfo> payments;
+    QVector<PaymentInfo> payments;
     float totalPrice = 0.0f;
     while(query.next()){
         payments.append(PaymentInfo(query.value(0).toDateTime(),query.value(1).toFloat()));

@@ -41,11 +41,11 @@ private:
     ThreadManager(ApplicationWindow* appwindow, QCameraViewfinder* camview_in, QCameraViewfinder* camview_out);
     ~ThreadManager();
 
-    ApplicationWindow* m_appwindow = nullptr;
-    CameraStream* m_camVehicleIn = nullptr;
-    CameraStream* m_camVehicleOut = nullptr;
-    ImageProcess* m_plateReaderVehicleIn = nullptr;
-    ImageProcess* m_plateReaderVehicleOut = nullptr;
+    ApplicationWindow* m_appwindow{nullptr};
+    CameraStream* m_camVehicleIn{nullptr};
+    CameraStream* m_camVehicleOut{nullptr};
+    ImageProcess* m_plateReaderVehicleIn{nullptr};
+    ImageProcess* m_plateReaderVehicleOut{nullptr};
 
     static ThreadManager* m_instance;
     static quint32 _refCounter;

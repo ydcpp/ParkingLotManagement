@@ -5,8 +5,8 @@
 #include "settingspanel.hpp"
 
 
-ThreadManager* ThreadManager::m_instance(0);
-quint32 ThreadManager::_refCounter = 0;
+ThreadManager* ThreadManager::m_instance{nullptr};
+quint32 ThreadManager::_refCounter{0};
 
 ThreadManager::ThreadManager(ApplicationWindow* appwindow, QCameraViewfinder* camview_in, QCameraViewfinder* camview_out)
     : m_appwindow(appwindow)

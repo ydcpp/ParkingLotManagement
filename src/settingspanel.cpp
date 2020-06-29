@@ -12,7 +12,7 @@
 
 Q_DECLARE_METATYPE(QCameraInfo)
 
-SettingsPanel::SettingsPanel(DatabaseManager* dbmanager, QList<PricingPlan*>& plans, ApplicationWindow *parent) :
+SettingsPanel::SettingsPanel(DatabaseManager* dbmanager, QVector<PricingPlan*>& plans, ApplicationWindow *parent) :
     QDialog(parent),
     ui(new Ui::SettingsPanel)
 {

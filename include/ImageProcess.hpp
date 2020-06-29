@@ -37,7 +37,7 @@ private slots:
 private:
     ThreadManager* m_tmanager;
     CameraStream* m_camera;
-    char* m_outText = nullptr;
+    char* m_outText{nullptr};
 
     QImage qt_image;
     cv::Mat m_frame;

@@ -40,7 +40,7 @@ private:
     ThreadManager* m_tmanager;
 
     QImage qt_image;
-    QCameraViewfinder* m_camviewfinder = nullptr;
+    QCameraViewfinder* m_camviewfinder{nullptr};
     QScopedPointer<QCamera> m_camera;
     QScopedPointer<QCameraImageCapture> m_capture;
     QCameraInfo m_currentCamInfo;

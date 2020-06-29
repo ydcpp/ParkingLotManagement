@@ -324,7 +324,7 @@ void ApplicationWindow::closeCameraStream_out()
 }
 
 
-QList<PricingPlan *>& ApplicationWindow::GetPricingPlanList()
+QVector<PricingPlan *>& ApplicationWindow::GetPricingPlanList()
 {
     return m_pricingPlans;
 }

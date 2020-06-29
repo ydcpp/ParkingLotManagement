@@ -50,12 +50,12 @@ protected slots:
 
 private:
     Ui::AdminPanel *ui;
-    DatabaseManager* m_dbmanager = nullptr;
-    NewUser* window_yenikullanici = nullptr;
-    DeleteUser* window_kullaniciSil = nullptr;
-    TotalIncomes* window_toplamGelirler = nullptr;
-    QSqlQueryModel* m_model = nullptr;
-    QSortFilterProxyModel* m_proxymodel = nullptr;
+    DatabaseManager* m_dbmanager{nullptr};
+    NewUser* window_yenikullanici{nullptr};
+    DeleteUser* window_kullaniciSil{nullptr};
+    TotalIncomes* window_toplamGelirler{nullptr};
+    QSqlQueryModel* m_model{nullptr};
+    QSortFilterProxyModel* m_proxymodel{nullptr};
 };
 
 #endif // ADMINPANEL_HPP
