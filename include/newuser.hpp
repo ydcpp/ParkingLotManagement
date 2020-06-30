@@ -21,7 +21,6 @@ public:
 
 
 private slots:
-
     void on_pushButton_submit_clicked();
 
     void on_pushButton_cancel_clicked();
@@ -30,7 +29,7 @@ private:
     Ui::NewUser *ui;
     DatabaseManager* m_dbmanager;
 
-    bool validateForm();
+    [[nodiscard]] bool validateForm();
 };
 
 #endif // NEWUSER_HPP

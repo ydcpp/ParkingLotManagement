@@ -10,7 +10,6 @@
 #include "ThreadManager.hpp"
 #include "TCPClient.hpp"
 #include "databasemanager.hpp"
-#include "logger.hpp"
 
 
 #include <QMainWindow>
@@ -29,17 +28,17 @@ class ApplicationWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit ApplicationWindow(DatabaseManager* dbmanager, User* user, Logger* logger, QWidget *parent = nullptr);
+    explicit ApplicationWindow(DatabaseManager* dbmanager, User* user, QWidget *parent = nullptr);
     ~ApplicationWindow();
 
     void ClearVehicleInStats();
     void ClearVehicleOutStats();
-    QMap<QString, QString> GetAssetPaths();
-    DatabaseManager* GetDBManager();
-    User* GetCurrentUser();
-    QVector<PricingPlan*>& GetPricingPlanList();
     void updateCurrentPlan(const qint32& planID);
-    OtoparkInfo* getOtoparkInfo();
+    [[nodiscard]] QMap<QString, QString> GetAssetPaths() const;
+    [[nodiscard]] DatabaseManager* GetDBManager();
+    [[nodiscard]] User* GetCurrentUser();
+    [[nodiscard]] QVector<PricingPlan*>& GetPricingPlanList();
+    [[nodiscard]] OtoparkInfo* getOtoparkInfo();
 
 signals:
     void terminateAllThreads();
@@ -54,7 +53,6 @@ public slots:
     void closeCameraStream_out();
     void displayLicensePlateString_vehicle_in(const QString&);
     void displayLicensePlateString_vehicle_out(const QString&);
-
 
 private slots:
     void initializeAssetPaths();
@@ -104,7 +102,6 @@ private slots:
 
     void on_pushButton_reconnect_clicked();
 
-
     void on_pushButton_completepayment_clicked();
 
 private:
@@ -112,7 +109,6 @@ private:
     DatabaseManager* m_dbmanager{nullptr};
     User* m_currentuser{nullptr};
     OtoparkInfo* m_otoparkInfo{nullptr};
-    Logger* m_logger{nullptr};
     AdminPanel* m_window_admin{nullptr};
     ManualVehicleEntry* m_window_vehicle_in{nullptr};
     ManualVehicleExit* m_window_vehicle_out{nullptr};

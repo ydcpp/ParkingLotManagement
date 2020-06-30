@@ -19,9 +19,9 @@ public:
     explicit TotalIncomes(DatabaseManager* dbmanager, QWidget *parent);
     ~TotalIncomes();
 
-    float GetMonthlyIncomeAmount();
-    float GetWeeklyIncomeAmount();
-    float GetDailyIncomeAmount();
+    [[nodiscard]] float GetMonthlyIncomeAmount();
+    [[nodiscard]] float GetWeeklyIncomeAmount();
+    [[nodiscard]] float GetDailyIncomeAmount();
 
 private slots:
     void on_pushButton_close_clicked();

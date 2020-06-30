@@ -14,14 +14,14 @@ public:
         USER_ADMIN = 3
     };
 
-    User::USERTYPES getUserType();
-    QString getUserType_string();
-    QString getUsername() const;
-    QString getFirstName() const;
-    QString getLastName() const;
-    qint32 getAccountID() const;
-    QDateTime getDateCreated() const;
-    QString getCurrentPassword() const;
+    [[nodiscard]] User::USERTYPES getUserType();
+    [[nodiscard]] QString getUserType_string();
+    [[nodiscard]] QString getUsername() const;
+    [[nodiscard]] QString getFirstName() const;
+    [[nodiscard]] QString getLastName() const;
+    [[nodiscard]] qint32 getAccountID() const;
+    [[nodiscard]] QDateTime getDateCreated() const;
+    [[nodiscard]] QString getCurrentPassword() const;
 
     void updatePassword(QString pw);
 

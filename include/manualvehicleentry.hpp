@@ -28,7 +28,7 @@ private:
     DatabaseManager* m_dbmanager;
     qint32 m_currentPlanID;
 
-    bool validateForm();
+    [[nodiscard]] bool validateForm();
 };
 
 #endif // MANUALVEHICLEENTRY_HPP

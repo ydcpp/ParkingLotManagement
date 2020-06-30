@@ -15,10 +15,8 @@ public:
 
     void startConnection();
     void terminateConnection();
-    QAbstractSocket::SocketState getCurrentSocketState();
-    QString getLastError();
-
-
+    [[nodiscard]] QAbstractSocket::SocketState getCurrentSocketState();
+    [[nodiscard]] QString getLastError();
 
 signals:
     void stateChanged(const QAbstractSocket::SocketState& socketState);

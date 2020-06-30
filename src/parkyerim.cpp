@@ -9,7 +9,6 @@ ParkYerim::ParkYerim(QWidget *parent)
     , ui(new Ui::ParkYerim)
 {
     ui->setupUi(this);
-    m_logger = new Logger(m_logfilepath);
     initializeDatabase();
     QPixmap pix(":/Images/ParkYerimDesktop.ico");
     ui->label_image->setPixmap(pix.scaled(ui->label_image->width(),ui->label_image->height(),Qt::KeepAspectRatio));
@@ -23,7 +22,6 @@ ParkYerim::~ParkYerim()
 {
     delete ui;
     delete m_database;
-    delete m_logger;
     if(m_user) delete m_user;
 }
 
@@ -46,7 +44,7 @@ bool ParkYerim::validateLoginInfo()
 
 void ParkYerim::launchProgram()
 {
-    ApplicationWindow* appwindow = new ApplicationWindow(m_database,m_user,m_logger);
+    ApplicationWindow* appwindow = new ApplicationWindow(m_database,m_user);
     this->hide();
     appwindow->show();
 }
@@ -54,7 +52,7 @@ void ParkYerim::launchProgram()
 void ParkYerim::launchDebugMode()
 {
     m_user = new User("admin","debug","mode",1,3,QDateTime(),"admin");
-    ApplicationWindow* appwindow = new ApplicationWindow(m_database,m_user,m_logger);
+    ApplicationWindow* appwindow = new ApplicationWindow(m_database,m_user);
     this->hide();
     appwindow->show();
 }

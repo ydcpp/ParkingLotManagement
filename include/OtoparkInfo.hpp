@@ -9,16 +9,16 @@ public:
     OtoparkInfo(const QString& ip,const quint16& port,const qint32& id,const qint32& planid);
     ~OtoparkInfo();
 
-    QString getServerIP() const;
+    [[nodiscard]] QString getServerIP() const;
     void setServerIP(const QString& value);
 
-    quint16 getServerPort() const;
+    [[nodiscard]] quint16 getServerPort() const;
     void setServerPort(const quint16& value);
 
-    qint32 getServerOtoparkID() const;
+    [[nodiscard]] qint32 getServerOtoparkID() const;
     void setServerOtoparkID(const qint32& value);
 
-    qint32 getCurrentPlanID() const;
+    [[nodiscard]] qint32 getCurrentPlanID() const;
     void setCurrentPlanID(const qint32& value);
 
 private:

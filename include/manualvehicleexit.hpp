@@ -43,7 +43,7 @@ private:
     QString m_planName;
     float m_price;
 
-    bool validateForm();
+    [[nodiscard]] bool validateForm();
     void clearResults();
 };
 

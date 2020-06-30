@@ -20,25 +20,26 @@ public:
                 const float& tentwelve,
                 const float& morethantwelve);
 
-    qint32 GetPlanID() const;
-    QString GetPlanName() const;
-    float GetPricePerHour() const;
-    float Getlessthantwo() const;
-    float Gettwothree() const;
-    float Getthreefour() const;
-    float Getfourfive() const;
-    float Getfivesix() const;
-    float Getsixseven() const;
-    float Getseveneight() const;
-    float Geteightten() const;
-    float Gettentwelve() const;
-    float Getmorethantwelve() const;
+    [[nodiscard]] qint32 GetPlanID() const;
+    [[nodiscard]] QString GetPlanName() const;
+    [[nodiscard]] float GetPricePerHour() const;
+    [[nodiscard]] float Getlessthantwo() const;
+    [[nodiscard]] float Gettwothree() const;
+    [[nodiscard]] float Getthreefour() const;
+    [[nodiscard]] float Getfourfive() const;
+    [[nodiscard]] float Getfivesix() const;
+    [[nodiscard]] float Getsixseven() const;
+    [[nodiscard]] float Getseveneight() const;
+    [[nodiscard]] float Geteightten() const;
+    [[nodiscard]] float Gettentwelve() const;
+    [[nodiscard]] float Getmorethantwelve() const;
     void GetPricesPerHour(float& lessThanTwo, float& twoThree, float& threeFour, float& fourFive, float& fiveSix, float& sixSeven, float& sevenEight, float& eightTen, float& tenTwelve, float& moreThanTwelve);
     void SetPricesPerHour(const float& lessThanTwo, const float& twoThree, const float& threeFour, const float& fourFive, const float& fiveSix, const float& sixSeven, const float& sevenEight, const float& eightTen, const float& tenTwelve, const float& moreThanTwelve);
+
+
 signals:
 
 public slots:
-
     float CalculatePrice(const qint64& minutes);
 
 private:
@@ -56,7 +57,7 @@ private:
     float m_TenTwelve;
     float m_moreThanTwelve;
 
-    float roundPrice(const float& price);
+    [[nodiscard]] float roundPrice(const float& price);
 };
 
 #endif // PRICINGPLAN_HPP

@@ -28,7 +28,7 @@ private:
     Ui::DeleteUser *ui;
     DatabaseManager* m_dbmanager;
 
-    bool validateForm();
+    [[nodiscard]] bool validateForm();
 };
 
 #endif // DELETEUSER_HPP

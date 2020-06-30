@@ -7,7 +7,6 @@
 #include "applicationwindow.hpp"
 #include "databasemanager.hpp"
 #include "User.hpp"
-#include "logger.hpp"
 
 
 QT_BEGIN_NAMESPACE
@@ -24,7 +23,7 @@ public:
 
 private slots:
     void on_pushButton_clicked();
-    bool validateLoginInfo();
+
     void launchProgram();
     void launchDebugMode();
     void initializeDatabase();
@@ -33,10 +32,9 @@ private:
     Ui::ParkYerim *ui;
     DatabaseManager* m_database{nullptr};
     User* m_user{nullptr};
-    Logger* m_logger{nullptr};
 
     const QString m_logfilepath {"./assets/other/applicationlog.txt"};
-
+    [[nodiscard]] bool validateLoginInfo();
 };
 
 

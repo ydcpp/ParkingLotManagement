@@ -9,9 +9,9 @@
 #include <QDebug>
 
 
-ApplicationWindow::ApplicationWindow(DatabaseManager* dbmanager, User* user, Logger* logger, QWidget *parent) :
+ApplicationWindow::ApplicationWindow(DatabaseManager* dbmanager, User* user, QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::ApplicationWindow) , m_dbmanager(dbmanager), m_currentuser(user), m_logger(logger)
+    ui(new Ui::ApplicationWindow) , m_dbmanager(dbmanager), m_currentuser(user)
 {
     ui->setupUi(this);
     this->setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint | Qt::WindowMaximizeButtonHint | Qt::CustomizeWindowHint);
@@ -58,7 +58,7 @@ void ApplicationWindow::ClearVehicleOutStats()
     ui->lineEdit_out_price->clear();
 }
 
-QMap<QString, QString> ApplicationWindow::GetAssetPaths()
+QMap<QString, QString> ApplicationWindow::GetAssetPaths() const
 {
     return m_assetPaths;
 }
