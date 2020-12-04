@@ -1,7 +1,7 @@
 # ParkYerimDesktop
 Desktop Automation for Smart Car Parking systems using QT Framework C++ and OpenCV computer vision libraries
 
-NOTE: This project is still in development.
+<b>NOTE:</b> This project is still in development.
 
 <b>Prerequisites</b>
 - QT Framework 5.14
