@@ -24,3 +24,4 @@ Required .dll files to be in the same directory with ParkYerimDesktop.exe after 
 <br>opencv_video420.dll
 <br>opencv_videoio420.dll
 <br>opencv_world300.dll
+<br>These files can be found in /libexternal/precompiled folder
