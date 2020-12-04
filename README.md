@@ -25,4 +25,4 @@ Required .dll files to be in the same directory with ParkYerimDesktop.exe after 
 <br>opencv_videoio420.dll
 <br>opencv_world300.dll
 <br>These files can be found in /libexternal/precompiled folder
-<b>Note:</b> These binaries are compiled in <b>Release</b> mode, therefore the project wont be built in Debug configuration.If you want to run the application in Debug mode then you will have to build OpenCV and OpenALPR in MSVC15 Debug configuration using Visual Studio. After building these external libraries in Debug configuration, you must edit .pro file and rename the dependencies as their Debug compilation output names (i.e: opencv_video420d.dll, not opencv_video420.dll).
+<br><br><b>Note:</b> These binaries are compiled in <b>Release</b> mode, therefore the project wont be built in Debug configuration.If you want to run the application in Debug mode then you will have to build OpenCV and OpenALPR in MSVC15 Debug configuration using Visual Studio. After building these external libraries in Debug configuration, you must edit .pro file and rename the dependencies as their Debug compilation output names (i.e: opencv_video420d.dll, not opencv_video420.dll).
