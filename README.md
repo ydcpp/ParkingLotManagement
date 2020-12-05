@@ -1,5 +1,4 @@
 # ParkYerimDesktop
-Desktop Parking Lot Automation system with Auto License Plate Recognition using QT Framework C++ and OpenCV computer vision libraries
 
 <b>NOTE:</b> This project is still in development.
 
