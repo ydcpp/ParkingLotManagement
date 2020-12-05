@@ -24,17 +24,14 @@ ApplicationWindow::ApplicationWindow(DatabaseManager* dbmanager, User* user, QWi
         connect(m_threadManager,&ThreadManager::plateNotDetected_in,this,&ApplicationWindow::onPlateNotDetected_in);
         connect(m_threadManager,&ThreadManager::plateDetected_out,this,&ApplicationWindow::onPlateDetected_out);
         connect(m_threadManager,&ThreadManager::plateNotDetected_out,this,&ApplicationWindow::onPlateNotDetected_out);
-        SetupTCPConnection();
         setupCustomComponents();
     }else{
-        statusMessageError("PROGRAM VERİLERİ DÜZGÜN YÜKLENEMEDİ, LÜTFEN PROGRAMI YENİDEN BAŞLATIN.",-1,ui->label_status);
+        statusMessageError("COULD NOT PROPERLY LOAD PROGRAMDATA, PLEASE RESTART THE APPLICATON.",-1,ui->label_status);
     }
 }
 
 ApplicationWindow::~ApplicationWindow()
 {
-    m_client->terminateConnection();
-    m_client->releaseInstance();
     m_threadManager->ReleaseInstance();
     for(PricingPlan* plan : m_pricingPlans) if(plan) delete plan;
     if(m_otoparkInfo) delete m_otoparkInfo;
@@ -94,35 +91,6 @@ void ApplicationWindow::decreaseRemainingSpotCount()
     m_dbmanager->DecreaseRemainingSpot();
 }
 
-void ApplicationWindow::on_socketStateChanged(const QAbstractSocket::SocketState& socketState)
-{
-    ui->pushButton_reconnect->setVisible(false);
-    QString status = "";
-    switch (socketState) {
-    case QAbstractSocket::ConnectedState:
-        ui->label_connectionstatus->setStyleSheet("color:green;");
-        ui->label_connectionstatus->setText("BAĞLANDI");
-        break;
-    case QAbstractSocket::UnconnectedState:
-        ui->label_connectionstatus->setStyleSheet("color:red;");
-        status += "BAĞLANTI KESİLDİ  (";
-        status.append(m_client->getLastError());
-        status.append(")");
-        ui->label_connectionstatus->setText(status);
-        ui->pushButton_reconnect->setVisible(true);
-        break;
-    default:
-        ui->label_connectionstatus->setStyleSheet("color:orange;");
-        ui->label_connectionstatus->setText(QVariant::fromValue(socketState).toString());
-        break;
-    }
-}
-
-void ApplicationWindow::onTCPErrorReceived(const QString& err)
-{
-    ui->label_connectionstatus->setStyleSheet("color:red;");
-    ui->label_connectionstatus->setText(err);
-}
 
 void ApplicationWindow::onPricingPlansUpdated()
 {
@@ -143,7 +111,7 @@ void ApplicationWindow::onPricingPlansUpdated()
                 break;
             }
         }
-        if(!currentPricingPlan) statusMessageError("Geçerli ücretlendirme planı veritabanında bulunamadı.",5000,ui->label_status);
+        if(!currentPricingPlan) statusMessageError("Current pricing plan could not found in database.",5000,ui->label_status);
     }
 }
 
@@ -215,7 +183,7 @@ void ApplicationWindow::onPlateDetected_in()
         statusMessageError(errormsg,5000,ui->label_platestatus_in);
         return;
     }
-    statusMessageSuccess("Araç girişi yapıldı.",3000,ui->label_platestatus_in);
+    statusMessageSuccess("New vehicle entry record is saved.",3000,ui->label_platestatus_in);
     QTimer::singleShot(3000,this,[&](){
         ClearVehicleInStats();
     });
@@ -224,7 +192,7 @@ void ApplicationWindow::onPlateDetected_in()
 
 void ApplicationWindow::onPlateNotDetected_in()
 {
-    statusMessageError("Plaka okunamadı",5000,ui->label_platestatus_in);
+    statusMessageError("Plate could not be recognized",5000,ui->label_platestatus_in);
     on_toolButton_vehicle_in_clicked();
 }
 
@@ -261,14 +229,12 @@ void ApplicationWindow::onPlateDetected_out()
     ui->lineEdit_planName->setText(planname);
     ui->lineEdit_out_price->setText(QString::number(m_price));
 
-    // Uzak sunucuya plaka ile ilgili sorgu gönder, eğer bakiyesi yeterli ve otomatik ödeme talimatı açık ise ödemeyi onayla ve bakiyesinden fiyatı düş
-    // eğer sisteme kayıtlı değilse veya bakiyesi yeterli değilse manuel ödeme butonunu aktifleştir (pushbutton_completepayment)
     ui->pushButton_completepayment->setEnabled(true);
 }
 
 void ApplicationWindow::onPlateNotDetected_out()
 {
-    statusMessageError("Plaka okunamadı",5000,ui->label_platestatus_out);
+    statusMessageError("Plate could not be recognized",5000,ui->label_platestatus_out);
     ClearVehicleOutStats();
     on_toolButton_vehicle_out_clicked();
 }
@@ -294,7 +260,7 @@ void ApplicationWindow::displayLicensePlateString_vehicle_out(const QString& pla
 void ApplicationWindow::openCameraStream_in()
 {
     ui->label_cam_in_status->setStyleSheet("color:green;");
-    ui->label_cam_in_status->setText("Kamera açık");
+    ui->label_cam_in_status->setText("Camera is ON");
     ui->camera_vehicle_in->setVisible(true);
     ui->pushButton_plakatani_in->setEnabled(true);
 }
@@ -302,7 +268,7 @@ void ApplicationWindow::openCameraStream_in()
 void ApplicationWindow::closeCameraStream_in()
 {
     ui->label_cam_in_status->setStyleSheet("color:red;");
-    ui->label_cam_in_status->setText("Kamera kapalı");
+    ui->label_cam_in_status->setText("Camera is OFF");
     ui->camera_vehicle_in->setVisible(false);
     ui->pushButton_plakatani_in->setEnabled(false);
 }
@@ -310,7 +276,7 @@ void ApplicationWindow::closeCameraStream_in()
 void ApplicationWindow::openCameraStream_out()
 {
     ui->label_cam_out_status->setStyleSheet("color:green;");
-    ui->label_cam_out_status->setText("Kamera açık");
+    ui->label_cam_out_status->setText("Camera is ON");
     ui->camera_vehicle_out->setVisible(true);
     ui->pushButton_plakatani_out->setEnabled(true);
 }
@@ -318,7 +284,7 @@ void ApplicationWindow::openCameraStream_out()
 void ApplicationWindow::closeCameraStream_out()
 {
     ui->label_cam_out_status->setStyleSheet("color:red;");
-    ui->label_cam_out_status->setText("Kamera kapalı");
+    ui->label_cam_out_status->setText("Camera is OFF");
     ui->camera_vehicle_out->setVisible(false);
     ui->pushButton_plakatani_out->setEnabled(false);
 }
@@ -354,7 +320,7 @@ OtoparkInfo* ApplicationWindow::getOtoparkInfo()
 void ApplicationWindow::on_toolButton_quit_clicked()
 {
     QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(this, "Çıkış", "Programı kapatmak istediğinizden emin misiniz?", QMessageBox::Yes|QMessageBox::Cancel);
+    reply = QMessageBox::question(this, "Exit", "Do you want to close the application?", QMessageBox::Yes|QMessageBox::Cancel);
     if(reply == QMessageBox::Yes){
         emit terminateAllThreads();
         QApplication::quit();
@@ -415,20 +381,6 @@ void ApplicationWindow::setupIcons()
     ui->pushButton_toggleCameras->setIcon(QIcon(m_assetPaths["icon_camera"]));
 }
 
-void ApplicationWindow::SetupTCPConnection()
-{
-    ui->pushButton_reconnect->setVisible(false);
-    m_client = TCPClient::getInstance(m_otoparkInfo->getServerIP(),m_otoparkInfo->getServerPort(),m_otoparkInfo->getServerOtoparkID(),m_dbmanager);
-    m_client->startConnection();
-    connect(m_client,&TCPClient::stateChanged,this,&ApplicationWindow::on_socketStateChanged);
-    connect(m_client,&TCPClient::sendError,this,&ApplicationWindow::onTCPErrorReceived);
-    connect(m_client,&TCPClient::sig_successMessage,[&](const QString& text, const qint32& milliseconds){
-        this->statusMessageSuccess(text,milliseconds,ui->label_status);
-    });
-    connect(m_client,&TCPClient::sig_errorMessage,[&](const QString& text, const qint32& milliseconds){
-        this->statusMessageError(text,milliseconds,ui->label_status);
-    });
-}
 
 void ApplicationWindow::setupCustomComponents()
 {
@@ -453,7 +405,7 @@ void ApplicationWindow::setupCustomComponents()
                 break;
             }
         }
-        if(!currentPricingPlan) statusMessageError("Geçerli ücretlendirme planı veritabanında bulunamadı.",5000,ui->label_status);
+        if(!currentPricingPlan) statusMessageError("Current pricing plan could not found in database.",5000,ui->label_status);
     }
 
     // setting up remaining spot count
@@ -525,14 +477,6 @@ void ApplicationWindow::on_pushButton_plakatani_out_clicked()
     emit recognizePlate_out();
 }
 
-void ApplicationWindow::on_pushButton_reconnect_clicked()
-{
-    if(!m_client) return;
-    m_client->terminateConnection();
-    m_client->startConnection();
-}
-
-
 void ApplicationWindow::on_pushButton_completepayment_clicked()
 {
     ui->pushButton_completepayment->setEnabled(false);
@@ -541,7 +485,7 @@ void ApplicationWindow::on_pushButton_completepayment_clicked()
         statusMessageError(errormsg,5000,ui->label_platestatus_out);
         ui->pushButton_completepayment->setEnabled(true);
     }else{
-        statusMessageSuccess("ÖDEME TAMAMLANDI",3000,ui->label_platestatus_out);
+        statusMessageSuccess("PAYMENT IS COMPLETED",3000,ui->label_platestatus_out);
         increaseRemainingSpotCount();
         ClearVehicleOutStats();
     }

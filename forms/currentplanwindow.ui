@@ -28,7 +28,10 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Geçerli Ücretlendirme Planı</string>
+   <string>Current Pricing Plan Details</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
@@ -46,8 +49,11 @@
      <bold>true</bold>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>PLAN ADI :</string>
+    <string>Plan Name</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_4">
@@ -65,8 +71,11 @@
      <bold>true</bold>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>SAATLİK ÜCRET</string>
+    <string>PRICE / HOUR</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -81,8 +90,11 @@
      <height>31</height>
     </rect>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>Tamam</string>
+    <string>Ok</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_5">
@@ -94,8 +106,11 @@
      <height>21</height>
     </rect>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>2 SAATTEN AZ</string>
+    <string>&lt; 2 HOURS</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -104,7 +119,7 @@
   <widget class="QLabel" name="label_6">
    <property name="geometry">
     <rect>
-     <x>50</x>
+     <x>70</x>
      <y>40</y>
      <width>81</width>
      <height>21</height>
@@ -116,8 +131,11 @@
      <bold>true</bold>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>SÜRE</string>
+    <string>TIME</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -132,8 +150,11 @@
      <height>21</height>
     </rect>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>2-3 SAAT ARASI</string>
+    <string>2 -3 HOURS</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -148,8 +169,11 @@
      <height>21</height>
     </rect>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>3-4 SAAT ARASI</string>
+    <string>3 -4 HOURS</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -164,8 +188,11 @@
      <height>21</height>
     </rect>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>4-5 SAAT ARASI</string>
+    <string>4 -5 HOURS</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -180,8 +207,11 @@
      <height>21</height>
     </rect>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>5-6 SAAT ARASI</string>
+    <string>5 -6 HOURS</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -196,8 +226,11 @@
      <height>21</height>
     </rect>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>6-7 SAAT ARASI</string>
+    <string>6 -7 HOURS</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -212,8 +245,11 @@
      <height>21</height>
     </rect>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>7-8 SAAT ARASI</string>
+    <string>7 -8 HOURS</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -228,8 +264,11 @@
      <height>21</height>
     </rect>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>8-10 SAAT ARASI</string>
+    <string>8 - 10 HOURS</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -244,8 +283,11 @@
      <height>21</height>
     </rect>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>10-12 SAAT ARASI</string>
+    <string>10 -12 HOURS</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -260,8 +302,11 @@
      <height>21</height>
     </rect>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>12 SAATTEN FAZLA</string>
+    <string>&gt; 12 HOURS</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -281,8 +326,11 @@
      <pointsize>14</pointsize>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>₺</string>
+    <string>$</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -302,8 +350,11 @@
      <pointsize>14</pointsize>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>₺</string>
+    <string>$</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -323,8 +374,11 @@
      <pointsize>14</pointsize>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>₺</string>
+    <string>$</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -344,8 +398,11 @@
      <pointsize>14</pointsize>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>₺</string>
+    <string>$</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -365,8 +422,11 @@
      <pointsize>14</pointsize>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>₺</string>
+    <string>$</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -386,8 +446,11 @@
      <pointsize>14</pointsize>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>₺</string>
+    <string>$</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -407,8 +470,11 @@
      <pointsize>14</pointsize>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>₺</string>
+    <string>$</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -428,8 +494,11 @@
      <pointsize>14</pointsize>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>₺</string>
+    <string>$</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -449,8 +518,11 @@
      <pointsize>14</pointsize>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>₺</string>
+    <string>$</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -470,8 +542,11 @@
      <pointsize>14</pointsize>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>₺</string>
+    <string>$</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -495,6 +570,9 @@
    </property>
    <property name="styleSheet">
     <string notr="true">padding-right:5px;</string>
+   </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
    </property>
    <property name="text">
     <string/>
@@ -525,6 +603,9 @@
    <property name="styleSheet">
     <string notr="true">padding-right:5px;</string>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
     <string/>
    </property>
@@ -553,6 +634,9 @@
    </property>
    <property name="styleSheet">
     <string notr="true">padding-right:5px;</string>
+   </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
    </property>
    <property name="text">
     <string/>
@@ -583,6 +667,9 @@
    <property name="styleSheet">
     <string notr="true">padding-right:5px;</string>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
     <string/>
    </property>
@@ -611,6 +698,9 @@
    </property>
    <property name="styleSheet">
     <string notr="true">padding-right:5px;</string>
+   </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
    </property>
    <property name="text">
     <string/>
@@ -641,6 +731,9 @@
    <property name="styleSheet">
     <string notr="true">padding-right:5px;</string>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
     <string/>
    </property>
@@ -669,6 +762,9 @@
    </property>
    <property name="styleSheet">
     <string notr="true">padding-right:5px;</string>
+   </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
    </property>
    <property name="text">
     <string/>
@@ -699,6 +795,9 @@
    <property name="styleSheet">
     <string notr="true">padding-right:5px;</string>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
     <string/>
    </property>
@@ -727,6 +826,9 @@
    </property>
    <property name="styleSheet">
     <string notr="true">padding-right:5px;</string>
+   </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
    </property>
    <property name="text">
     <string/>
@@ -757,6 +859,9 @@
    <property name="styleSheet">
     <string notr="true">padding-right:5px;</string>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
     <string/>
    </property>
@@ -784,6 +889,9 @@
    <property name="styleSheet">
     <string notr="true">color:red;</string>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
     <string/>
    </property>
@@ -796,6 +904,9 @@
      <width>201</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
    </property>
    <property name="text">
     <string/>

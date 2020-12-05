@@ -8,7 +8,6 @@
 #include "currentplanwindow.hpp"
 #include "vehiclesearch.hpp"
 #include "ThreadManager.hpp"
-#include "TCPClient.hpp"
 #include "databasemanager.hpp"
 
 
@@ -58,14 +57,11 @@ private slots:
     void initializeAssetPaths();
     void setupIcons();
     void setupCustomComponents();
-    void SetupTCPConnection();
     void showTime();
     void enableToggleCameraButton();
     void updateRemainingSpots(const qint32&);
     void increaseRemainingSpotCount();
     void decreaseRemainingSpotCount();
-    void on_socketStateChanged(const QAbstractSocket::SocketState& socketState);
-    void onTCPErrorReceived(const QString& err);
     void onPricingPlansUpdated();
     void getCalculatedPrice(const qint64& minutes, const qint32& planid, float& out_price, QString& out_planName);
     void statusMessageSuccess(const QString& text, const qint32& milliseconds, QLabel* targetlabel);
@@ -100,8 +96,6 @@ private slots:
 
     void on_pushButton_plakatani_out_clicked();
 
-    void on_pushButton_reconnect_clicked();
-
     void on_pushButton_completepayment_clicked();
 
 private:
@@ -116,7 +110,6 @@ private:
     CurrentPlanWindow* m_window_currentplan{nullptr};
     VehicleSearch* m_window_vehiclesearch{nullptr};
     ThreadManager* m_threadManager{nullptr};
-    TCPClient* m_client{nullptr};
     PricingPlan* currentPricingPlan{nullptr};
 
     qint32 m_remainingSpots{0};

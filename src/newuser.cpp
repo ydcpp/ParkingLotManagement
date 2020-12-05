@@ -35,7 +35,7 @@ void NewUser::on_pushButton_submit_clicked()
             ui->pushButton_submit->setEnabled(false);
             ui->pushButton_cancel->setEnabled(false);
             ui->label_status->setStyleSheet("color:green;");
-            ui->label_status->setText("Yeni kullanıcı kaydı eklendi.");
+            ui->label_status->setText("New user is added.");
             QTimer::singleShot(2000,this,&QDialog::close);
         }else{
             ui->label_status->setStyleSheet("color:red;");
@@ -51,28 +51,41 @@ void NewUser::on_pushButton_cancel_clicked()
 
 bool NewUser::validateForm()
 {
+    // Validate first name
     if(ui->lineEdit_firstname->text().isEmpty()){
-        ui->label_status->setText("Ad boş bırakılamaz.");
+        ui->label_status->setText("First Name field cannot be empty.");
         return false;
     }
+
+    // Validate last name
     if(ui->lineEdit_lastname->text().isEmpty()){
-        ui->label_status->setText("Soyad boş bırakılamaz.");
+        ui->label_status->setText("Last Name field cannot be empty.");
         return false;
     }
-    if(ui->lineEdit_phone->text().length() != 10){
-        ui->label_status->setText("Lütfen 'TELEFON' alanına 10 haneli bir telefon numarası girin.");
-        return false;
-    }
+
+    // Validate phone number
+    // phone number validation depends on country specific phone number formats,
+    // you may implement this if-check according to your preferences.
+
+
+    // Validate username
     if(ui->lineEdit_username->text().isEmpty()){
         ui->label_status->setText("Kullanıcı Adı alanı boş bırakılamaz.");
         return false;
     }
+
+    // Validate password
     if(ui->lineEdit_password->text().isEmpty()){
         ui->label_status->setText("Şifre alanı boş bırakılamaz.");
         return false;
-    }else if(ui->lineEdit_password->text() != ui->lineEdit_repeatpassword->text()){
+    }
+
+    // Validate re-password
+    else if(ui->lineEdit_password->text() != ui->lineEdit_repeatpassword->text()){
         ui->label_status->setText("Şifre tekrarı geçersiz.");
         return false;
     }
+
+    // Return true if all required fields are validated
     return true;
 }

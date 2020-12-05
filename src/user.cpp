@@ -43,9 +43,9 @@ QString User::getUserType_string()
     case USER_NULL:
         return "NULL";
     case USER_NORMAL:
-        return "ÇALIŞAN";
+        return "EMPLOYEE";
     case USER_MANAGER:
-        return "YÖNETİCİ";
+        return "MANAGER";
     case USER_ADMIN:
         return "ADMIN";
     default:

@@ -54,7 +54,7 @@ void AdminPanel::on_pushButton_employees_clicked()
     ui->tableView->setColumnWidth(2,100);
     ui->tableView->setColumnWidth(3,100);
     ui->tableView->setColumnWidth(4,120);
-    ui->label_tableheader->setText("Çalışanların Listesi");
+    ui->label_tableheader->setText("List of Employees");
 }
 
 void AdminPanel::on_pushButton_managers_clicked()
@@ -72,7 +72,7 @@ void AdminPanel::on_pushButton_managers_clicked()
     ui->tableView->setColumnWidth(2,100);
     ui->tableView->setColumnWidth(3,100);
     ui->tableView->setColumnWidth(4,120);
-    ui->label_tableheader->setText("Yöneticilerin Listesi");
+    ui->label_tableheader->setText("List of Managers");
 }
 
 void AdminPanel::on_pushButton_newUser_clicked()
@@ -131,5 +131,5 @@ void AdminPanel::on_pushButton_payments_clicked()
     ui->tableView->setColumnWidth(4,50);
     ui->tableView->setColumnWidth(5,70);
     ui->tableView->setColumnWidth(6,120);
-    ui->label_tableheader->setText("Yapılan Tüm Ödemelerin Listesi");
+    ui->label_tableheader->setText("List of All Payments");
 }

@@ -28,7 +28,10 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Plaka ve Fatura Sorgulama</string>
+   <string>Vehicles and Payments</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
   </property>
   <widget class="QTableView" name="tableView">
    <property name="geometry">
@@ -53,7 +56,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>PLAKA</string>
+    <string>PLATE</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_search">
@@ -118,7 +121,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Ödeme Geçmişi</string>
+    <string>Payment History</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -162,7 +165,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>MARKA</string>
+     <string>BRAND</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -178,7 +181,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>RENK</string>
+     <string>COLOR</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -200,7 +203,7 @@
      </font>
     </property>
     <property name="text">
-     <string>ARAÇ BİLGİLERİ</string>
+     <string>VEHICLE INFO</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_6">
@@ -213,7 +216,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>TÜR</string>
+     <string>TYPE</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -229,7 +232,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>PLAKA</string>
+     <string>PLATE</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -324,7 +327,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>İçeride Bulunan Tüm Araçları Listele</string>
+    <string>List All Vehicles Currently Parked</string>
    </property>
   </widget>
  </widget>

@@ -75,7 +75,7 @@ void ManualVehicleExit::on_pushButton_completePayment_clicked()
         ui->pushButton_completePayment->setEnabled(true);
     }else{
         ui->label_result->setStyleSheet("color:green;");
-        ui->label_result->setText("ÖDEME TAMAMLANDI.");
+        ui->label_result->setText("PAYMENT COMPLETED.");
         emit increaseCount();
         QTimer::singleShot(2000,this,&QDialog::close);
     }

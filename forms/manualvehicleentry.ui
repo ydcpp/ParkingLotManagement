@@ -11,7 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>ARAÇ GİRİŞ</string>
+   <string>Manual Vehicle Entry</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
@@ -29,8 +32,11 @@
      <bold>true</bold>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>PLAKA</string>
+    <string>PLATE</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
@@ -49,8 +55,11 @@
      <bold>true</bold>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>RENK</string>
+    <string>COLOR</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_3">
@@ -69,8 +78,11 @@
      <bold>true</bold>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>MARKA</string>
+    <string>BRAND</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_4">
@@ -89,8 +101,11 @@
      <bold>true</bold>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>TÜR</string>
+    <string>TYPE</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_plate">
@@ -106,6 +121,9 @@
     <font>
      <pointsize>12</pointsize>
     </font>
+   </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
    </property>
    <property name="text">
     <string/>
@@ -125,6 +143,9 @@
      <pointsize>12</pointsize>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
   </widget>
   <widget class="QComboBox" name="comboBox_colors">
    <property name="geometry">
@@ -140,9 +161,12 @@
      <pointsize>10</pointsize>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <item>
     <property name="text">
-     <string>Seçiniz...</string>
+     <string>Select...</string>
     </property>
    </item>
   </widget>
@@ -160,9 +184,12 @@
      <pointsize>10</pointsize>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <item>
     <property name="text">
-     <string>Seçiniz...</string>
+     <string>Select...</string>
     </property>
    </item>
   </widget>
@@ -182,8 +209,11 @@
      <bold>true</bold>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>KAYDET</string>
+    <string>SAVE</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_error">
@@ -197,6 +227,9 @@
    </property>
    <property name="styleSheet">
     <string notr="true">color:red;</string>
+   </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
    </property>
    <property name="text">
     <string/>

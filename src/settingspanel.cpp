@@ -63,13 +63,13 @@ void SettingsPanel::on_comboBox_chooseplan_currentTextChanged(const QString &arg
     setEditingEnabled(false);
     ui->pushButton_setdefaultplan->setEnabled(false);
     ui->groupBox_newplan->setEnabled(false);
-    if(arg1 == "Yeni Plan Ekle"){
+    if(arg1 == "Add New Plan"){
         ui->groupBox_newplan->setEnabled(true);
         setEditingEnabled(true);
         clearPriceList();
         return;
     }
-    if(arg1 == "Seçiniz..."){
+    if(arg1 == "Select..."){
         clearPriceList();
         ui->checkBox_copyexistingplan->setCheckState(Qt::CheckState::Unchecked);
         return;
@@ -110,16 +110,16 @@ void SettingsPanel::loadPlanList()
         planlist.append(plan->GetPlanName());
     }
     ui->comboBox_existingplans->clear();
-    ui->comboBox_existingplans->addItem("Seçiniz...");
+    ui->comboBox_existingplans->addItem("Select...");
     ui->comboBox_existingplans->addItems(planlist);
     ui->comboBox_existingplans->setEnabled(false);
     ui->checkBox_copyexistingplan->setChecked(false);
     ui->comboBox_chooseplan->clear();
-    ui->comboBox_chooseplan->addItem("Seçiniz...");
+    ui->comboBox_chooseplan->addItem("Select...");
     ui->comboBox_chooseplan->addItems(planlist);
-    ui->comboBox_chooseplan->addItem("Yeni Plan Ekle");
+    ui->comboBox_chooseplan->addItem("Add New Plan");
     ui->comboBox_existingplans_2->clear();
-    ui->comboBox_existingplans_2->addItem("Seçiniz...");
+    ui->comboBox_existingplans_2->addItem("Select...");
     ui->comboBox_existingplans_2->addItems(planlist);
 }
 
@@ -193,15 +193,15 @@ void SettingsPanel::on_pushButton_changepassword_clicked()
 {
     // form validation
     if(ui->lineEdit_acc_currentpw->text() != m_parent->GetCurrentUser()->getCurrentPassword()){
-        setErrorMessage("Hatalı şifre.");
+        setErrorMessage("Incorrect password.");
         return;
     }
     if(ui->lineEdit_acc_newpw->text().isEmpty()){
-        setErrorMessage("Yeni şifreyi girin");
+        setErrorMessage("Enter new password");
         return;
     }
     if(ui->lineEdit_acc_newpw->text() != ui->lineEdit_acc_newpwrepeat->text()){
-        setErrorMessage("Şifre tekrarı yanlış girildi.");
+        setErrorMessage("Re-password was incorrect.");
         return;
     }
     // database password change update
@@ -215,7 +215,7 @@ void SettingsPanel::on_pushButton_changepassword_clicked()
     }
     // User instance password update
     m_parent->GetCurrentUser()->updatePassword(newpw);
-    setSuccessMessage("Şifre değiştirildi.");
+    setSuccessMessage("Password has been changed.");
 }
 
 void SettingsPanel::on_checkBox_copyexistingplan_stateChanged(int arg1)
@@ -271,7 +271,7 @@ void SettingsPanel::on_pushButton_saveplan_clicked()
     }else{
         emit sig_PricingPlansUpdated();
         setEditingEnabled(!m_editingEnabled);
-        setSuccessMessage("Kaydedildi.");
+        setSuccessMessage("Saved.");
     }
 }
 
@@ -279,12 +279,12 @@ void SettingsPanel::on_pushButton_createnewplan_clicked()
 {
     // name check
     if(ui->lineEdit_newplanname->text().isEmpty()){
-        setErrorMessage("Bir ödeme planı adı girin.");
+        setErrorMessage("Enter a pricing plan name.");
         return;
     }
     for(PricingPlan* plan : m_parent->GetPricingPlanList()){
         if(ui->lineEdit_newplanname->text().toLower() == plan->GetPlanName().toLower()){
-            setErrorMessage("Var olan planlardan farklı bir plan adı seçmelisiniz.");
+            setErrorMessage("You must select different plan name than existing ones.");
             return;
         }
     }
@@ -300,7 +300,7 @@ void SettingsPanel::on_pushButton_createnewplan_clicked()
             || ui->doubleSpinBox_tentwelve->value() < 0.01
             || ui->doubleSpinBox_morethantwelve->value() < 0.01
             || ui->doubleSpinBox_newplanprice->value() < 0.01){
-        setErrorMessage("Tüm fiyat değerlerini giriniz.");
+        setErrorMessage("Enter all pricing values.");
         return;
     }
     QString errormsg;
@@ -321,7 +321,7 @@ void SettingsPanel::on_pushButton_createnewplan_clicked()
     }else{
         loadPlanList();
         emit sig_PricingPlansUpdated();
-        setSuccessMessage("Yeni Ücretlendirme Planı oluşturuldu.");
+        setSuccessMessage("New Pricing Plan is created.");
     }
 }
 
@@ -355,7 +355,7 @@ void SettingsPanel::on_pushButton_deleteplan_clicked()
     }
     if(planID == -1) return;
     if(planID == 0){
-        setErrorMessage("Standart tarife silinemez, ancak değiştirebilirsiniz.");
+        setErrorMessage("Standard plan cannot be deleted, but you may edit it.");
         return;
     }
     QString errormsg;
@@ -365,7 +365,7 @@ void SettingsPanel::on_pushButton_deleteplan_clicked()
         m_parent->updateCurrentPlan(0);
         emit sig_PricingPlansUpdated();
         ui->comboBox_existingplans_2->setCurrentIndex(0);
-        setSuccessMessage("Seçilen plan silindi.");
+        setSuccessMessage("Selected plan has ben deleted.");
     }
 }
 

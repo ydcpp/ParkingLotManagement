@@ -23,7 +23,10 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Yeni Kullanıcı Kaydı</string>
+   <string>Register New User</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
@@ -39,8 +42,11 @@
      <pointsize>10</pointsize>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>Ad</string>
+    <string>First Name</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
@@ -57,8 +63,11 @@
      <pointsize>10</pointsize>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>Soyad</string>
+    <string>Last Name</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_3">
@@ -75,8 +84,11 @@
      <pointsize>10</pointsize>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>Telefon</string>
+    <string>Phone</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_4">
@@ -93,8 +105,11 @@
      <pointsize>10</pointsize>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>Kullanıcı Adı</string>
+    <string>Username</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_5">
@@ -111,8 +126,11 @@
      <pointsize>10</pointsize>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>Şifre</string>
+    <string>Password</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_6">
@@ -129,8 +147,11 @@
      <pointsize>10</pointsize>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>Şifre Tekrar</string>
+    <string>Re-Password</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_status">
@@ -149,6 +170,9 @@
    </property>
    <property name="styleSheet">
     <string notr="true">color:red;</string>
+   </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
    </property>
    <property name="text">
     <string/>
@@ -174,8 +198,11 @@
      <pointsize>10</pointsize>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="text">
-    <string>Hesap Türü</string>
+    <string>Account Type</string>
    </property>
   </widget>
   <widget class="QWidget" name="horizontalLayoutWidget">
@@ -187,18 +214,27 @@
      <height>31</height>
     </rect>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
      <widget class="QPushButton" name="pushButton_submit">
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="text">
-       <string>Kaydet</string>
+       <string>Save</string>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QPushButton" name="pushButton_cancel">
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="text">
-       <string>İptal</string>
+       <string>Cancel</string>
       </property>
       <property name="autoDefault">
        <bool>false</bool>
@@ -221,6 +257,9 @@
      <pointsize>10</pointsize>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_lastname">
    <property name="geometry">
@@ -235,6 +274,9 @@
     <font>
      <pointsize>10</pointsize>
     </font>
+   </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_phone">
@@ -251,8 +293,11 @@
      <pointsize>10</pointsize>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="placeholderText">
-    <string>(555)1234567</string>
+    <string/>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_username">
@@ -269,11 +314,14 @@
      <pointsize>10</pointsize>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="maxLength">
     <number>30</number>
    </property>
    <property name="placeholderText">
-    <string>En fazla 30 karakter</string>
+    <string>Maximum 30 characters</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_password">
@@ -289,6 +337,9 @@
     <font>
      <pointsize>10</pointsize>
     </font>
+   </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
    </property>
    <property name="maxLength">
     <number>40</number>
@@ -311,6 +362,9 @@
      <pointsize>10</pointsize>
     </font>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <property name="echoMode">
     <enum>QLineEdit::Password</enum>
    </property>
@@ -324,24 +378,27 @@
      <height>22</height>
     </rect>
    </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
+   </property>
    <item>
     <property name="text">
-     <string>Hesap Türü Seçin...</string>
+     <string>Select Account Type...</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>1- ÇALIŞAN</string>
+     <string>1- EMPLOYER</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>2- YÖNETİCİ</string>
+     <string>2- MANAGER</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>3- ADMİN</string>
+     <string>3- ADMIN</string>
     </property>
    </item>
   </widget>

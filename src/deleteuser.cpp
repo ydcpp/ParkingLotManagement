@@ -26,7 +26,7 @@ void DeleteUser::on_pushButton_delete_clicked()
         else{
             this->setEnabled(false);
             ui->label_error->setStyleSheet("color:green;");
-            ui->label_error->setText("Kullanıcı kaydı silindi.");
+            ui->label_error->setText("User is deleted.");
             QTimer::singleShot(2000,this,&QDialog::close);
         }
     }

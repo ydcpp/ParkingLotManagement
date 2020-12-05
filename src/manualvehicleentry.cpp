@@ -46,7 +46,7 @@ void ManualVehicleEntry::on_pushButton_clicked()
         }
         ui->pushButton->setEnabled(false);
         ui->label_error->setStyleSheet("color:green;");
-        ui->label_error->setText("Giriş yapıldı.");
+        ui->label_error->setText("New entry is saved.");
         emit decreaseCount();
         QTimer::singleShot(2000,this,&QDialog::close);
     }
@@ -55,7 +55,7 @@ void ManualVehicleEntry::on_pushButton_clicked()
 bool ManualVehicleEntry::validateForm()
 {
     if(ui->lineEdit_plate->text().isEmpty()){
-        ui->label_error->setText("ARAÇ PLAKASINI GİRİN");
+        ui->label_error->setText("ENTER PLATE");
         return false;
     }
     return true;

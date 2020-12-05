@@ -63,7 +63,7 @@ void ParkYerim::initializeDatabase()
     m_database = new DatabaseManager();
     if(!m_database->isConnected()){
         ui->label_login_err->setStyleSheet("color:red;");
-        ui->label_login_err->setText("Veritabanına bağlanılamadı.");
+        ui->label_login_err->setText("Could not connect database.");
         ui->pushButton->setEnabled(false);
     }
 }

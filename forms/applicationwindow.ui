@@ -26,7 +26,10 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>ParkYerim Otopark Yönetim Sistemi - v0.01 Desktop</string>
+   <string>ParkYerim Parking Lot Management System</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
   </property>
   <widget class="QFrame" name="frame_mainFrame">
    <property name="geometry">
@@ -36,6 +39,9 @@
      <width>1181</width>
      <height>701</height>
     </rect>
+   </property>
+   <property name="locale">
+    <locale language="English" country="UnitedStates"/>
    </property>
    <property name="frameShape">
     <enum>QFrame::StyledPanel</enum>
@@ -57,6 +63,9 @@
 border-color : red;
 }</string>
     </property>
+    <property name="locale">
+     <locale language="English" country="UnitedStates"/>
+    </property>
     <property name="frameShape">
      <enum>QFrame::StyledPanel</enum>
     </property>
@@ -71,6 +80,9 @@ border-color : red;
        <width>321</width>
        <height>611</height>
       </rect>
+     </property>
+     <property name="locale">
+      <locale language="English" country="UnitedStates"/>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -90,8 +102,11 @@ border-color : red;
       <property name="styleSheet">
        <string notr="true"/>
       </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="text">
-       <string>MANUEL ARAÇ GİRİŞİ</string>
+       <string>Manual Vehicle Entry</string>
       </property>
       <property name="icon">
        <iconset>
@@ -116,8 +131,11 @@ border-color : red;
         <height>171</height>
        </rect>
       </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="text">
-       <string>MANUEL ARAÇ ÇIKIŞI</string>
+       <string>Manual Vehicle Exit</string>
       </property>
       <property name="icon">
        <iconset>
@@ -147,8 +165,11 @@ border-color : red;
         <pointsize>12</pointsize>
        </font>
       </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="text">
-       <string>KALAN BOŞ YER : </string>
+       <string>Remaining Spots :</string>
       </property>
      </widget>
      <widget class="QLCDNumber" name="lcdNumber_freespacecount">
@@ -164,6 +185,9 @@ border-color : red;
        <font>
         <pointsize>10</pointsize>
        </font>
+      </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
       </property>
       <property name="smallDecimalPoint">
        <bool>false</bool>
@@ -183,6 +207,9 @@ border-color : red;
         <width>321</width>
         <height>191</height>
        </rect>
+      </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
       </property>
       <property name="frameShape">
        <enum>QFrame::Box</enum>
@@ -205,6 +232,9 @@ border-color : red;
          <weight>50</weight>
          <bold>false</bold>
         </font>
+       </property>
+       <property name="locale">
+        <locale language="English" country="UnitedStates"/>
        </property>
        <property name="minimumDate">
         <date>
@@ -239,8 +269,11 @@ border-color : red;
         <bold>true</bold>
        </font>
       </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="text">
-       <string>Geçerli Tarife</string>
+       <string>Current Plan</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -254,6 +287,9 @@ border-color : red;
         <width>101</width>
         <height>20</height>
        </rect>
+      </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
       </property>
       <property name="text">
        <string>NULL</string>
@@ -277,8 +313,11 @@ border-color : red;
       <property name="styleSheet">
        <string notr="true"/>
       </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="text">
-       <string>PLAKA VE FATURA BİLGİSİ SORGULA</string>
+       <string>        PLATE AND BILLING LISTS        </string>
       </property>
       <property name="icon">
        <iconset>
@@ -303,8 +342,11 @@ border-color : red;
         <height>41</height>
        </rect>
       </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="text">
-       <string>       PARK ALANLARINI GÖSTER       </string>
+       <string>        SHOW PARKING SPOTS        </string>
       </property>
       <property name="icon">
        <iconset>
@@ -329,8 +371,11 @@ border-color : red;
         <height>41</height>
        </rect>
       </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="text">
-       <string>        KAMERALARI AÇ / KAPAT         </string>
+       <string>        OPEN / CLOSE CAMERAS        </string>
       </property>
       <property name="icon">
        <iconset>
@@ -352,8 +397,11 @@ border-color : red;
         <height>41</height>
        </rect>
       </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="text">
-       <string>GEÇERLİ FİYAT TARİFESİ DETAYLARI</string>
+       <string>CURRENT PRICING PLAN DETAILS</string>
       </property>
       <property name="icon">
        <iconset>
@@ -375,6 +423,9 @@ border-color : red;
        <width>411</width>
        <height>611</height>
       </rect>
+     </property>
+     <property name="locale">
+      <locale language="English" country="UnitedStates"/>
      </property>
      <property name="frameShape">
       <enum>QFrame::Box</enum>
@@ -398,8 +449,11 @@ border-color : red;
         <bold>true</bold>
        </font>
       </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="text">
-       <string>PLAKA :</string>
+       <string>PLATE :</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -424,6 +478,9 @@ border-color : red;
         <bold>true</bold>
        </font>
       </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -443,6 +500,9 @@ border-color : red;
         <height>20</height>
        </rect>
       </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
@@ -455,6 +515,9 @@ border-color : red;
         <width>381</width>
         <height>20</height>
        </rect>
+      </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
       </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -469,47 +532,11 @@ border-color : red;
         <height>20</height>
        </rect>
       </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton_reconnect">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>570</y>
-        <width>131</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Yeniden Bağlan</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_22">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>590</y>
-        <width>131</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Sunucu Bağlantısı Durumu :</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_connectionstatus">
-      <property name="geometry">
-       <rect>
-        <x>150</x>
-        <y>590</y>
-        <width>251</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
       </property>
      </widget>
      <widget class="QCameraViewfinder" name="camera_vehicle_in" native="true">
@@ -521,6 +548,9 @@ border-color : red;
         <height>251</height>
        </rect>
       </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
      </widget>
      <widget class="Line" name="line_13">
       <property name="geometry">
@@ -530,6 +560,9 @@ border-color : red;
         <width>381</width>
         <height>20</height>
        </rect>
+      </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
       </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -543,6 +576,9 @@ border-color : red;
         <width>381</width>
         <height>20</height>
        </rect>
+      </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
       </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -561,6 +597,9 @@ border-color : red;
        <font>
         <pointsize>12</pointsize>
        </font>
+      </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
       </property>
       <property name="text">
        <string/>
@@ -585,6 +624,9 @@ border-color : red;
        <font>
         <pointsize>12</pointsize>
        </font>
+      </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
       </property>
       <property name="wrapping">
        <bool>false</bool>
@@ -645,6 +687,9 @@ border-color : red;
         <pointsize>12</pointsize>
        </font>
       </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -671,8 +716,11 @@ border-color : red;
         <bold>false</bold>
        </font>
       </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="text">
-       <string>GİRİŞ SAATİ :</string>
+       <string>Entry Time :</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -694,8 +742,11 @@ border-color : red;
         <bold>false</bold>
        </font>
       </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="text">
-       <string>TARİFE :</string>
+       <string>Price Plan :</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -710,6 +761,9 @@ border-color : red;
        <width>411</width>
        <height>611</height>
       </rect>
+     </property>
+     <property name="locale">
+      <locale language="English" country="UnitedStates"/>
      </property>
      <property name="frameShape">
       <enum>QFrame::Box</enum>
@@ -736,6 +790,9 @@ border-color : red;
         <bold>true</bold>
        </font>
       </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -754,6 +811,9 @@ border-color : red;
         <width>381</width>
         <height>20</height>
        </rect>
+      </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
       </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -775,8 +835,11 @@ border-color : red;
         <bold>true</bold>
        </font>
       </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="text">
-       <string>PLAKA :</string>
+       <string>PLATE :</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -790,6 +853,9 @@ border-color : red;
         <width>381</width>
         <height>20</height>
        </rect>
+      </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
       </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -812,6 +878,9 @@ border-color : red;
         <pointsize>12</pointsize>
        </font>
       </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -830,6 +899,9 @@ border-color : red;
         <width>381</width>
         <height>20</height>
        </rect>
+      </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
       </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -851,8 +923,11 @@ border-color : red;
         <bold>false</bold>
        </font>
       </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="text">
-       <string>SÜRE :</string>
+       <string>Duration :</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -874,8 +949,11 @@ border-color : red;
         <bold>false</bold>
        </font>
       </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="text">
-       <string>GİRİŞ SAATİ :</string>
+       <string>Entry Time :</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -889,6 +967,9 @@ border-color : red;
         <width>381</width>
         <height>20</height>
        </rect>
+      </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
       </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -910,8 +991,11 @@ border-color : red;
         <bold>false</bold>
        </font>
       </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="text">
-       <string>ÇIKIŞ SAATİ :</string>
+       <string>Exit Time :</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -925,6 +1009,9 @@ border-color : red;
         <width>381</width>
         <height>20</height>
        </rect>
+      </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
       </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -946,6 +1033,9 @@ border-color : red;
        <font>
         <pointsize>12</pointsize>
        </font>
+      </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
       </property>
       <property name="wrapping">
        <bool>false</bool>
@@ -1006,6 +1096,9 @@ border-color : red;
         <pointsize>12</pointsize>
        </font>
       </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="wrapping">
        <bool>false</bool>
       </property>
@@ -1057,6 +1150,9 @@ border-color : red;
         <height>20</height>
        </rect>
       </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
@@ -1080,8 +1176,11 @@ border-color : red;
       <property name="styleSheet">
        <string notr="true">color : red;</string>
       </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="text">
-       <string>ÜCRET :</string>
+       <string>PRICE :</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -1106,6 +1205,9 @@ border-color : red;
         <bold>true</bold>
        </font>
       </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -1125,6 +1227,9 @@ border-color : red;
         <height>251</height>
        </rect>
       </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
      </widget>
      <widget class="Line" name="line_14">
       <property name="geometry">
@@ -1134,6 +1239,9 @@ border-color : red;
         <width>381</width>
         <height>20</height>
        </rect>
+      </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
       </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -1147,6 +1255,9 @@ border-color : red;
         <width>381</width>
         <height>20</height>
        </rect>
+      </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
       </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -1165,6 +1276,9 @@ border-color : red;
        <font>
         <pointsize>12</pointsize>
        </font>
+      </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
       </property>
       <property name="text">
        <string/>
@@ -1189,8 +1303,11 @@ border-color : red;
         <bold>false</bold>
        </font>
       </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="text">
-       <string>TARİFE :</string>
+       <string>Price Plan :</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -1212,6 +1329,9 @@ border-color : red;
        <font>
         <pointsize>12</pointsize>
        </font>
+      </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
       </property>
       <property name="text">
        <string/>
@@ -1240,8 +1360,11 @@ border-color : red;
         <pointsize>9</pointsize>
        </font>
       </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="text">
-       <string>ÖDEMEYİ GERÇEKLEŞTİR</string>
+       <string>COMPLETE PAYMENT</string>
       </property>
      </widget>
     </widget>
@@ -1263,6 +1386,9 @@ border-color : red;
     </property>
     <property name="toolTip">
      <string>Ayarlar Paneli</string>
+    </property>
+    <property name="locale">
+     <locale language="English" country="UnitedStates"/>
     </property>
     <property name="text">
      <string>Ayarlar</string>
@@ -1314,6 +1440,9 @@ border-color : red;
     <property name="styleSheet">
      <string notr="true"/>
     </property>
+    <property name="locale">
+     <locale language="English" country="UnitedStates"/>
+    </property>
     <property name="text">
      <string>Çıkış</string>
     </property>
@@ -1343,8 +1472,11 @@ border-color : red;
       <height>16</height>
      </rect>
     </property>
+    <property name="locale">
+     <locale language="English" country="UnitedStates"/>
+    </property>
     <property name="text">
-     <string>Çıkış</string>
+     <string>Exit</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -1359,8 +1491,11 @@ border-color : red;
       <height>16</height>
      </rect>
     </property>
+    <property name="locale">
+     <locale language="English" country="UnitedStates"/>
+    </property>
     <property name="text">
-     <string>Ayarlar</string>
+     <string>Settings</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -1374,6 +1509,9 @@ border-color : red;
       <width>151</width>
       <height>51</height>
      </rect>
+    </property>
+    <property name="locale">
+     <locale language="English" country="UnitedStates"/>
     </property>
     <property name="frameShape">
      <enum>QFrame::Box</enum>
@@ -1404,8 +1542,11 @@ border-color : red;
       <bold>true</bold>
      </font>
     </property>
+    <property name="locale">
+     <locale language="English" country="UnitedStates"/>
+    </property>
     <property name="text">
-     <string>ARAÇ GİRİŞ</string>
+     <string>VEHICLE ENTRY</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -1427,8 +1568,11 @@ border-color : red;
       <bold>true</bold>
      </font>
     </property>
+    <property name="locale">
+     <locale language="English" country="UnitedStates"/>
+    </property>
     <property name="text">
-     <string>ARAÇ ÇIKIŞ</string>
+     <string>VEHICLE EXIT</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -1443,8 +1587,11 @@ border-color : red;
       <height>16</height>
      </rect>
     </property>
+    <property name="locale">
+     <locale language="English" country="UnitedStates"/>
+    </property>
     <property name="text">
-     <string>Yönetici</string>
+     <string>Manage</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -1468,6 +1615,9 @@ border-color : red;
     <property name="toolTip">
      <string>Yönetici Paneli</string>
     </property>
+    <property name="locale">
+     <locale language="English" country="UnitedStates"/>
+    </property>
     <property name="text">
      <string>Ayarlar</string>
     </property>
@@ -1488,9 +1638,9 @@ border-color : red;
    <widget class="QLabel" name="label_user">
     <property name="geometry">
      <rect>
-      <x>70</x>
+      <x>60</x>
       <y>0</y>
-      <width>261</width>
+      <width>271</width>
       <height>16</height>
      </rect>
     </property>
@@ -1498,6 +1648,9 @@ border-color : red;
      <font>
       <pointsize>10</pointsize>
      </font>
+    </property>
+    <property name="locale">
+     <locale language="English" country="UnitedStates"/>
     </property>
     <property name="text">
      <string/>
@@ -1508,7 +1661,7 @@ border-color : red;
      <rect>
       <x>10</x>
       <y>0</y>
-      <width>61</width>
+      <width>41</width>
       <height>16</height>
      </rect>
     </property>
@@ -1518,8 +1671,11 @@ border-color : red;
       <bold>true</bold>
      </font>
     </property>
+    <property name="locale">
+     <locale language="English" country="UnitedStates"/>
+    </property>
     <property name="text">
-     <string>Kullanıcı : </string>
+     <string>User : </string>
     </property>
    </widget>
    <widget class="QLabel" name="label_cam_in_status">
@@ -1541,8 +1697,11 @@ border-color : red;
     <property name="styleSheet">
      <string notr="true">color:red;</string>
     </property>
+    <property name="locale">
+     <locale language="English" country="UnitedStates"/>
+    </property>
     <property name="text">
-     <string>Kamera Kapalı</string>
+     <string>Camera is OFF</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -1567,8 +1726,11 @@ border-color : red;
     <property name="styleSheet">
      <string notr="true">color:red;</string>
     </property>
+    <property name="locale">
+     <locale language="English" country="UnitedStates"/>
+    </property>
     <property name="text">
-     <string>Kamera Kapalı</string>
+     <string>Camera is OFF</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -1586,8 +1748,11 @@ border-color : red;
       <height>23</height>
      </rect>
     </property>
+    <property name="locale">
+     <locale language="English" country="UnitedStates"/>
+    </property>
     <property name="text">
-     <string>Plakayı Tanı</string>
+     <string>Recognize</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_plakatani_out">
@@ -1602,8 +1767,11 @@ border-color : red;
       <height>23</height>
      </rect>
     </property>
+    <property name="locale">
+     <locale language="English" country="UnitedStates"/>
+    </property>
     <property name="text">
-     <string>Plakayı Tanı</string>
+     <string>Recognize</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_status">
@@ -1632,6 +1800,9 @@ border-color : red;
       <pointsize>10</pointsize>
      </font>
     </property>
+    <property name="locale">
+     <locale language="English" country="UnitedStates"/>
+    </property>
     <property name="text">
      <string/>
     </property>
@@ -1657,8 +1828,11 @@ border-color : red;
       <height>20</height>
      </size>
     </property>
+    <property name="locale">
+     <locale language="English" country="UnitedStates"/>
+    </property>
     <property name="text">
-     <string>Durum :</string>
+     <string>Status  :</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>

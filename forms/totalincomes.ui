@@ -11,7 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Toplam Gelirler Özet</string>
+   <string>Total Incomes Summary</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
@@ -30,7 +33,10 @@
     </font>
    </property>
    <property name="text">
-    <string>TOPLAM AYLIK GELİR :</string>
+    <string>TOTAL MONTHLY INCOME :</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
@@ -50,7 +56,10 @@
     </font>
    </property>
    <property name="text">
-    <string>TOPLAM HAFTALIK GELİR :</string>
+    <string>TOTAL WEEKLY INCOME :</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
   <widget class="QLabel" name="label_3">
@@ -70,7 +79,10 @@
     </font>
    </property>
    <property name="text">
-    <string>TOPLAM GÜNLÜK GELİR :</string>
+    <string>TOTAL DAILY INCOME :</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEdit_monthly">
@@ -146,7 +158,10 @@
     </rect>
    </property>
    <property name="text">
-    <string>Son Güncellenme Tarihi :</string>
+    <string>Last Updated :</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
   <widget class="QLabel" name="label_lastupdate">
@@ -179,7 +194,7 @@
     </font>
    </property>
    <property name="text">
-    <string>₺</string>
+    <string>$</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_6">
@@ -199,7 +214,7 @@
     </font>
    </property>
    <property name="text">
-    <string>₺</string>
+    <string>$</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_7">
@@ -219,7 +234,7 @@
     </font>
    </property>
    <property name="text">
-    <string>₺</string>
+    <string>$</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_close">
@@ -232,7 +247,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Kapat</string>
+    <string>Close</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_error">

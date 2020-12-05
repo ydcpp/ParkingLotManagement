@@ -35,7 +35,7 @@ bool DatabaseManager::ValidateUserLogin(const QString& username, const QString& 
             return false;
         }
         if(!query.next()){
-            errormsg = "Hatalı kullanıcı adı.";
+            errormsg = "Invalid username.";
             return false;
         }else{
             query.clear();
@@ -48,7 +48,7 @@ bool DatabaseManager::ValidateUserLogin(const QString& username, const QString& 
             }
             query.next();
             if(password != query.value(0).toString()){
-                errormsg = "Hatalı şifre.";
+                errormsg = "Invalid password.";
                 return false;
             }else{
                 QString firstname;
@@ -92,12 +92,12 @@ bool DatabaseManager::DeleteUser(const QString& username, QString& errmsg)
         return false;
     }
     if(!query.next()){
-        errmsg = "Böyle bir kullanıcı adı bulunmamaktadır.";
+        errmsg = "This username is not found in database.";
         return false;
     }else{
         quint32 userID = query.value(0).toUInt();
         if(userID == 0){
-            errmsg = "Admin hesabı silinemez.";
+            errmsg = "Admin account cannot be deleted, but you may change its default password.";
             return false;
         }
         query.clear();
@@ -208,7 +208,7 @@ bool DatabaseManager::GetBillingResult(const QString& plate, QString& errmsg, qi
         return false;
     }
     if(!query.next()){
-        errmsg = "Bu plakalı araç sistemde bulunmamaktadır.";
+        errmsg = "This license plate could not found in database.";
         return false;
     }
     vehicleID = query.value(0).toInt();
@@ -222,7 +222,7 @@ bool DatabaseManager::GetBillingResult(const QString& plate, QString& errmsg, qi
         return false;
     }
     if(!query.next()){
-        errmsg = "Bu plakalı aracın ödenmemiş kaydı bulunmamaktadır.";
+        errmsg = "Vehicle with this license plate does not have any unpayed billing.";
         return false;
     }else{
         out_paymentID = query.value(0).toInt();
@@ -245,7 +245,7 @@ bool DatabaseManager::CompletePayment(const qint32& vehicleID, const QDateTime& 
         return false;
     }
     if(!query.next()){
-        errmsg = "Bu araca ait bir ücret kaydı bilgisi bulunamadı.";
+        errmsg = "Could not found any payment info for this license plate.";
         return false;
     }
     QTime parkingTime = QTime(0,0).addSecs(60*int(minutes));
@@ -593,7 +593,7 @@ bool DatabaseManager::GetVehicleInformationByPlate(const QString& plate, qint32 
 bool DatabaseManager::ChangePassword(const qint32& accountID, const QString& oldPassword, const QString& newPassword, QString &errmsg)
 {
     if(oldPassword == newPassword){
-        errmsg = "Eski şifre ile Yeni şifre aynı.";
+        errmsg = "Please enter different password than old one.";
         return false;
     }
     QSqlQuery query;
@@ -604,11 +604,11 @@ bool DatabaseManager::ChangePassword(const qint32& accountID, const QString& old
         return false;
     }
     if(!query.next()){
-        errmsg = "Hatalı kullanıcı ID";
+        errmsg = "Invalid User ID";
         return false;
     }
     if(oldPassword != query.value(0).toString()){
-        errmsg = "Hatalı şifre.";
+        errmsg = "Invalid password.";
         return false;
     }
     // apply new password
@@ -631,7 +631,7 @@ qint32 DatabaseManager::QueryRemainingSpots(QString& errmsg)
         errmsg = query.lastError().text();
         return -1;
     }if(!query.next()){
-        errmsg = "Hatalı otopark id";
+        errmsg = "Invalid Parking Lot ID";
         return -1;
     }
     return query.value(0).toInt();
@@ -683,12 +683,9 @@ bool DatabaseManager::SetOtoparkInfo(OtoparkInfo** out_otoparkInfo)
         *out_otoparkInfo = nullptr;
     }
     QSqlQuery query;
-    if(!query.exec("select ServerIP, ServerPort, ServerOtoparkID, fk_CurrentPlanID from OtoparkInfo where ID = 0")) return false;
+    if(!query.exec("select fk_CurrentPlanID from OtoparkInfo where ID = 0")) return false;
     if(!query.next()) return false;
-    *out_otoparkInfo = new OtoparkInfo(query.value(0).toString(),
-                                       query.value(1).toUInt(),
-                                       query.value(2).toInt(),
-                                       query.value(3).toInt());
+    *out_otoparkInfo = new OtoparkInfo(query.value(0).toInt());
     return true;
 }
 

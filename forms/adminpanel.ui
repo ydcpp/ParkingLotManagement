@@ -32,7 +32,10 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Yönetici Paneli</string>
+   <string>Admin Panel</string>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
@@ -65,8 +68,11 @@
         <height>41</height>
        </rect>
       </property>
+      <property name="locale">
+       <locale language="English" country="UnitedStates"/>
+      </property>
       <property name="text">
-       <string>Kapat</string>
+       <string>Close</string>
       </property>
      </widget>
      <widget class="QLabel" name="label">
@@ -84,7 +90,7 @@
        </font>
       </property>
       <property name="text">
-       <string>Durum : </string>
+       <string>Status : </string>
       </property>
      </widget>
      <widget class="QLabel" name="label_status">
@@ -126,8 +132,11 @@
          <height>41</height>
         </rect>
        </property>
+       <property name="locale">
+        <locale language="English" country="UnitedStates"/>
+       </property>
        <property name="text">
-        <string>Yeni Kullanıcı Kaydı</string>
+        <string>Register New User</string>
        </property>
       </widget>
       <widget class="QPushButton" name="pushButton_employees">
@@ -139,8 +148,11 @@
          <height>41</height>
         </rect>
        </property>
+       <property name="locale">
+        <locale language="English" country="UnitedStates"/>
+       </property>
        <property name="text">
-        <string>Kayıtlı Çalışanları Listele</string>
+        <string>List Employees</string>
        </property>
       </widget>
       <widget class="QPushButton" name="pushButton_managers">
@@ -152,8 +164,11 @@
          <height>41</height>
         </rect>
        </property>
+       <property name="locale">
+        <locale language="English" country="UnitedStates"/>
+       </property>
        <property name="text">
-        <string>Kayıtlı Yöneticileri Listele</string>
+        <string>List Managers</string>
        </property>
       </widget>
       <widget class="QPushButton" name="pushButton_deleteUser">
@@ -165,8 +180,11 @@
          <height>41</height>
         </rect>
        </property>
+       <property name="locale">
+        <locale language="English" country="UnitedStates"/>
+       </property>
        <property name="text">
-        <string>Kullanıcı Sil</string>
+        <string>Remove User</string>
        </property>
       </widget>
      </widget>
@@ -191,8 +209,11 @@
          <height>41</height>
         </rect>
        </property>
+       <property name="locale">
+        <locale language="English" country="UnitedStates"/>
+       </property>
        <property name="text">
-        <string>Yapılan Ödemeleri Listele</string>
+        <string>List All Payments</string>
        </property>
       </widget>
       <widget class="QPushButton" name="pushButton_incomes">
@@ -204,8 +225,11 @@
          <height>41</height>
         </rect>
        </property>
+       <property name="locale">
+        <locale language="English" country="UnitedStates"/>
+       </property>
        <property name="text">
-        <string>Toplam Gelirleri Listele</string>
+        <string>Summary All Incomes</string>
        </property>
       </widget>
      </widget>
