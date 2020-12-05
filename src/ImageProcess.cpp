@@ -24,6 +24,9 @@ ImageProcess::~ImageProcess()
 void ImageProcess::run()
 {
     emit sendPlateString("Processing...");
+
+    // you must edit the lines below in order to properly utilize ALPR for country specific license plates
+    // to see the region and country options, check /runtime_data/postprocess folder in the application directory
     alpr::Alpr openalpr("eu", "./openalpr.conf");
     openalpr.setDefaultRegion("tr");
 

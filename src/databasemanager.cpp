@@ -470,7 +470,7 @@ bool DatabaseManager::SetQUeryModel_Payments(QSqlQueryModel *out_model, QString 
         return false;
     }
     QSqlQuery query;
-    query.prepare("select Payments.ID as 'Fatura ID', Vehicles.Plate as 'Plaka', Payments.VehicleEntryDate as 'Giriş Tarihi', Payments.PaymentDate as 'Çıkış Tarihi', Payments.HoursParked as 'Süre', Payments.Price as 'Fiyat (TL)', PricingPlans.PlanName as 'Tarife'"
+    query.prepare("select Payments.ID, Vehicles.Plate, Payments.VehicleEntryDate, Payments.PaymentDate, Payments.HoursParked, Payments.Price, PricingPlans.PlanName"
                   " from Payments left join Vehicles on Vehicles.ID = Payments.fk_VehicleID"
                   " left join PricingPlans on PricingPlans.ID = Payments.fk_PricingPlanID"
                   " where Payments.isPaymentComplete = true");
@@ -542,7 +542,7 @@ bool DatabaseManager::QueryDailyIncome(float &out_income, QString &errmsg)
 bool DatabaseManager::SetQueryModel_TotalPaymentInfo(const qint32& vehicleID, QSqlQueryModel *out_model, QString &errmsg)
 {
     QSqlQuery query;
-    query.prepare("select Payments.ID as 'Fatura ID', VehicleEntryDate as 'Giriş Tarihi', PaymentDate as 'Çıkış Tarihi', HoursParked as 'Süre', Price as 'Ücret (TL)', PricingPlans.PlanName as 'Tarife' from Payments"
+    query.prepare("select Payments.ID, VehicleEntryDate, PaymentDate, HoursParked, Price, PricingPlans.PlanName from Payments"
                   " left join PricingPlans on Payments.fk_PricingPlanID = PricingPlans.ID where fk_VehicleID = :id");
     query.bindValue(":id",vehicleID);
     if(!query.exec()){
@@ -556,7 +556,7 @@ bool DatabaseManager::SetQueryModel_TotalPaymentInfo(const qint32& vehicleID, QS
 bool DatabaseManager::SetQueryModel_ListAllVehiclesInside(QSqlQueryModel* out_model, QString& errmsg)
 {
     QSqlQuery query;
-    query.prepare("select Vehicles.Plate as 'Plaka', Vehicles.Model as 'Marka', Payments.ID as 'Fatura ID', VehicleEntryDate as 'Giriş Saati', PricingPlans.PlanName as 'Tarife' from Payments"
+    query.prepare("select Vehicles.Plate, Vehicles.Model, Payments.ID, VehicleEntryDate, PricingPlans.PlanName from Payments"
                   " left join PricingPlans on Payments.fk_PricingPlanID = PricingPlans.ID"
                   " left join Vehicles on Payments.fk_VehicleID = Vehicles.ID where Payments.isPaymentComplete = 0");
     if(!query.exec()){
