@@ -1,5 +1,5 @@
 # ParkYerimDesktop
-Desktop Automation for Smart Car Parking systems using QT Framework C++ and OpenCV computer vision libraries
+Desktop Parking Lot Automation system with Auto License Plate Recognition using QT Framework C++ and OpenCV computer vision libraries
 
 <b>NOTE:</b> This project is still in development.
 
@@ -10,11 +10,11 @@ Desktop Automation for Smart Car Parking systems using QT Framework C++ and Open
 - OpenALPR 2.3.0
 
 <b>Building Project</b>
-<br> To build the project, you need to build required external libraries above and point their path in ParkYerimDesktop.pro file. Alternatively, you can point precompiled libraries that are in libexternal directory.
-<br> To run the project, add required dlls in the same directory with ParkYerimDesktop.exe
-
+<br> To build the project, you need to build required external libraries above and point their path in ParkYerimDesktop.pro file (in LIBS subfield). Alternatively, you can point precompiled libraries that are present in libexternal directory.
 <br>
-Required .dll files to be in the same directory with ParkYerimDesktop.exe after building;
+<br><b>Running the application</b>
+<br> To run the application, add required dlls in the same directory with ParkYerimDesktop.exe
+<br>Required .dll files to be in the same directory with ParkYerimDesktop.exe after building;
 <br>liblept170.dll
 <br>openalpr.dll
 <br>opencv_core420.dll
@@ -24,5 +24,5 @@ Required .dll files to be in the same directory with ParkYerimDesktop.exe after 
 <br>opencv_video420.dll
 <br>opencv_videoio420.dll
 <br>opencv_world300.dll
-<br>These files can be found in /libexternal/precompiled folder
-<br><br><b>Note:</b> These binaries are compiled in <b>Release</b> mode, therefore the project wont be built in Debug configuration.If you want to run the application in Debug mode then you will have to build OpenCV and OpenALPR in MSVC15 Debug configuration using Visual Studio. After building these external libraries in Debug configuration, you must edit .pro file and rename the dependencies as their Debug compilation output names (i.e: opencv_video420d.dll, not opencv_video420.dll).
+<br>These files can be found in <b>/libexternal/precompiled</b> folder
+<br><br><b>Note:</b> These binaries are compiled in <b>Release</b> mode, therefore the project wont be built or run in Debug configuration.If you want to run the application in Debug mode then you will have to build OpenCV and OpenALPR in MSVC15 Debug configuration using Visual Studio. After building these external libraries in Debug configuration, you must edit .pro file and rename the dependencies (in LIBS subfield) as their Debug compilation output names (i.e: opencv_video420d.dll, not opencv_video420.dll).
