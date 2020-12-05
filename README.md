@@ -29,4 +29,4 @@
 
 
 2. Configuring OpenALPR runtime data
-<br>In order to run Auto License Plate Recognition functions, you must copy runtime_data folder and openalpr.conf file in <b>/libexternal/openalpr_x64</b> and paste them to project build directory.
+<br>In order to run Auto License Plate Recognition functions, you must copy <b>runtime_data</b> folder and <b>openalpr.conf</b> file in <b>/libexternal/openalpr_x64</b> and paste them to project build directory.
