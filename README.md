@@ -1,4 +1,4 @@
-# ParkYerimDesktop
+# Parking Lot Management System with Auto License Plate Recognition
 
 <b>NOTE:</b> This project is still in development.
 
