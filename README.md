@@ -1,12 +1,9 @@
 # Parking Lot Management System with Auto License Plate Recognition
 
-<b>NOTE:</b> This project is still in development.
-
 <b>Prerequisites</b>
-- QT Framework 5.14
-- MSVC15 (2017) build tools
-- OpenCV 4.2.0
-- OpenALPR 2.3.0
+- QT Framework 5.14 or higher
+- OpenCV 4.2.0 or higher
+- OpenALPR 2.3.0 or higher
 
 <b>Building Project</b>
 <br> To build the project, you need to build required external libraries above and point their path in ParkYerimDesktop.pro file (in LIBS subfield). Alternatively, you can point precompiled libraries that are present in libexternal directory.
